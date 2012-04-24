@@ -4,10 +4,10 @@
 
 #include <QGLWidget>
 #include <GL/glu.h>
-#include "lib/lib_primitive/cube.h"
-#include "lib/lib_primitive/pyramid.h"
-#include "lib/lib_action/translate.h"
-#include "lib/lib_action/rotate.h"
+#include "lib/primitive/cube.h"
+#include "lib/primitive/pyramid.h"
+#include "lib/action/translate.h"
+#include "lib/action/rotate.h"
 #include "lib/element.h"
 #include "resource.h"
 

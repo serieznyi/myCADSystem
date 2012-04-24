@@ -12,14 +12,6 @@ TEMPLATE = app
 
 SOURCES += \
     lib/element.cpp \
-    lib/lib_action/translate.cpp \
-    lib/lib_action/subtraction.cpp \
-    lib/lib_action/rotate.cpp \
-    lib/lib_action/intersection.cpp \
-    lib/lib_action/group.cpp \
-    lib/lib_action/action.cpp \
-    lib/lib_primitive/pyramid.cpp \
-    lib/lib_primitive/cube.cpp \
     work.cpp \
     statusbar.cpp \
     paintingzone.cpp \
@@ -30,19 +22,19 @@ SOURCES += \
     toolbars/select_primitive_toolbar.cpp \
     toolbars/scene_control_toolbar.cpp \
     toolbars/action_primitive_toolbar.cpp \
-    lib/lib_primitive/primitive.cpp \
-    toolbars/toolbar.cpp
+    toolbars/toolbar.cpp \
+    lib/action/translate.cpp \
+    lib/action/subtraction.cpp \
+    lib/action/rotate.cpp \
+    lib/action/intersection.cpp \
+    lib/action/group.cpp \
+    lib/action/action.cpp \
+    lib/primitive/pyramid.cpp \
+    lib/primitive/primitive.cpp \
+    lib/primitive/cube.cpp
 
 HEADERS  += \
     lib/element.h \
-    lib/lib_action/translate.h \
-    lib/lib_action/subtraction.h \
-    lib/lib_action/rotate.h \
-    lib/lib_action/intersection.h \
-    lib/lib_action/group.h \
-    lib/lib_action/action.h \
-    lib/lib_primitive/pyramid.h \
-    lib/lib_primitive/cube.h \
     work.h \
     statusbar.h \
     resource.h \
@@ -53,8 +45,16 @@ HEADERS  += \
     toolbars/select_primitive_toolbar.h \
     toolbars/scene_control_toolbar.h \
     toolbars/action_primitive_toolbar.h \
-    lib/lib_primitive/primitive.h \
-    toolbars/toolbar.h
+    toolbars/toolbar.h \
+    lib/action/translate.h \
+    lib/action/subtraction.h \
+    lib/action/rotate.h \
+    lib/action/intersection.h \
+    lib/action/group.h \
+    lib/action/action.h \
+    lib/primitive/pyramid.h \
+    lib/primitive/primitive.h \
+    lib/primitive/cube.h
 
 FORMS +=
 

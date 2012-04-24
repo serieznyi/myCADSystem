@@ -14,8 +14,8 @@
 #include "abstractmainwindow.h"
 #include "work.h"
 #include "toolbars/list_primitive_toolbar.h"
-#include "lib/lib_primitive/primitive.h"
-#include "lib/lib_action/translate.h"
+#include "lib/primitive/primitive.h"
+#include "lib/action/translate.h"
 
 class MainWindow;
 
