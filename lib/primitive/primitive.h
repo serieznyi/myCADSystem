@@ -3,17 +3,19 @@
 
 #include <QGLWidget>
 #include "lib/element.h"
+#include "resource.h"
 
 class Primitive : public Element
 {
 public:
     Primitive();
-    void draw();
-    int* getColor();
+    int* getIDColor();
+    void setIDColor(int *a);
+    int *getColor();
     void setColor(int *a);
-
 private:
     int *ID_COLOR;
+    int *COLOR;
 };
 
 

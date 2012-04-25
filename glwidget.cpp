@@ -42,17 +42,19 @@ void GLWidget::initializeGL()
 {
     glClearColor(1.0f,1.0f,1.0f,1.0f);              // цвет "очистки порта вида"
     glEnable(GL_DEPTH_TEST);                        // буфер глубины
-    //glEnable(GL_COLOR_MATERIAL);                    // цвет материала
+    ///glEnable(GL_COLOR_MATERIAL);                    // цвет материала
     //glEnable(GL_AUTO_NORMAL);                       // авто нормаль
     glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
 }
 
 void GLWidget::resizeGL(int w, int h)
 {
+    this->w=w;
+    this->h=h;
     glViewport(0, 0, w, h);                         // ”становка порт вида
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-w/h*2, w/h*2, -w/h, w/h, -4.0f, 4.0f);
+    glOrtho(-w/h*2, w/h*2, -w/h, w/h, -10.0f, 10.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -73,7 +75,8 @@ void GLWidget::paintGL()
     if(this->getProjection()==MPJ_FRONT)
     {
         glPushMatrix();
-        glRotatef(90, 1, 0, 0);
+        //glTranslated(0, 0, 5);
+        glRotated(-90, 1, 0, 0);
         this->drawPlane();                                  // ќтрисовка плоскости
         glPopMatrix();
     }
@@ -87,7 +90,7 @@ void GLWidget::paintGL()
     else
         this->drawPlane();                               // ќтрисовка плоскости
 
-    currentWork->drawWork();
+    currentWork->drawWork(MODE_REAL);
 
 }
 
@@ -147,7 +150,6 @@ int GLWidget::getProjection()
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     p_lastPos = event->pos();
-    glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
 
     switch(*currenEvent)
     {
@@ -160,6 +162,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         /*if(event->buttons()&&Qt::LeftButton&&isTopW)
             addPrimitive(event->pos());
         else */addPrimitive();
+        previousEvent = currenEvent;
+        pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
     case MEV_TRANSLATE:
         break;
@@ -172,45 +176,9 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     p_currentPos.setX(event->x() - p_lastPos.x());
     p_currentPos.setY(event->y() - p_lastPos.y());
-    selectEvent(event, p_currentPos);
-    p_lastPos = event->pos();
-
-    /*
-    GLubyte a[3];
-    glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &a);
-    if(*currenEvent==MEV_TRANSLATE)
-    {
-
-        glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
-
-        double step_translate = 0.005;
-        if(currentWork->getOnlyPrimitiveList()->size()>0)
-        {
-            QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
-
-            //foreach (int i, only_prim)
-            for(int i=0;i<only_prim->size();i++)
-            {
-                int index = only_prim->at(i);
-                Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
-                int *na = 0;
-                GLubyte ba[3] = {0};
-                na =prim->getColor();
-                for(int i=0;i<3;i++)
-                    ba[i] = (GLubyte)na[i];
-
-                if(ba[0]==a[0]&&bcolor_selected_prim[1]==color_selected_prim[1]&&ba[2]==color_selected_prim[2])
-                {
-                    Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-1));
-                    translate->step(step_translate,step_translate,step_translate);
-                    absMainWindow->getPaintZ()->Update();
-                    return;
-                }
-            }
-
-
-    }
-    //qDebug()<<a[0]<<" "<<a[1]<<" "<<a[2];}*/
+    if(event->buttons() && Qt::LeftButton )
+        selectEvent(event, p_currentPos);
+    p_lastPos = event->pos();    
 }
 
 void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
@@ -321,8 +289,11 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
 {
-
-    double step_translate = 0.05;
+    glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
+    //double step_translate_y = (w/h)/w;
+    //double step_translate_x = ((w/h)*2)/h;
+    double step_translate_y = 0.03;
+    double step_translate_x = 0.03;
     if(currentWork->getOnlyPrimitiveList()->size()>0)
     {
         QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
@@ -330,36 +301,31 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
         //foreach (int i, only_prim)
         for(int i=0;i<only_prim->size();i++)
         {
-            int index = only_prim->at(i);
+            int index = only_prim->at(i);   // »Ќдексы только примитивов
             Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
-            int *na = 0;
+            int *na = 0;// ÷вет примитива из контейнера
             GLubyte ba[3] = {0};
-            na =prim->getColor();
+            na =prim->getIDColor();
             for(int i=0;i<3;i++)
                 ba[i] = (GLubyte)na[i];
 
-            qDebug()<<"Scene";
-            qDebug()<<na[0]<<" "<<na[1]<<" "<<na[2];
-            qDebug()<<"Primitive";
-            qDebug()<<ba[0]<<" "<<ba[1]<<" "<<ba[2];
-
-            if(ba[0]==na[0]&&ba[1]==na[1]&&ba[2]==na[2])
+            if(ba[0]== color_selected_prim[0]&&ba[1]==color_selected_prim[1]&&ba[2]==color_selected_prim[2])
             {
                 Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-2));
 
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
                 {
                     if(current.x()>0){
-                        translate->move(step_translate,0,0);
+                        translate->move(step_translate_x,0,0);
                     }
                     else if(current.x()<0){
-                        translate->move(-step_translate,0,0);
+                        translate->move(-step_translate_x,0,0);
                     }
                     if(current.y()>0){
-                        translate->move(0,0,-step_translate);
+                        translate->move(0,0,-step_translate_y);
                     }
                     else if(current.y()<0){
-                        translate->move(0,0,step_translate);
+                        translate->move(0,0,step_translate_y);
                     }
                     pMW->Update();
                     return;
@@ -401,14 +367,9 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
             Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
             int *na = 0;
             GLubyte ba[3] = {0};
-            na =prim->getColor();
+            na =prim->getIDColor();
             for(int i=0;i<3;i++)
                 ba[i] = (GLubyte)na[i];
-
-            qDebug()<<"Scene";
-            qDebug()<<na[0]<<" "<<na[1]<<" "<<na[2];
-            qDebug()<<"Primitive";
-            qDebug()<<ba[0]<<" "<<ba[1]<<" "<<ba[2];
 
             if(ba[0]==na[0]&&ba[1]==na[1]&&ba[2]==na[2])
             {
@@ -581,39 +542,7 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
     this->updateGL();
     return;
 }
-/*
-void GLWidget::evenTranslatePrimitive(QMouseEvent *event, QPoint current)
-{
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP){
-        if(current.x()>0){
-            //currentWork->addAction(MEV_TRANSLATE_PRIM, obj);
-        }
-        else if(current.x()<0){
 
-        }
-        if(current.y()>0){
-
-        }
-        else if(current.y()<0){
-
-        }
-        this->updateGL();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT){
-
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT){
-
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE){
-
-    }
-}
-*/
 void GLWidget::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -675,11 +604,6 @@ void GLWidget::addPrimitive(QPoint current)
     glGetDoublev( GL_PROJECTION_MATRIX, projection );
     glGetIntegerv( GL_VIEWPORT, viewport );
     gluUnProject(current.x(), current.y(), 0, modelview, projection, viewport, &obj[0], &obj[1], &obj[2]);
-
-    qDebug()<<current;
-    qDebug()<<obj[0];
-    qDebug()<<obj[1];
-    qDebug()<<obj[2];
 
     currentWork->addAction(MEV_TRANSLATE, obj);
     currentWork->addPrimitive(*currenEvent);

@@ -4,7 +4,7 @@ Intersection::Intersection():Action()
 {
 }
 
-void Intersection::Apply()
+void Intersection::Apply(bool mode)
 {
 
 }

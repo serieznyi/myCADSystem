@@ -4,7 +4,7 @@ Subtraction::Subtraction():Action()
 {
 }
 
-void Subtraction::Apply()
+void Subtraction::Apply(bool mode)
 {
 
 }

@@ -9,7 +9,7 @@ class Subtraction : public Action
 {
 public:
     explicit Subtraction();
-    virtual void Apply();
+    virtual void Apply(bool mode=true);
 };
 
 #endif // SUBTRACTION_H

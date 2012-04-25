@@ -7,8 +7,7 @@ class Cube : public Primitive
 {
 public:
     explicit Cube(GLfloat a);
-    virtual void Apply();
-
+    virtual void Apply(bool mode=true);
 public:
     GLdouble a;
 };

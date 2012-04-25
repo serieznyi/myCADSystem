@@ -7,7 +7,7 @@ Translate::Translate(double x, double y, double z):Action()
     this->z=z;
 }
 
-void Translate::Apply()
+void Translate::Apply(bool mode)
 {
     glTranslated(x,y,z);
 }

@@ -4,7 +4,7 @@ Group::Group():Action()
 {
 }
 
-void Group::Apply()
+void Group::Apply(bool mode)
 {
 
 }

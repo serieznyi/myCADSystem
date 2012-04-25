@@ -4,6 +4,8 @@
 
 #include <QGLWidget>
 #include <GL/glu.h>
+#include "stdlib.h"
+#include "time.h"
 #include "lib/primitive/cube.h"
 #include "lib/primitive/pyramid.h"
 #include "lib/action/translate.h"
@@ -15,14 +17,16 @@ class Work
 {
 public:
     explicit Work();
-    void drawWork();
+    void drawWork(bool mode=true);
     void addPrimitive(int i);               // Добавление объекта на сцену
     void addAction(int i, double obj[3]);   // Применение действия
-    long genGID();                          // Генерация идентификатора для события
-    int* genIDColor();
+    long generateGID();                          // Генерация идентификатора для события
+    int* generatetIDColor();
+    int* generateColor();
     QList<Element*>* getList();
     QList<int>* getOnlyPrimitiveList();
-
+public:
+    int                      real_color[3];
 private:
     QList<Element*>          *element_list;             //  Список элементов сцены
     long                     current_free_id;           //  Текущий свободный идентификатор

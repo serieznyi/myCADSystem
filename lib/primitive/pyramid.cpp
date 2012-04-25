@@ -5,29 +5,30 @@ Pyramid::Pyramid(GLfloat a):Cube(a)
     this->a = a;
 }
 
-void Pyramid::Apply()
+void Pyramid::Apply(bool mode)
 {
-    GLdouble a = 0.5;
-    GLdouble h = (sqrt(3)/2)*a;
+    int *color =0;
+    if(mode)
+    color = getColor();
+            else
+    color = getIDColor();
+    GLdouble h = (sqrt(3)/2)*this->a;
         glPushMatrix();//основание
             glRotated(90, 1, 0, 0);
                 glBegin(GL_TRIANGLES);
-                    glColor3f(1.0, 0, 0);
+                    glColor3f(color[0], color[1], color[3]);
                     glVertex3d(0, h/2, 0);
                     glVertex3d(a/2, -h/2, 0);
                     glVertex3d(-a/2, -h/2, 0);
 
-                        glColor3d(0, 1, 0);
                     glVertex3d(0, 0, -h);
                     glVertex3d(0, h/2, 0);
                     glVertex3d(a/2, -h/2, 0);
 
-                        glColor3d(0, 0, 1);
                     glVertex3d(0, 0, -h);
                     glVertex3d(0, h/2, 0);
                     glVertex3d(-a/2, -h/2, 0);
 
-                        glColor3d(0, 0.5, 0.5);
                     glVertex3d(0, 0, -h);
                     glVertex3d(a/2, -h/2, 0);
                     glVertex3d(-a/2, -h/2, 0);

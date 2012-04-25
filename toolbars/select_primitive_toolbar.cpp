@@ -36,7 +36,7 @@ void SelectPrimitiveToolbar::createActions()
     connect(quadAction, SIGNAL(triggered()), SLOT(addCube()));
 
 
-    triangleAction = new QAction(QString::fromLocal8Bit("&Треугольник"), this);
+    triangleAction = new QAction(QString::fromLocal8Bit("&Пирамида"), this);
     this->addAction(triangleAction);
     connect(triangleAction, SIGNAL(triggered()), SLOT(addPyramid()));
 

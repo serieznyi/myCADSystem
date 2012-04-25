@@ -38,7 +38,6 @@ public:
     void addPrimitive(QPoint current);                                  //
     void addPrimitive();                                          //
     void eventTranslatePrimitive(QMouseEvent *event, QPoint current);
-
     void eventRotatePrimitive(QMouseEvent *event, QPoint current);
 protected:
     void initializeGL();                // Инициализация GL
@@ -47,9 +46,11 @@ protected:
     void drawAxes();                    // Рисование осей
     void drawPlane();                   // Рисование плоскости
     void qNormalizeAngle(int &angle);   //
-
+public:
+    GLubyte color_selected_prim[3];
 private:
     int             type_projection;
+    int             w,h;
     GLdouble        xRot,                   //
                     yRot,                   //
                     zRot;                   //
@@ -70,12 +71,9 @@ private:
     MainWindow *pMW;
     Work            *currentWork;
     int             *currenEvent;
-    int             previousEvent;
-    GLubyte color_selected_prim[3];
-
+    int             *previousEvent;
     static const GLfloat step_scale = 0.01f;
     static const GLfloat step_translate = 0.05f;
-
 public slots:
     void changeProection(int n);
 };

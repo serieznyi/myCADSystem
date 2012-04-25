@@ -9,7 +9,7 @@ class Rotate : public Action
 {
 public:
     explicit Rotate(double angleX=0, double angleY=0, double angleZ=0);
-    virtual void Apply();
+    virtual void Apply(bool mode=true);
 
 public:
     double angleX;

@@ -11,7 +11,6 @@
 #include "toolbars/scene_control_toolbar.h"
 #include "toolbars/list_primitive_toolbar.h"
 #include "statusbar.h"
-#include "abstractmainwindow.h"
 #include "work.h"
 #include "resource.h"
 
@@ -21,7 +20,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);                   // Конструктор
     int* getCurEvent();
     void setCurEvent(int event);
-    int getPrevEvent();
+    int *getPrevEvent();
     void setPrevEvent(int event);
     Work* getWork();
     void Update();

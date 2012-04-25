@@ -8,7 +8,7 @@ class Pyramid : public Cube
 {
 public:
     explicit Pyramid(GLfloat a);
-    virtual void Apply();
+    virtual void Apply(bool mode=true);
 };
 
 #endif // PYRAMID_H

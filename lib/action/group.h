@@ -9,7 +9,7 @@ class Group : public Action
 {
 public:
     explicit Group();
-    virtual void Apply();
+    virtual void Apply(bool mode=true);
 };
 
 #endif // GROUP_H

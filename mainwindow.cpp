@@ -41,9 +41,9 @@ void MainWindow::setCurEvent(int a)
     cur_event = a;
 }
 
-int MainWindow::getPrevEvent()
+int* MainWindow::getPrevEvent()
 {
-    return prev_event;
+    return &prev_event;
 }
 
 void MainWindow::setPrevEvent(int a)

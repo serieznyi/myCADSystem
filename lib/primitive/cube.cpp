@@ -1,17 +1,23 @@
 #include "cube.h"
+#include "QDebug"
 
 Cube::Cube(GLfloat a=1.0f):Primitive()
 {
     this->a = a;
 }
 
-void Cube::Apply()
+void Cube::Apply(bool mode)
 {
-    int *color = getColor();
-    //glColor3i(color[0],color[1],color[2]);
+    int *color = 0;
+    if(mode)
+    color = getColor();
+            else
+    color = getIDColor();
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
-
+    int a1 = color[0];
+    int a2 = color[1];
+    int a3 = color[2];
     const GLfloat vertices[] = {
             -a,-a,-a,
             a,-a,-a,
@@ -21,6 +27,7 @@ void Cube::Apply()
             a,-a,a,
             a,a,a,
             -a,a,a};
+
 
     const GLint colors[] = {
             color[0],color[1],color[2],

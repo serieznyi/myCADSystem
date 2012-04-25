@@ -9,7 +9,7 @@ class Intersection : public Action
 {
 public:
     explicit Intersection();
-    virtual void Apply();
+    virtual void Apply(bool mode=true);
 };
 
 #endif // INTERSECTION_H
