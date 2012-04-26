@@ -32,3 +32,42 @@ void PaintingZone::Update()
     widFront->repaint();
     widRight->repaint();
 }
+
+void PaintingZone::setMaximum(int i)
+{
+    switch(i)
+    {
+    case MPJ_FRONT:
+        setAllUnvisible(true);
+        widFront->setVisible(true);
+        break;
+    case MPJ_TOP:
+        setAllUnvisible(true);
+        widTop->setVisible(true);
+        break;
+    case MPJ_RIGHT:
+        setAllUnvisible(true);
+        widRight->setVisible(true);
+        break;
+    case MPJ_PERSPECTIVE:
+        setAllUnvisible(true);
+        widPerspective->setVisible(true);
+        break;
+    }
+}
+
+void PaintingZone::setAllUnvisible(bool a)
+{
+    widTop->setHidden(a);
+    widFront->setHidden(a);
+    widRight->setHidden(a);
+    widPerspective->setHidden(a);
+}
+
+void PaintingZone::saveAllLastState()
+{
+    widPerspective->SaveLastWH();
+    widTop->SaveLastWH();
+    widFront->SaveLastWH();
+    widRight->SaveLastWH();
+}

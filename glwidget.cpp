@@ -6,6 +6,12 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     //color_selected_prim = {0};
+    mode                = MODE_REAL;
+    w                   =0;
+    h                   =0;
+    last_w              =0;
+    last_h              =0;
+    lastProjection      =0;
     pMW = dynamic_cast<MainWindow*>(parent);
     currentWork         = pMW->getWork();
     currenEvent         = pMW->getCurEvent();
@@ -34,27 +40,50 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     lay_global_v->addStretch(3);
     this->setLayout(lay_global_v);
 
+
     connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeProection(int)));
+
     setMouseTracking(true);
 }
 
 void GLWidget::initializeGL()
 {
     glClearColor(1.0f,1.0f,1.0f,1.0f);              // цвет "очистки порта вида"
-    glEnable(GL_DEPTH_TEST);                        // буфер глубины
-    ///glEnable(GL_COLOR_MATERIAL);                    // цвет материала
-    //glEnable(GL_AUTO_NORMAL);                       // авто нормаль
+    glEnable(GL_DEPTH_TEST);// буфер глубины
+    glEnable(GL_COLOR_MATERIAL);                    // цвет материала
+    glEnable(GL_LIGHTING);
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_AUTO_NORMAL);// авто нормаль
+
+
     glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
 }
 
 void GLWidget::resizeGL(int w, int h)
 {
-    this->w=w;
-    this->h=h;
-    glViewport(0, 0, w, h);                         // Установка порт вида
+    if(w!=0&&h!=0)
+    {
+        this->w=w;
+        this->h=h;
+    }
+    else
+    {
+        this->w=this->last_w;
+        this->h=this->last_h;
+        //this->comboBox->
+    }
+
+    glViewport(0, 0, this->w, this->h);                         // Установка порт вида
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-w/h*2, w/h*2, -w/h, w/h, -10.0f, 10.0f);
+    double l=-this->w/this->h*2,
+            r=this->w/this->h*2,
+            t=-this->w/this->h,
+            d=this->w/this->h,
+            n=-10.0f,
+            f=10.0f;
+    glOrtho(l, r, t, d, n, f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -63,26 +92,31 @@ void GLWidget::paintGL()
 {
     glLoadIdentity();
 
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);   // Очистка буферов
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);          // Режим отрисовки
+
     glScalef(gScale, gScale, gScale);
     glTranslatef(xTranslate, yTranslate, zTranslate);
     glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);   // Очистка буферов
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);          // Режим отрисовки
+    //drawX();
 
     if(this->getProjection()==MPJ_FRONT)
     {
         glPushMatrix();
-        //glTranslated(0, 0, 5);
+        //glScaled(-1, -1, -1);
+        glTranslated(0,0,9);
         glRotated(-90, 1, 0, 0);
+
         this->drawPlane();                                  // Отрисовка плоскости
         glPopMatrix();
     }
     else if(this->getProjection()==MPJ_RIGHT)
     {
         glPushMatrix();
+        glTranslated(-(w/h*2)*2, 0, 0);
         glRotatef(90, 0, 0, 1);
         this->drawPlane();                                  // Отрисовка плоскости
         glPopMatrix();
@@ -90,18 +124,101 @@ void GLWidget::paintGL()
     else
         this->drawPlane();                               // Отрисовка плоскости
 
-    currentWork->drawWork(MODE_REAL);
+    currentWork->drawWork(mode);
+
+    drawAxes();
 
 }
 
 void GLWidget::drawAxes()
 {
+    glLoadIdentity();
+    glTranslated(2.9, -1.4, 0);
+    glScaled(0.5, 0.5, 0.5);
+    glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
+    glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
+    glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
+    glLineWidth(2);
+    glBegin(GL_LINES);
+    glColor3ub(255, 0, 0);//Цвет оси X
+        // Ось X
+        glVertex3d(0, 0, 0);
+        glVertex3d(1, 0, 0);
+            glPushMatrix();
+                glLineWidth(3);
+                glTranslated(1.2, 0, 0);
+                glScaled(0.2, 0.2, 0.2);
+                //drawX();
+                glLineWidth(2);
+            glPopMatrix();
+    glColor3ub(0, 255, 0);//Цвет оси Y
+        // Ось Y
+        glVertex3d(0, 0, 0);
+        glVertex3d(0, 1, 0);
+            glPushMatrix();
+                glLineWidth(3);
+                glTranslated(0, 1.2, 0);
+                glScaled(0.3, 0.3, 0.3);
+                glLineWidth(2);
+             //   drawY();
+            glPopMatrix();
+    glColor3ub(0, 0, 255);
+        glVertex3d(0, 0, 0);
+        glVertex3d(0, 0, 1);
+            glPushMatrix();
+                glLineWidth(3);
+                glTranslated(0, 0, 1.2);
+                glScaled(0.3, 0.3, 0.3);
+                glLineWidth(2);
+              //  drawZ();
+            glPopMatrix();
+    glEnd();
+    glLineWidth(1);
+}
+
+void GLWidget::drawX()
+{
+    // Буква X
+    glBegin(GL_LINES);
+        glVertex3d(-1, 1, 0);
+        glVertex3d(1, -1, 0);
+
+        glVertex3d(-1, -1, 0);
+        glVertex3d(1, 1, 0);
+    glEnd();
+}
+
+void GLWidget::drawY()
+{
+    glBegin(GL_LINES);
+        glVertex3d(-1, 1, 0);
+        glVertex3d(1, 1, 0);
+        glVertex3d(-1, -1, 0);
+        glVertex3d(1, -1, 0);
+        glVertex3d(-1, -1, 0);
+        glVertex3d(1, -1, 0);
+    glEnd();
+}
+
+void GLWidget::drawZ()
+{
+    glBegin(GL_LINE);
+        glVertex3d(-0.8, 1, 0);
+        glVertex3d(0, 0, 0);
+
+        glVertex3d(0.8, 1, 0);
+        glVertex3d(0, 0, 0);
+
+        glVertex3d(0, 0, 0);
+        glVertex3d(0, -1, 0);
+    glEnd();
 }
 
 void GLWidget::drawPlane()
 {
-    glColor3f(0.6f, 0.2f, 1.0f);
+    //glPushAttrib(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.0f, 0.0f, 0.0f);
 
     for(double i=PLANE_MIN_X; i<=PLANE_MAX_X;i+=0.5)
     {
@@ -113,6 +230,7 @@ void GLWidget::drawPlane()
         glVertex3d(i, 0, PLANE_MAX_Z);
         glEnd();
     }
+    //glPopAttrib();
 }
 
 void GLWidget::setProjection(int i)
@@ -122,20 +240,27 @@ void GLWidget::setProjection(int i)
     switch(i)
     {
     case MPJ_FRONT:
+        xRot = 0;
         yRot = 180*16;
+        zRot = 0;
         this->comboBox->setCurrentIndex(3);
         break;
     case MPJ_TOP:
         xRot     = -90.0f*16;
+        yRot = 0;
+        zRot = 0;
         this->comboBox->setCurrentIndex(1);
         break;
     case MPJ_RIGHT:
-        yRot    = -90.0f*16;
+        xRot = 0;
+        yRot = -90.0f*16;
+        zRot = 0;
         this->comboBox->setCurrentIndex(2);
         break;
     case MPJ_PERSPECTIVE:
-        xRot     = 10.0f*16;
-        yRot     = 10.0f*16;
+        xRot = 10.0f*16;
+        yRot = 10.0f*16;
+        zRot = 0;
         this->comboBox->setCurrentIndex(0);
         break;
     }
@@ -166,6 +291,18 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
     case MEV_TRANSLATE:
+    case MEV_ROTATE:
+        mode = MODE_FICTIVE;
+        glDisable(GL_COLOR_MATERIAL);                    // цвет материала
+        glDisable(GL_LIGHTING);
+        glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+        glDisable(GL_LIGHT0);
+        updateGL();
+        glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
+        mode = MODE_REAL;
+        updateGL();
+        qDebug()<<"PIXEL COLOR"<<color_selected_prim[0]<<" "<<color_selected_prim[1]<<" "<<color_selected_prim[2];
+
         break;
     default:break;
     }
@@ -174,11 +311,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+
     p_currentPos.setX(event->x() - p_lastPos.x());
-    p_currentPos.setY(event->y() - p_lastPos.y());
+    p_currentPos.setY(event->y() - p_lastPos.y());    
     if(event->buttons() && Qt::LeftButton )
         selectEvent(event, p_currentPos);
-    p_lastPos = event->pos();    
+    p_lastPos = event->pos();
 }
 
 void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
@@ -289,7 +427,8 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
 {
-    glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
+
+
     //double step_translate_y = (w/h)/w;
     //double step_translate_x = ((w/h)*2)/h;
     double step_translate_y = 0.03;
@@ -332,20 +471,42 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                 }
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
                 {
-
+                    if(current.x()>0){
+                        translate->move(-step_translate_x,0,0);
+                    }
+                    else if(current.x()<0){
+                        translate->move(step_translate_x,0,0);
+                    }
+                    if(current.y()>0){
+                        translate->move(0,-step_translate_y,0);
+                    }
+                    else if(current.y()<0){
+                        translate->move(0,step_translate_y,0);
+                    }
+                    pMW->Update();
+                    return;
                 }
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
                 {
-
+                    if(current.x()>0){
+                        translate->move(0,0,-step_translate_x);
+                    }
+                    else if(current.x()<0){
+                        translate->move(0,0,step_translate_x);
+                    }
+                    if(current.y()>0){
+                        translate->move(0,-step_translate_y,0);
+                    }
+                    else if(current.y()<0){
+                        translate->move(0,step_translate_y,0);
+                    }
+                    pMW->Update();
+                    return;
                 }
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE)
                 {
 
                 }
-
-
-                //translate->move(step_translate,step_translate,step_translate);
-                //pMW->Update();
                 return;
             }
         }
@@ -582,10 +743,25 @@ void GLWidget::changeProection(int n)
 {
     switch(n)
     {
-    case MPJ_PERSPECTIVE: setProjection(MPJ_PERSPECTIVE); break;
-    case MPJ_TOP: setProjection(MPJ_TOP); break;
-    case MPJ_RIGHT: setProjection(MPJ_RIGHT); break;
-    case MPJ_FRONT: setProjection(MPJ_FRONT); break;
+    case MPJ_PERSPECTIVE:
+        setProjection(MPJ_PERSPECTIVE);
+        break;
+    case MPJ_TOP:
+        setProjection(MPJ_TOP);
+        break;
+    case MPJ_RIGHT:
+        setProjection(MPJ_RIGHT);
+        break;
+    case MPJ_FRONT:
+        setProjection(MPJ_FRONT);
+        break;
+    case MPJ_MAXIMAZE:
+        pMW->getPaintZ()->saveAllLastState();
+        pMW->getPaintZ()->setMaximum(this->type_projection);
+        break;
+    case MPJ_RESET:
+        pMW->getPaintZ()->setAllUnvisible(false);
+        break;
     }
 }
 
@@ -607,4 +783,12 @@ void GLWidget::addPrimitive(QPoint current)
 
     currentWork->addAction(MEV_TRANSLATE, obj);
     currentWork->addPrimitive(*currenEvent);
+}
+
+void GLWidget::SaveLastState()
+{
+    this->last_h = this->h;
+    this->last_w = this->w;
+    this->lastProjection = getProjection();
+
 }

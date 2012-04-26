@@ -24,7 +24,7 @@ public:
     void setPrevEvent(int event);
     Work* getWork();
     void Update();
-    //ListPrimitiveToolbar* getListPrimTB();
+    PaintingZone *getPaintZ();
 
 private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида

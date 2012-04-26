@@ -16,7 +16,7 @@ void Pyramid::Apply(bool mode)
         glPushMatrix();//основание
             glRotated(90, 1, 0, 0);
                 glBegin(GL_TRIANGLES);
-                    glColor3f(color[0], color[1], color[3]);
+                    glColor3ub(color[0], color[1], color[3]);
                     glVertex3d(0, h/2, 0);
                     glVertex3d(a/2, -h/2, 0);
                     glVertex3d(-a/2, -h/2, 0);

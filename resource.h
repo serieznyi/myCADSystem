@@ -15,8 +15,8 @@
 #define MPJ_TOP                     1
 #define MPJ_RIGHT                   2
 #define MPJ_FRONT                   3
-//#define WMAXIMAZE                      4
-//#define WRESET                         5
+#define MPJ_MAXIMAZE                4
+#define MPJ_RESET                   5
 
 //ТИП ЭЛЕМЕНТА
 //Примитивы

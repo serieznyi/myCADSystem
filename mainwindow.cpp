@@ -64,6 +64,11 @@ void MainWindow::Update()
     paintingZone->widPerspective->repaint();
 }
 
+PaintingZone* MainWindow::getPaintZ()
+{
+    return paintingZone;
+}
+
 /*
 ListPrimitiveToolbar *MainWindow::getListPrimTB()
 {
