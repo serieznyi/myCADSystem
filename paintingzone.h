@@ -22,7 +22,7 @@ public:
     GLWidget            *widFront;                 // ZOX
     GLWidget            *widRight;                 // XOY
     QVBoxLayout         *lay_global;               // Глобальный менеджер компоновки
-    void saveAllWH();
+    void saveAllLastState();
 public slots:
     void setMaximum(int i);
 };

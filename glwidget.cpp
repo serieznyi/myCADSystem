@@ -49,12 +49,12 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 void GLWidget::initializeGL()
 {
     glClearColor(1.0f,1.0f,1.0f,1.0f);              // цвет "очистки порта вида"
-    glEnable(GL_DEPTH_TEST);// буфер глубины
-    glEnable(GL_COLOR_MATERIAL);                    // цвет материала
-    glEnable(GL_LIGHTING);
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_AUTO_NORMAL);// авто нормаль
+    glEnable(GL_DEPTH_TEST);                        // буфер глубины
+    //glEnable(GL_COLOR_MATERIAL);                    // цвет материала
+    //glEnable(GL_LIGHTING);
+    //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    //glEnable(GL_LIGHT0);
+    //glEnable(GL_AUTO_NORMAL);// авто нормаль
 
 
     glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
@@ -133,7 +133,7 @@ void GLWidget::paintGL()
 void GLWidget::drawAxes()
 {
     glLoadIdentity();
-    glTranslated(2.9, -1.4, 0);
+    glTranslated(2.9, -1.4, 5);
     glScaled(0.5, 0.5, 0.5);
     glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
@@ -293,13 +293,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     case MEV_TRANSLATE:
     case MEV_ROTATE:
         mode = MODE_FICTIVE;
-        glDisable(GL_COLOR_MATERIAL);                    // цвет материала
-        glDisable(GL_LIGHTING);
-        glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-        glDisable(GL_LIGHT0);
+        //glDisable(GL_LIGHT0);
         updateGL();
         glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
         mode = MODE_REAL;
+        //glEnable(GL_LIGHT0);
         updateGL();
         qDebug()<<"PIXEL COLOR"<<color_selected_prim[0]<<" "<<color_selected_prim[1]<<" "<<color_selected_prim[2];
 
@@ -427,8 +425,6 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
 {
-
-
     //double step_translate_y = (w/h)/w;
     //double step_translate_x = ((w/h)*2)/h;
     double step_translate_y = 0.03;
@@ -437,18 +433,16 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
     {
         QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
 
-        //foreach (int i, only_prim)
         for(int i=0;i<only_prim->size();i++)
         {
             int index = only_prim->at(i);   // »Ќдексы только примитивов
             Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
             int *na = 0;// ÷вет примитива из контейнера
             GLubyte ba[3] = {0};
-            na =prim->getIDColor();
+            na = prim->getIDColor();
             for(int i=0;i<3;i++)
                 ba[i] = (GLubyte)na[i];
-
-            if(ba[0]== color_selected_prim[0]&&ba[1]==color_selected_prim[1]&&ba[2]==color_selected_prim[2])
+            if(ba[0]==color_selected_prim[0]&&ba[1]==color_selected_prim[1]&&ba[2]==color_selected_prim[2])
             {
                 Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-2));
 
@@ -521,7 +515,6 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
     {
         QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
 
-        //foreach (int i, only_prim)
         for(int i=0;i<only_prim->size();i++)
         {
             int index = only_prim->at(i);

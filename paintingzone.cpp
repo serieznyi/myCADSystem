@@ -66,8 +66,8 @@ void PaintingZone::setAllUnvisible(bool a)
 
 void PaintingZone::saveAllLastState()
 {
-    widPerspective->SaveLastWH();
-    widTop->SaveLastWH();
-    widFront->SaveLastWH();
-    widRight->SaveLastWH();
+    widPerspective->SaveLastState();
+    widTop->SaveLastState();
+    widFront->SaveLastState();
+    widRight->SaveLastState();
 }
