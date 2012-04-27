@@ -53,9 +53,10 @@ public:
     GLubyte color_selected_prim[3];
     int             mode;
     void SaveLastState();
+    QString ScreenCoordToOpenGLCoord(QPoint point);
 private:
     int             type_projection;
-    int             w,
+    int          w,
                     h,
                     last_w,
                     last_h;

@@ -64,9 +64,14 @@ void MainWindow::Update()
     paintingZone->widPerspective->repaint();
 }
 
-PaintingZone* MainWindow::getPaintZ()
+PaintingZone* MainWindow::getPaintingZone()
 {
     return paintingZone;
+}
+
+StatusBar *MainWindow::getStatusBar()
+{
+    return statusBar;
 }
 
 /*

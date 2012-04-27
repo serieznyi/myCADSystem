@@ -309,6 +309,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
+                                     "      OpenGL: "+ScreenCoordToOpenGLCoord(event->pos()));
 
     p_currentPos.setX(event->x() - p_lastPos.x());
     p_currentPos.setY(event->y() - p_lastPos.y());    
@@ -444,6 +446,16 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                 ba[i] = (GLubyte)na[i];
             if(ba[0]==color_selected_prim[0]&&ba[1]==color_selected_prim[1]&&ba[2]==color_selected_prim[2])
             {
+                //при совпадении пикселей
+                //prevMx = windW/2 - x;
+                //prevMy = y - windH/2;
+                // ѕри перемещ мыши
+                /*
+                Mx += prevMx - (windW/2 - x);
+                My += prevMy - (y - windH/2);
+                prevMx = windW/2 - x;
+                prevMy = y - windH/2;*/
+
                 Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-2));
 
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
@@ -505,6 +517,17 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
             }
         }
     }
+}
+
+QString GLWidget::ScreenCoordToOpenGLCoord(QPoint point) {
+    double proj_x = ((double)w/(double)h*(double)4);
+    double proj_y=(((double)w/(double)h)*(double)2);
+    double opengl_pix_x =(proj_x/(double)w);
+    double opengl_pix_y =(proj_y/(double)h);
+    double x = opengl_pix_x*(double)point.x();
+    double y = opengl_pix_y*(double)point.y();
+
+    return QString::number(x)+"   "+QString::number(y);
 }
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
@@ -749,11 +772,11 @@ void GLWidget::changeProection(int n)
         setProjection(MPJ_FRONT);
         break;
     case MPJ_MAXIMAZE:
-        pMW->getPaintZ()->saveAllLastState();
-        pMW->getPaintZ()->setMaximum(this->type_projection);
+        pMW->getPaintingZone()->saveAllLastState();
+        pMW->getPaintingZone()->setMaximum(this->type_projection);
         break;
     case MPJ_RESET:
-        pMW->getPaintZ()->setAllUnvisible(false);
+        pMW->getPaintingZone()->setAllUnvisible(false);
         break;
     }
 }
