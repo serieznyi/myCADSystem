@@ -310,8 +310,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
-                                     "      OpenGL: "+ScreenCoordToOpenGLCoord(event->pos()));
-
+                                     "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
+                                                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y)));
     p_currentPos.setX(event->x() - p_lastPos.x());
     p_currentPos.setY(event->y() - p_lastPos.y());    
     if(event->buttons() && Qt::LeftButton )
@@ -459,7 +459,7 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                 Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-2));
 
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
-                {
+                {/*
                     if(current.x()>0){
                         translate->move(step_translate_x,0,0);
                     }
@@ -471,7 +471,8 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                     }
                     else if(current.y()<0){
                         translate->move(0,0,step_translate_y);
-                    }
+                    }*/
+                    translate->moveTo(ScreenToOGL(current.x(), COORD_X),0,ScreenToOGL(current.y(), COORD_Y));
                     pMW->Update();
                     return;
                 }
@@ -519,15 +520,26 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
     }
 }
 
-QString GLWidget::ScreenCoordToOpenGLCoord(QPoint point) {
-    double proj_x = ((double)w/(double)h*(double)4);
-    double proj_y=(((double)w/(double)h)*(double)2);
-    double opengl_pix_x =(proj_x/(double)w);
-    double opengl_pix_y =(proj_y/(double)h);
-    double x = opengl_pix_x*(double)point.x();
-    double y = opengl_pix_y*(double)point.y();
+double GLWidget::ScreenToOGL(int coord, int type) {
 
-    return QString::number(x)+"   "+QString::number(y);
+    double opengl_pix;
+
+    switch(type)
+    {
+        case COORD_X:
+        {
+            double proj_x = ((double)w/(double)h*(double)4);
+            opengl_pix =(proj_x/(double)w);
+            break;
+        }
+        case COORD_Y:
+        {
+            double proj_y=(((double)w/(double)h)*(double)2);
+            opengl_pix =(proj_y/(double)h);
+            break;
+        }
+    }
+    return opengl_pix*(double)coord;
 }
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)

@@ -42,21 +42,21 @@ public:
     void drawX();
     void drawY();
     void drawZ();
+    void SaveLastState();
+    double ScreenToOGL(int coord, int type);    // Перевод оконных координат в координаты OpenGL
 protected:
-    void initializeGL();                // Инициализация GL
-    void resizeGL(int w, int h);        // Изменение размера области рисования
-    void paintGL();                     // Главная функция рисования
-    void drawAxes();                    // Рисование осей
-    void drawPlane();                   // Рисование плоскости
-    void qNormalizeAngle(int &angle);   //
+    void initializeGL();                        // Инициализация GL
+    void resizeGL(int w, int h);                // Изменение размера области рисования
+    void paintGL();                             // Главная функция рисования
+    void drawAxes();                            // Рисование осей
+    void drawPlane();                           // Рисование плоскости
+    void qNormalizeAngle(int &angle);           //
 public:
     GLubyte color_selected_prim[3];
     int             mode;
-    void SaveLastState();
-    QString ScreenCoordToOpenGLCoord(QPoint point);
 private:
     int             type_projection;
-    int          w,
+    int             w,
                     h,
                     last_w,
                     last_h;

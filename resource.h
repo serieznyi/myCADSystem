@@ -17,6 +17,9 @@
 #define MPJ_FRONT                   3
 #define MPJ_MAXIMAZE                4
 #define MPJ_RESET                   5
+// Прочее
+#define COORD_X                     10
+#define COORD_Y                     11
 
 //ТИП ЭЛЕМЕНТА
 //Примитивы
@@ -49,5 +52,7 @@
 #define MEV_PRIM_PYRAMID            304 // Пирамида
 #define MEV_PRIM_SPHERE             305 // Сфера
 #define MEV_PRIM_CYLINDER           306 // Цилиндр
+
+
 
 #endif // RESOURCE_H
