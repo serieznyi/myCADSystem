@@ -54,6 +54,7 @@ protected:
 public:
     GLubyte color_selected_prim[3];
     int             mode;
+    double ScreenToOGLv2(int last, int coord, int type);
 private:
     int             type_projection;
     int             w,

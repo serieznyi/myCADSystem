@@ -41,7 +41,7 @@ void Work::addPrimitive(int i)
     }
     case MEV_PRIM_QUAD:
     {
-        Translate *translate = new Translate(0, 0, 0);
+        Translate *translate = new Translate(1, 0, 1);
         translate->setGID(generateGID());
         element_list->append(translate);
             Rotate *rotate = new Rotate(0,0,0);
@@ -117,7 +117,7 @@ int* Work::generatetIDColor()
         current_free_color[1]++;
     else if(this->current_free_color[0]<255)
         current_free_color[0]++;
-    qDebug()<<"ID COLOR"<<current_free_color[0]<<" "<<current_free_color[1]<<" "<<current_free_color[2];
+    //qDebug()<<"ID COLOR"<<current_free_color[0]<<" "<<current_free_color[1]<<" "<<current_free_color[2];
 
     return this->current_free_color;
 }
@@ -129,7 +129,7 @@ int* Work::generateColor()
         this->real_color[i]=(0 + rand()%255);
         srand(time(NULL));
     }
-    qDebug()<<"REAL COLOR"<<real_color[0]<<" "<<real_color[1]<<" "<<real_color[2];
+    //qDebug()<<"REAL COLOR"<<real_color[0]<<" "<<real_color[1]<<" "<<real_color[2];
     return this->real_color;
 }
 

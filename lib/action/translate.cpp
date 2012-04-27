@@ -1,4 +1,5 @@
 #include "translate.h"
+#include <QDebug>
 
 Translate::Translate(double x, double y, double z):Action()
 {
@@ -9,6 +10,7 @@ Translate::Translate(double x, double y, double z):Action()
 
 void Translate::Apply(bool mode)
 {
+    qDebug()<<x<<" "<<y<<" "<<z;
     glTranslated(x,y,z);
 }
 

@@ -142,37 +142,37 @@ void GLWidget::drawAxes()
     glLineWidth(2);
     glBegin(GL_LINES);
     glColor3ub(255, 0, 0);//÷вет оси X
-        // ќсь X
-        glVertex3d(0, 0, 0);
-        glVertex3d(1, 0, 0);
-            glPushMatrix();
-                glLineWidth(3);
-                glTranslated(1.2, 0, 0);
-                glScaled(0.2, 0.2, 0.2);
-                //drawX();
-                glLineWidth(2);
-            glPopMatrix();
+    // ќсь X
+    glVertex3d(0, 0, 0);
+    glVertex3d(1, 0, 0);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(1.2, 0, 0);
+    glScaled(0.2, 0.2, 0.2);
+    //drawX();
+    glLineWidth(2);
+    glPopMatrix();
     glColor3ub(0, 255, 0);//÷вет оси Y
-        // ќсь Y
-        glVertex3d(0, 0, 0);
-        glVertex3d(0, 1, 0);
-            glPushMatrix();
-                glLineWidth(3);
-                glTranslated(0, 1.2, 0);
-                glScaled(0.3, 0.3, 0.3);
-                glLineWidth(2);
-             //   drawY();
-            glPopMatrix();
+    // ќсь Y
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, 1, 0);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(0, 1.2, 0);
+    glScaled(0.3, 0.3, 0.3);
+    glLineWidth(2);
+    //   drawY();
+    glPopMatrix();
     glColor3ub(0, 0, 255);
-        glVertex3d(0, 0, 0);
-        glVertex3d(0, 0, 1);
-            glPushMatrix();
-                glLineWidth(3);
-                glTranslated(0, 0, 1.2);
-                glScaled(0.3, 0.3, 0.3);
-                glLineWidth(2);
-              //  drawZ();
-            glPopMatrix();
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, 0, 1);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(0, 0, 1.2);
+    glScaled(0.3, 0.3, 0.3);
+    glLineWidth(2);
+    //  drawZ();
+    glPopMatrix();
     glEnd();
     glLineWidth(1);
 }
@@ -181,37 +181,37 @@ void GLWidget::drawX()
 {
     // Ѕуква X
     glBegin(GL_LINES);
-        glVertex3d(-1, 1, 0);
-        glVertex3d(1, -1, 0);
+    glVertex3d(-1, 1, 0);
+    glVertex3d(1, -1, 0);
 
-        glVertex3d(-1, -1, 0);
-        glVertex3d(1, 1, 0);
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, 1, 0);
     glEnd();
 }
 
 void GLWidget::drawY()
 {
     glBegin(GL_LINES);
-        glVertex3d(-1, 1, 0);
-        glVertex3d(1, 1, 0);
-        glVertex3d(-1, -1, 0);
-        glVertex3d(1, -1, 0);
-        glVertex3d(-1, -1, 0);
-        glVertex3d(1, -1, 0);
+    glVertex3d(-1, 1, 0);
+    glVertex3d(1, 1, 0);
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, -1, 0);
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, -1, 0);
     glEnd();
 }
 
 void GLWidget::drawZ()
 {
     glBegin(GL_LINE);
-        glVertex3d(-0.8, 1, 0);
-        glVertex3d(0, 0, 0);
+    glVertex3d(-0.8, 1, 0);
+    glVertex3d(0, 0, 0);
 
-        glVertex3d(0.8, 1, 0);
-        glVertex3d(0, 0, 0);
+    glVertex3d(0.8, 1, 0);
+    glVertex3d(0, 0, 0);
 
-        glVertex3d(0, 0, 0);
-        glVertex3d(0, -1, 0);
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, -1, 0);
     glEnd();
 }
 
@@ -299,7 +299,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         mode = MODE_REAL;
         //glEnable(GL_LIGHT0);
         updateGL();
-        qDebug()<<"PIXEL COLOR"<<color_selected_prim[0]<<" "<<color_selected_prim[1]<<" "<<color_selected_prim[2];
+        //qDebug()<<"PIXEL COLOR"<<color_selected_prim[0]<<" "<<color_selected_prim[1]<<" "<<color_selected_prim[2];
 
         break;
     default:break;
@@ -309,14 +309,14 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
+    /*pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
                                      "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
-                                                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y)));
+                                                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y)));*/
     p_currentPos.setX(event->x() - p_lastPos.x());
-    p_currentPos.setY(event->y() - p_lastPos.y());    
+    p_currentPos.setY(event->y() - p_lastPos.y());
     if(event->buttons() && Qt::LeftButton )
         selectEvent(event, p_currentPos);
-    p_lastPos = event->pos();
+    //p_lastPos = event->pos();
 }
 
 void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
@@ -459,7 +459,8 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                 Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(index-2));
 
                 if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
-                {/*
+                {
+                    /*
                     if(current.x()>0){
                         translate->move(step_translate_x,0,0);
                     }
@@ -472,7 +473,17 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
                     else if(current.y()<0){
                         translate->move(0,0,step_translate_y);
                     }*/
-                    translate->moveTo(ScreenToOGL(current.x(), COORD_X),0,ScreenToOGL(current.y(), COORD_Y));
+
+
+                    pMW->getStatusBar()->showMessage("OpenGL: "+QString::number(ScreenToOGLv2(p_lastPos.x(),event->pos().x(), COORD_X))+"   "+
+                                                     QString::number(ScreenToOGLv2(p_lastPos.y(),event->pos().y(), COORD_Y)));
+
+                    //*(w-current.x())
+                    translate->moveTo(ScreenToOGLv2(p_lastPos.x(),event->pos().x(), COORD_X),0,
+                                      ScreenToOGLv2(p_lastPos.y(),event->pos().y(), COORD_Y));
+
+
+
                     pMW->Update();
                     return;
                 }
@@ -526,20 +537,67 @@ double GLWidget::ScreenToOGL(int coord, int type) {
 
     switch(type)
     {
-        case COORD_X:
-        {
-            double proj_x = ((double)w/(double)h*(double)4);
-            opengl_pix =(proj_x/(double)w);
-            break;
-        }
-        case COORD_Y:
-        {
-            double proj_y=(((double)w/(double)h)*(double)2);
-            opengl_pix =(proj_y/(double)h);
-            break;
-        }
+    case COORD_X:
+    {
+        double proj_x = ((double)w/(double)h*(double)4);
+        opengl_pix =(proj_x/(double)w);
+        break;
     }
+    case COORD_Y:
+    {
+        double proj_y=(((double)w/(double)h)*(double)2);
+        opengl_pix =(proj_y/(double)h);
+        break;
+    }
+    }
+
+
     return opengl_pix*(double)coord;
+}
+
+double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
+
+    double opengl_pix;
+    double result = 0;
+
+    switch(type)
+    {
+
+    case COORD_X:
+    {
+        double proj_x = ((double)w/(double)h*(double)4);
+        opengl_pix =(proj_x/(double)w);
+        if(coord>last)
+        {
+            result = opengl_pix*((double)coord-((double)last));
+        }
+        else if(coord<last)
+        {
+            result = opengl_pix*((double)coord-(double)last);
+        }
+
+        break;
+    }
+    case COORD_Y:
+    {
+        double proj_y=(((double)w/(double)h)*(double)2);
+        opengl_pix =(proj_y/(double)h);
+
+        if(coord>last)
+        {
+            result = (-1)*opengl_pix*((double)coord-((double)last));
+        }
+        else if(coord<last)
+        {
+            result = (-1)*opengl_pix*((double)coord-((double)last));
+        }
+
+
+        break;
+    }
+    }
+
+    return result;
 }
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
