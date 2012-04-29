@@ -8,7 +8,6 @@ Cube::Cube(GLfloat a=1.0f):Primitive()
 
 void Cube::Apply(bool mode)
 {
-    glPushAttrib(GL_COLOR_BUFFER_BIT);
     int *color = 0;
     if(mode)
     color = getColor();
@@ -45,5 +44,4 @@ void Cube::Apply(bool mode)
         glDrawElements(GL_POLYGON, 4,
                        GL_UNSIGNED_BYTE, &cubeIndex[4*i]);
 
-    glPopAttrib();
 }

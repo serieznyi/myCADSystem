@@ -10,7 +10,7 @@ Translate::Translate(double x, double y, double z):Action()
 
 void Translate::Apply(bool mode)
 {
-    qDebug()<<x<<" "<<y<<" "<<z;
+    //qDebug()<<x<<" "<<y<<" "<<z;
     glTranslated(x,y,z);
 }
 
