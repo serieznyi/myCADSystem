@@ -3,18 +3,18 @@
 #include <QDebug>
 #include "mainwindow.h"
 
+//  Главные
+
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
+    // ПОЧИСТИТЬ!
     pMW = dynamic_cast<MainWindow*>(parent);
+    currentOrtho = Ortho();
     //color_selected_prim = {0};
     this->SELECTED            = false;
     this->AXES                = true;
     this->PLANE               = true;
-    this->PAINTING_MODE       = MODE_FICTIVE;
-    w                   =0;
-    h                   =0;
-    last_w              =0;
-    last_h              =0;
+    this->PAINTING_MODE       = MODE_REAL;
     lastProjection      =0;
     currentWork         = pMW->getWork();
     currenEvent         = pMW->getCurEvent();
@@ -56,6 +56,7 @@ void GLWidget::initializeGL()
 {
     glClearColor(1.0f,1.0f,1.0f,1.0f);              // цвет "очистки порта вида"
     glEnable(GL_DEPTH_TEST);                        // буфер глубины
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     //glEnable(GL_COLOR_MATERIAL);                    // цвет материала
     //glEnable(GL_LIGHTING);
     //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
@@ -66,33 +67,40 @@ void GLWidget::initializeGL()
     glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
 }
 
-void GLWidget::resizeGL(int w, int h)
+void GLWidget::resizeGL(int _w, int _h)
 {
-    this->w=w;
-    this->h=h;
-    /*
+    int w = _w, h = _h;
     if(w!=0&&h!=0)
     {
-        this->w=w;
-        this->h=h;
+        currentOrtho.width = w;
+        currentOrtho.height = h;
     }
     else
     {
-        this->w=this->last_w;
-        this->h=this->last_h;
-        //this->comboBox->
-    }*/
+        currentOrtho.width = currentOrtho.last_width;
+        currentOrtho.height = currentOrtho.last_height;
+        w = currentOrtho.last_width;
+        h = currentOrtho.last_height;
+    }
 
-    glViewport(0, 0, this->w, this->h);                         // Размер порта вида
+    currentOrtho.left_val = -w/h*2;
+    currentOrtho.right_val = w/h*2;
+    currentOrtho.top_val = -w/h;
+    currentOrtho.down_val = w/h;
+    currentOrtho.near_val = -10;
+    currentOrtho.far_val = 10;
+
+    glViewport(0, 0, currentOrtho.width, currentOrtho.height);                         // Размер порта вида
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    double l=-this->w/this->h*2,
-            r=this->w/this->h*2,
-            t=-this->w/this->h,
-            d=this->w/this->h,
-            n=-10.0f,
-            f=10.0f;
-    glOrtho(l, r, t, d, n, f);                                  // Размер ортогональной проекции
+
+
+    glOrtho(currentOrtho.left_val,
+            currentOrtho.right_val,
+            currentOrtho.top_val,
+            currentOrtho.down_val,
+            currentOrtho.near_val,
+            currentOrtho.far_val);                                  // Размер ортогональной проекции
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -102,7 +110,7 @@ void GLWidget::paintGL()
     glLoadIdentity();
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);   // Очистка буферов
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);          // Режим отрисовки
+    glPolygonMode(GL_FRONT, GL_POINTS);          // Режим отрисовки
 
     glScalef(gScale, gScale, gScale);
     glTranslatef(xTranslate, yTranslate, zTranslate);
@@ -110,13 +118,10 @@ void GLWidget::paintGL()
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    //drawX();
-
     if(this->getProjection()==MPJ_FRONT)
     {
         glPushMatrix();
-        //glScaled(-1, -1, -1);
-        glTranslated(0,0,9);
+        glTranslated(0,0,-currentOrtho.far_val);
         glRotated(-90, 1, 0, 0);
 
         this->drawPlane();
@@ -125,7 +130,7 @@ void GLWidget::paintGL()
     else if(this->getProjection()==MPJ_RIGHT)
     {
         glPushMatrix();
-        glTranslated(-(w/h*2)*2, 0, 0);
+        glTranslated(currentOrtho.far_val, 0, 0);
         glRotatef(90, 0, 0, 1);
         this->drawPlane();
         glPopMatrix();
@@ -134,166 +139,13 @@ void GLWidget::paintGL()
         this->drawPlane();
 
     currentWork->drawWork(PAINTING_MODE);
-    /*
-    glColor3ub(0, 0,255);
-
-    glBegin(GL_QUADS);
-        glVertex3d(-1,1,0);
-        glVertex3d(1,1,0);
-        glVertex3d(1,-1,0);
-        glVertex3d(-1,-1,0);
-    glEnd();*/
 
     drawAxes();
-
-}
-
-void GLWidget::drawAxes()
-{
-    glLoadIdentity();
-    glTranslated(2.9, -1.4, 5);
-    glScaled(0.5, 0.5, 0.5);
-    glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
-    glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
-    glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
-
-    glLineWidth(2);
-    glBegin(GL_LINES);
-    glColor3ub(255, 0, 0);//Цвет оси X
-    // Ось X
-    glVertex3d(0, 0, 0);
-    glVertex3d(1, 0, 0);
-    glPushMatrix();
-    glLineWidth(3);
-    glTranslated(1.2, 0, 0);
-    glScaled(0.2, 0.2, 0.2);
-    //drawX();
-    glLineWidth(2);
-    glPopMatrix();
-    glColor3ub(0, 255, 0);//Цвет оси Y
-    // Ось Y
-    glVertex3d(0, 0, 0);
-    glVertex3d(0, 1, 0);
-    glPushMatrix();
-    glLineWidth(3);
-    glTranslated(0, 1.2, 0);
-    glScaled(0.3, 0.3, 0.3);
-    glLineWidth(2);
-    //   drawY();
-    glPopMatrix();
-    glColor3ub(0, 0, 255);
-    glVertex3d(0, 0, 0);
-    glVertex3d(0, 0, 1);
-    glPushMatrix();
-    glLineWidth(3);
-    glTranslated(0, 0, 1.2);
-    glScaled(0.3, 0.3, 0.3);
-    glLineWidth(2);
-    //  drawZ();
-    glPopMatrix();
-    glEnd();
-    glLineWidth(1);
-}
-
-void GLWidget::drawX()
-{
-    // Буква X
-    glBegin(GL_LINES);
-    glVertex3d(-1, 1, 0);
-    glVertex3d(1, -1, 0);
-
-    glVertex3d(-1, -1, 0);
-    glVertex3d(1, 1, 0);
-    glEnd();
-}
-
-void GLWidget::drawY()
-{
-    glBegin(GL_LINES);
-    glVertex3d(-1, 1, 0);
-    glVertex3d(1, 1, 0);
-    glVertex3d(-1, -1, 0);
-    glVertex3d(1, -1, 0);
-    glVertex3d(-1, -1, 0);
-    glVertex3d(1, -1, 0);
-    glEnd();
-}
-
-void GLWidget::drawZ()
-{
-    glBegin(GL_LINE);
-    glVertex3d(-0.8, 1, 0);
-    glVertex3d(0, 0, 0);
-
-    glVertex3d(0.8, 1, 0);
-    glVertex3d(0, 0, 0);
-
-    glVertex3d(0, 0, 0);
-    glVertex3d(0, -1, 0);
-    glEnd();
-}
-
-void GLWidget::drawPlane()
-{
-    //glPushAttrib(GL_COLOR_BUFFER_BIT);
-    glColor3f(0.0f, 0.0f, 0.0f);
-
-    for(double i=PLANE_MIN_X; i<=PLANE_MAX_X;i+=0.5)
-    {
-        glBegin(GL_LINES);
-        glVertex3d(PLANE_MIN_X, 0, i);
-        glVertex3d(PLANE_MAX_X, 0, i);
-
-        glVertex3d(i, 0, PLANE_MIN_Z);
-        glVertex3d(i, 0, PLANE_MAX_Z);
-        glEnd();
-    }
-    //glPopAttrib();
-}
-
-void GLWidget::setProjection(int i)
-{
-    this->PROJECTION_TYPE = i;
-    glLoadIdentity();
-    switch(i)
-    {
-    case MPJ_FRONT:
-        xRot = 0;
-        yRot = -180*16;
-        zRot = 0;
-        this->comboBox->setCurrentIndex(3);
-        break;
-    case MPJ_TOP:
-        xRot     = -90.0f*16;
-        yRot = 0;
-        zRot = 0;
-        this->comboBox->setCurrentIndex(1);
-        break;
-    case MPJ_RIGHT:
-        xRot = 0;
-        yRot = -90.0f*16;
-        zRot = 0;
-        this->comboBox->setCurrentIndex(2);
-        break;
-    case MPJ_PERSPECTIVE:
-        xRot = 10.0f*16;
-        yRot = 10.0f*16;
-        zRot = 0;
-        this->comboBox->setCurrentIndex(0);
-        break;
-    }
-    this->updateGL();
-}
-
-int GLWidget::getProjection()
-{
-    return PROJECTION_TYPE;
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     p_lastPos = event->pos();
-    glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
 
     switch(*currenEvent)
     {
@@ -311,15 +163,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         break;
     case MEV_TRANSLATE:
     case MEV_ROTATE:
-        /*mode = MODE_FICTIVE;
-        //glDisable(GL_LIGHT0);
+        PAINTING_MODE = MODE_FICTIVE;
         updateGL();
-        glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &color_selected_prim);
-        //qDebug()<<"PIXEL COLOR"<<color_selected_prim[0]<<" "<<color_selected_prim[1]<<" "<<color_selected_prim[2];
-        mode = MODE_REAL;
-        //glEnable(GL_LIGHT0);
+        glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
+        PAINTING_MODE = MODE_REAL;
         updateGL();
-*/
+
         if(currentWork->getOnlyPrimitiveList()->size()>0)
         {
             QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
@@ -338,8 +187,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
                     SELECTED = true;
                     selected_prim = index;
                     //делаем точку в которой кликнули началом системы координат
-                    prevMx = w/2 - event->pos().x();
-                    prevMy = event->pos().y() - h/2;
+                    prevMx = currentOrtho.width/2 - event->pos().x();
+                    prevMy = event->pos().y() - currentOrtho.height/2;
 
                 }
                 else
@@ -352,20 +201,92 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         break;
     default:break;
     }
-
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    p_currentPos.setX(event->x() - p_lastPos.x());
+    p_currentPos.setY(event->y() - p_lastPos.y());
+    if(event->buttons() && Qt::LeftButton)
+        selectEvent(event, p_currentPos);
+    p_lastPos = event->pos();
+
     pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
                                      "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y)));
+}
 
-    p_currentPos.setX(event->x() - p_lastPos.x());
-    p_currentPos.setY(event->y() - p_lastPos.y());
-    if(event->buttons() && Qt::LeftButton )
-        selectEvent(event, p_currentPos);
-    p_lastPos = event->pos();
+void GLWidget::setProjection(int i)
+{
+    this->PROJECTION_TYPE = i;
+    glLoadIdentity();
+    switch(i)
+    {
+    case MPJ_FRONT:
+        xRot = 0;
+        yRot = 0;
+        zRot = 0;
+        this->comboBox->setCurrentIndex(3);
+        break;
+    case MPJ_TOP:
+        xRot = -90.0f*16;
+        yRot = 0;
+        zRot = 0;
+        this->comboBox->setCurrentIndex(1);
+        break;
+    case MPJ_RIGHT:
+        xRot = 0;
+        yRot = 90.0f*16;
+        zRot = 0;
+        this->comboBox->setCurrentIndex(2);
+        break;
+    case MPJ_PERSPECTIVE:
+        xRot = 10.0f*16;
+        yRot = 10.0f*16;
+        zRot = 0;
+        this->comboBox->setCurrentIndex(0);
+        break;
+    }
+    this->updateGL();
+}
+
+int GLWidget::getProjection()
+{
+    return PROJECTION_TYPE;
+}
+
+void GLWidget::changeProection(int n)
+{
+    switch(n)
+    {
+    case MPJ_PERSPECTIVE:
+        setProjection(MPJ_PERSPECTIVE);
+        break;
+    case MPJ_TOP:
+        setProjection(MPJ_TOP);
+        break;
+    case MPJ_RIGHT:
+        setProjection(MPJ_RIGHT);
+        break;
+    case MPJ_FRONT:
+        setProjection(MPJ_FRONT);
+        break;
+    case MPJ_MAXIMAZE:
+        pMW->getPaintingZone()->setMaximum(this->PROJECTION_TYPE);
+        pMW->getPaintingZone()->saveProjectionLastState();
+        break;
+    case MPJ_RESET:
+        pMW->getPaintingZone()->setAllUnvisible(false);
+        break;
+    }
+}
+
+void GLWidget::SaveLastState()
+{
+    currentOrtho.last_height = currentOrtho.height;
+    currentOrtho.last_width = currentOrtho.width;
+    this->lastProjection = getProjection();
+
 }
 
 void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
@@ -382,7 +303,7 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
         eventRotateCamera(event, current);
         break;
     case MEV_TRANSLATE:
-        eventTranslatePrimitive(event, current);
+        eventTranslatePrimitive(event);
         break;
     case MEV_ROTATE:
         eventRotatePrimitive(event, current);
@@ -390,134 +311,88 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
     }
 }
 
-double GLWidget::ScreenToOGL(int coord, int type) {
+//  Камера
 
-    double opengl_pix;
-
-    switch(type)
-    {
-    case COORD_X:
-    {
-        double proj_x = ((double)w/(double)h*(double)4);
-        opengl_pix =(proj_x/(double)w);
-        break;
-    }
-    case COORD_Y:
-    {
-        double proj_y=(((double)w/(double)h)*(double)2);
-        opengl_pix =(proj_y/(double)h);
-        break;
-    }
-    }
-
-
-    return opengl_pix*(double)coord;
-}
-
-double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
-
-    double opengl_pix;
-    double result = 0;
-
-    switch(type)
-    {
-
-    case COORD_X:
-    {
-        double proj_x = ((double)w/(double)h*(double)4);
-        opengl_pix =(proj_x/(double)w);
-        if(coord>last)
-        {
-            result = opengl_pix*((double)coord-((double)last));
-        }
-        else if(coord<last)
-        {
-            result = opengl_pix*((double)coord-(double)last);
-        }
-
-        break;
-    }
-    case COORD_Y:
-    {
-        double proj_y=(((double)w/(double)h)*(double)2);
-        opengl_pix =(proj_y/(double)h);
-
-        if(coord>last)
-        {
-            result = (-1)*opengl_pix*((double)coord-((double)last));
-        }
-        else if(coord<last)
-        {
-            result = (-1)*opengl_pix*((double)coord-((double)last));
-        }
-
-
-        break;
-    }
-    }
-
-    return result;
-}
-
-void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
+void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 {
-
-    double step_rotate = 1;
-    if(currentWork->getOnlyPrimitiveList()->size()>0)
-    {
-        QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
-
-        for(int i=0;i<only_prim->size();i++)
-        {
-            int index = only_prim->at(i);
-            Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
-            int *na = 0;
-            GLubyte ba[3] = {0};
-            na =prim->getIDColor();
-            for(int i=0;i<3;i++)
-                ba[i] = (GLubyte)na[i];
-
-            if(ba[0]==na[0]&&ba[1]==na[1]&&ba[2]==na[2])
-            {
-                Rotate *rotate =dynamic_cast<Rotate*>(currentWork->getList()->at(index-1));
-
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
-                {
-                    if(current.x()>0){
-                        rotate->RotateZ(step_rotate);
-                    }
-                    else if(current.x()<0){
-                        rotate->RotateZ(-step_rotate);
-                    }
-                    if(current.y()>0){
-                        rotate->RotateX(step_rotate);
-                    }
-                    else if(current.y()<0){
-                        rotate->RotateX(-step_rotate);
-                    }
-                    pMW->Update();
-                    return;
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
-                {
-
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
-                {
-
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE)
-                {
-
-                }
-
-
-                //translate->move(step_translate,step_translate,step_translate);
-                //pMW->Update();
-                return;
-            }
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP){
+        if(current.x()>0){
+            xTranslate += step_translate;
         }
+        else if(current.x()<0){
+            xTranslate -= step_translate;
+        }
+        if(current.y()>0){
+            yTranslate -= step_translate;
+        }
+        else if(current.y()<0){
+            yTranslate += step_translate;
+        }
+        this->updateGL();
+        return;
     }
+
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT){
+        if(current.x()>0){
+            xTranslate += step_translate;
+        }
+        else if(current.x()<0){
+            xTranslate -= step_translate;
+        }
+        if(current.y()>0){
+            yTranslate -= step_translate;
+        }
+        else if(current.y()<0){
+            yTranslate += step_translate;
+        }
+
+        this->updateGL();
+        return;
+    }
+
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT){
+        if(current.x()>0){
+            xTranslate += step_translate;
+        }
+        else if(current.x()<0){
+            xTranslate -= step_translate;
+        }
+        if(current.y()>0){
+            yTranslate -= step_translate;
+        }
+        else if(current.y()<0){
+            yTranslate += step_translate;
+        }
+        this->updateGL();
+        return;
+    }
+
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE){
+        if(current.x()>0){
+            xTranslate += step_translate;
+            //xCamPos -= step_translate;
+            //xCamLook -= step_translate;
+        }
+        else if(current.x()<0){
+            xTranslate -= step_translate;
+            //xCamPos += step_translate;
+            //xCamLook += step_translate;
+        }
+        if(current.y()>0){
+            yTranslate -= step_translate;
+            //zCamPos -= step_translate;
+            //zCamLook -= step_translate;
+        }
+        else if(current.y()<0){
+            yTranslate += step_translate;
+            //zCamPos += step_translate;
+            //zCamLook += step_translate;
+        }
+        this->updateGL();
+        return;
+    }
+
+    //R = sqrt((xCamLook-xCamPos)*(xCamLook-xCamPos)+(zCamLook-zCamPos)*(zCamLook-zCamPos));
 }
 
 void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
@@ -649,6 +524,326 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
     return;
 }
 
+//  Примитивы
+
+void GLWidget::addPrimitive()
+{
+    currentWork->addPrimitive(*currenEvent);
+    pMW->Update();
+}
+
+void GLWidget::addPrimitive(QPoint current)
+{
+    double modelview[16], projection[16];
+    GLdouble obj[3];
+    int viewport[4];
+    glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
+    glGetDoublev( GL_PROJECTION_MATRIX, projection );
+    glGetIntegerv( GL_VIEWPORT, viewport );
+    gluUnProject(current.x(), current.y(), 0, modelview, projection, viewport, &obj[0], &obj[1], &obj[2]);
+
+    currentWork->addAction(MEV_TRANSLATE, obj);
+    currentWork->addPrimitive(*currenEvent);
+}
+
+void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
+{
+    QList<Element*> *list_elements = currentWork->getList();
+
+    if(list_elements->size()>0 && SELECTED)
+    {
+        Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
+
+        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
+        {
+            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
+            My = prevMy - (event->pos().y() - currentOrtho.height/2);
+            prevMx = currentOrtho.width/2 - event->pos().x();
+            prevMy = event->pos().y() - currentOrtho.height/2;
+
+            translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
+
+            pMW->Update();
+            return;
+        }
+
+        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
+        {
+            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
+            My = prevMy - (event->pos().y() - currentOrtho.height/2);
+            prevMx = currentOrtho.width/2 - event->pos().x();
+            prevMy = event->pos().y() - currentOrtho.height/2;
+
+            translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
+
+            pMW->Update();
+            return;
+        }
+
+        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
+        {
+            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
+            My = prevMy - (event->pos().y() - currentOrtho.height/2);
+            prevMx = currentOrtho.width/2 - event->pos().x();
+            prevMy = event->pos().y() - currentOrtho.height/2;
+
+            translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
+
+            pMW->Update();
+            return;
+        }
+        /*
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE && SELECTED)
+    {
+        Mx = prevMx - (w/2 - event->pos().x());
+        My = prevMy - (event->pos().y() - h/2);
+        prevMx = w/2 - event->pos().x();
+        prevMy = event->pos().y() - h/2;
+
+        translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
+
+        pMW->Update();
+        return;
+    }*/
+    }
+}
+
+void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
+{
+
+    double step_rotate = 1;
+    if(currentWork->getOnlyPrimitiveList()->size()>0)
+    {
+        QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
+
+        for(int i=0;i<only_prim->size();i++)
+        {
+            int index = only_prim->at(i);
+            Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
+            int *na = 0;
+            GLubyte ba[3] = {0};
+            na =prim->getIDColor();
+            for(int i=0;i<3;i++)
+                ba[i] = (GLubyte)na[i];
+
+            if(ba[0]==na[0]&&ba[1]==na[1]&&ba[2]==na[2])
+            {
+                Rotate *rotate =dynamic_cast<Rotate*>(currentWork->getList()->at(index-1));
+
+                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
+                {
+                    if(current.x()>0){
+                        rotate->RotateZ(step_rotate);
+                    }
+                    else if(current.x()<0){
+                        rotate->RotateZ(-step_rotate);
+                    }
+                    if(current.y()>0){
+                        rotate->RotateX(step_rotate);
+                    }
+                    else if(current.y()<0){
+                        rotate->RotateX(-step_rotate);
+                    }
+                    pMW->Update();
+                    return;
+                }
+                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
+                {
+
+                }
+                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
+                {
+
+                }
+                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE)
+                {
+
+                }
+
+
+                //translate->move(step_translate,step_translate,step_translate);
+                //pMW->Update();
+                return;
+            }
+        }
+    }
+}
+
+//  Рисование
+void GLWidget::drawAxes()
+{
+    glLoadIdentity();
+    glTranslated(2.9, -1.4, 5);
+    glScaled(0.5, 0.5, 0.5);
+    glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
+    glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
+    glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
+
+    glLineWidth(2);
+    glBegin(GL_LINES);
+    glColor3ub(255, 0, 0);//Цвет оси X
+    // Ось X
+    glVertex3d(0, 0, 0);
+    glVertex3d(1, 0, 0);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(1.2, 0, 0);
+    glScaled(0.2, 0.2, 0.2);
+    //drawX();
+    glLineWidth(2);
+    glPopMatrix();
+    glColor3ub(0, 255, 0);//Цвет оси Y
+    // Ось Y
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, 1, 0);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(0, 1.2, 0);
+    glScaled(0.3, 0.3, 0.3);
+    glLineWidth(2);
+    //   drawY();
+    glPopMatrix();
+    glColor3ub(0, 0, 255);
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, 0, 1);
+    glPushMatrix();
+    glLineWidth(3);
+    glTranslated(0, 0, 1.2);
+    glScaled(0.3, 0.3, 0.3);
+    glLineWidth(2);
+    //  drawZ();
+    glPopMatrix();
+    glEnd();
+    glLineWidth(1);
+}
+
+void GLWidget::drawX()
+{
+    // Буква X
+    glBegin(GL_LINES);
+    glVertex3d(-1, 1, 0);
+    glVertex3d(1, -1, 0);
+
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, 1, 0);
+    glEnd();
+}
+
+void GLWidget::drawY()
+{
+    glBegin(GL_LINES);
+    glVertex3d(-1, 1, 0);
+    glVertex3d(1, 1, 0);
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, -1, 0);
+    glVertex3d(-1, -1, 0);
+    glVertex3d(1, -1, 0);
+    glEnd();
+}
+
+void GLWidget::drawZ()
+{
+    glBegin(GL_LINE);
+    glVertex3d(-0.8, 1, 0);
+    glVertex3d(0, 0, 0);
+
+    glVertex3d(0.8, 1, 0);
+    glVertex3d(0, 0, 0);
+
+    glVertex3d(0, 0, 0);
+    glVertex3d(0, -1, 0);
+    glEnd();
+}
+
+void GLWidget::drawPlane()
+{
+    //glPushAttrib(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.0f, 0.0f, 0.0f);
+
+    for(double i=PLANE_MIN_X; i<=PLANE_MAX_X;i+=0.5)
+    {
+        glBegin(GL_LINES);
+        glVertex3d(PLANE_MIN_X, 0, i);
+        glVertex3d(PLANE_MAX_X, 0, i);
+
+        glVertex3d(i, 0, PLANE_MIN_Z);
+        glVertex3d(i, 0, PLANE_MAX_Z);
+        glEnd();
+    }
+    //glPopAttrib();
+}
+
+//  Дополнительные
+
+double GLWidget::ScreenToOGL(int coord, int type) {
+
+    double opengl_pix;
+
+    switch(type)
+    {
+    case COORD_X:
+    {
+        double proj_x = (currentOrtho.width/currentOrtho.height*(double)4);
+        opengl_pix =(proj_x/currentOrtho.width);
+        break;
+    }
+    case COORD_Y:
+    {
+        double proj_y=((currentOrtho.width/currentOrtho.height)*(double)2);
+        opengl_pix =(proj_y/currentOrtho.height);
+        break;
+    }
+    }
+
+
+    return opengl_pix*(double)coord;
+}
+
+double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
+
+    double opengl_pix;
+    double result = 0;
+
+    switch(type)
+    {
+
+    case COORD_X:
+    {
+        double proj_x = (currentOrtho.width/currentOrtho.height*(double)4);
+        opengl_pix =(proj_x/currentOrtho.width);
+        if(coord>last)
+        {
+            result = opengl_pix*((double)coord-((double)last));
+        }
+        else if(coord<last)
+        {
+            result = opengl_pix*((double)coord-(double)last);
+        }
+
+        break;
+    }
+    case COORD_Y:
+    {
+        double proj_y=((currentOrtho.width/currentOrtho.height)*(double)2);
+        opengl_pix =(proj_y/currentOrtho.height);
+
+        if(coord>last)
+        {
+            result = (-1)*opengl_pix*((double)coord-((double)last));
+        }
+        else if(coord<last)
+        {
+            result = (-1)*opengl_pix*((double)coord-((double)last));
+        }
+
+
+        break;
+    }
+    }
+
+    return result;
+}
+
 void GLWidget::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
@@ -684,199 +879,9 @@ void GLWidget::qNormalizeAngle(int &angle)
         angle -= 360 * 16;
 }
 
-void GLWidget::changeProection(int n)
-{
-    switch(n)
-    {
-    case MPJ_PERSPECTIVE:
-        setProjection(MPJ_PERSPECTIVE);
-        break;
-    case MPJ_TOP:
-        setProjection(MPJ_TOP);
-        break;
-    case MPJ_RIGHT:
-        setProjection(MPJ_RIGHT);
-        break;
-    case MPJ_FRONT:
-        setProjection(MPJ_FRONT);
-        break;
-    case MPJ_MAXIMAZE:
-        pMW->getPaintingZone()->saveAllLastState();
-        pMW->getPaintingZone()->setMaximum(this->PROJECTION_TYPE);
-        break;
-    case MPJ_RESET:
-        pMW->getPaintingZone()->setAllUnvisible(false);
-        break;
-    }
-}
+// TEMP
 
-void GLWidget::addPrimitive()
-{
-    currentWork->addPrimitive(*currenEvent);
-    pMW->Update();
-}
-
-void GLWidget::addPrimitive(QPoint current)
-{
-    double modelview[16], projection[16];
-    GLdouble obj[3];
-    int viewport[4];
-    glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-    glGetDoublev( GL_PROJECTION_MATRIX, projection );
-    glGetIntegerv( GL_VIEWPORT, viewport );
-    gluUnProject(current.x(), current.y(), 0, modelview, projection, viewport, &obj[0], &obj[1], &obj[2]);
-
-    currentWork->addAction(MEV_TRANSLATE, obj);
-    currentWork->addPrimitive(*currenEvent);
-}
-
-void GLWidget::SaveLastState()
-{
-    this->last_h = this->h;
-    this->last_w = this->w;
-    this->lastProjection = getProjection();
-
-}
-//  Камера
-
-void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
-{
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP){
-        if(current.x()>0){
-            xTranslate += step_translate;
-        }
-        else if(current.x()<0){
-            xTranslate -= step_translate;
-        }
-        if(current.y()>0){
-            yTranslate -= step_translate;
-        }
-        else if(current.y()<0){
-            yTranslate += step_translate;
-        }
-        this->updateGL();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT){
-        if(current.x()>0){
-            xTranslate += step_translate;
-        }
-        else if(current.x()<0){
-            xTranslate -= step_translate;
-        }
-        if(current.y()>0){
-            yTranslate -= step_translate;
-        }
-        else if(current.y()<0){
-            yTranslate += step_translate;
-        }
-
-        this->updateGL();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT){
-        if(current.x()>0){
-            xTranslate += step_translate;
-        }
-        else if(current.x()<0){
-            xTranslate -= step_translate;
-        }
-        if(current.y()>0){
-            yTranslate -= step_translate;
-        }
-        else if(current.y()<0){
-            yTranslate += step_translate;
-        }
-        this->updateGL();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE){
-        if(current.x()>0){
-            xTranslate += step_translate;
-            //xCamPos -= step_translate;
-            //xCamLook -= step_translate;
-        }
-        else if(current.x()<0){
-            xTranslate -= step_translate;
-            //xCamPos += step_translate;
-            //xCamLook += step_translate;
-        }
-        if(current.y()>0){
-            yTranslate -= step_translate;
-            //zCamPos -= step_translate;
-            //zCamLook -= step_translate;
-        }
-        else if(current.y()<0){
-            yTranslate += step_translate;
-            //zCamPos += step_translate;
-            //zCamLook += step_translate;
-        }
-        this->updateGL();
-        return;
-    }
-
-    //R = sqrt((xCamLook-xCamPos)*(xCamLook-xCamPos)+(zCamLook-zCamPos)*(zCamLook-zCamPos));
-}
-
-//  Примитивы
-
-void GLWidget::eventTranslatePrimitive(QMouseEvent *event, QPoint current)
+void GLWidget::initializeLighting()
 {
 
-    Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP && SELECTED)
-    {
-        Mx = prevMx - (w/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - h/2);
-        prevMx = w/2 - event->pos().x();
-        prevMy = event->pos().y() - h/2;
-
-        translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-
-        pMW->Update();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT && SELECTED)
-    {
-        Mx = prevMx - (w/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - h/2);
-        prevMx = w/2 - event->pos().x();
-        prevMy = event->pos().y() - h/2;
-
-        translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
-
-        pMW->Update();
-        return;
-    }
-
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT && SELECTED)
-    {
-        Mx = prevMx - (w/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - h/2);
-        prevMx = w/2 - event->pos().x();
-        prevMy = event->pos().y() - h/2;
-
-        translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
-
-        pMW->Update();
-        return;
-    }
-    /*
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE && SELECTED)
-    {/*
-        Mx = prevMx - (w/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - h/2);
-        prevMx = w/2 - event->pos().x();
-        prevMy = event->pos().y() - h/2;
-
-        translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-
-        pMW->Update();
-        return;
-    }*/
 }

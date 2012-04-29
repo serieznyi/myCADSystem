@@ -41,7 +41,7 @@ void Work::addPrimitive(int i)
     }
     case MEV_PRIM_QUAD:
     {
-        Translate *translate = new Translate(1, 0, 1);
+        Translate *translate = new Translate(0, 0, 0);
         translate->setGID(generateGID());
         element_list->append(translate);
             Rotate *rotate = new Rotate(0,0,0);

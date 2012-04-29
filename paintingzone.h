@@ -13,6 +13,7 @@ public:
     explicit PaintingZone(QWidget *parent = 0);
     void Update();
     void setAllUnvisible(bool a);
+    void saveProjectionLastState();
 public:
     QSplitter           *sp_global;
     QSplitter           *sp_top;
@@ -22,7 +23,6 @@ public:
     GLWidget            *widFront;                 // ZOX
     GLWidget            *widRight;                 // XOY
     QVBoxLayout         *lay_global;               // Глобальный менеджер компоновки
-    void saveAllLastState();
 public slots:
     void setMaximum(int i);
 };

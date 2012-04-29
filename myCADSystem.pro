@@ -54,7 +54,8 @@ HEADERS  += \
     lib/action/action.h \
     lib/primitive/pyramid.h \
     lib/primitive/primitive.h \
-    lib/primitive/cube.h
+    lib/primitive/cube.h \
+    lib/lib.h
 
 FORMS +=
 

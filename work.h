@@ -6,11 +6,7 @@
 #include <GL/glu.h>
 #include "stdlib.h"
 #include "time.h"
-#include "lib/primitive/cube.h"
-#include "lib/primitive/pyramid.h"
-#include "lib/action/translate.h"
-#include "lib/action/rotate.h"
-#include "lib/element.h"
+#include "lib/lib.h"
 #include "resource.h"
 
 class Work

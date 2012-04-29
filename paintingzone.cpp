@@ -14,14 +14,13 @@ PaintingZone::PaintingZone(QWidget *parent) : QWidget(parent)
     widPerspective->setProjection(MPJ_PERSPECTIVE);
     widFront->setProjection(MPJ_FRONT);
     widRight->setProjection(MPJ_RIGHT);
-        sp_top->addWidget(widTop);
-        sp_top->addWidget(widPerspective);
-        sp_down->addWidget(widFront);
-        sp_down->addWidget(widRight);
-        sp_global->addWidget(sp_top);
-        sp_global->addWidget(sp_down);
-        lay_global->addWidget(sp_global);
-
+    sp_top->addWidget(widTop);
+    sp_top->addWidget(widPerspective);
+    sp_down->addWidget(widFront);
+    sp_down->addWidget(widRight);
+    sp_global->addWidget(sp_top);
+    sp_global->addWidget(sp_down);
+    lay_global->addWidget(sp_global);
     this->setLayout(lay_global);
 }
 
@@ -64,7 +63,7 @@ void PaintingZone::setAllUnvisible(bool a)
     widPerspective->setHidden(a);
 }
 
-void PaintingZone::saveAllLastState()
+void PaintingZone::saveProjectionLastState()
 {
     widPerspective->SaveLastState();
     widTop->SaveLastState();

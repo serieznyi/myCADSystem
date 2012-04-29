@@ -1,17 +1,18 @@
 #include "pyramid.h"
 
-Pyramid::Pyramid(GLfloat a):Cube(a)
+Pyramid::Pyramid(GLfloat a):Primitive()
 {
     this->a = a;
 }
 
 void Pyramid::Apply(bool mode)
 {
-    int *color =0;
+    int *color =0;    
     if(mode)
     color = getColor();
             else
     color = getIDColor();
+
     GLdouble h = (sqrt(3)/2)*this->a;
         glPushMatrix();//основание
             glRotated(90, 1, 0, 0);
