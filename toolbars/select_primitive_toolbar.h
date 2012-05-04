@@ -39,6 +39,7 @@ private:
 public slots:
     void addCube();
     void addPyramid();
+    void addSphere();
 };
 
 #endif // PRIMITIVETOOLBAR_H

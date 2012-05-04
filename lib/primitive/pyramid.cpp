@@ -7,14 +7,20 @@ Pyramid::Pyramid(GLfloat a):Primitive()
 
 void Pyramid::Apply(bool mode)
 {
-    int *color =0;    
-    if(mode)
+    setPaintMode(mode);
+    draw();
+}
+
+void Pyramid::draw()
+{
+    int *color = 0;
+    if(getPaintMode())
     color = getColor();
             else
     color = getIDColor();
 
     GLdouble h = (sqrt(3)/2)*this->a;
-        glPushMatrix();//основание
+       // glPushMatrix();//основание
             glRotated(90, 1, 0, 0);
                 glBegin(GL_TRIANGLES);
                     glColor3ub(color[0], color[1], color[3]);
@@ -34,5 +40,5 @@ void Pyramid::Apply(bool mode)
                     glVertex3d(a/2, -h/2, 0);
                     glVertex3d(-a/2, -h/2, 0);
                 glEnd();
-        glPopMatrix();
+   //             glPopMatrix();
 }

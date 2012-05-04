@@ -123,8 +123,8 @@ void GLWidget::paintGL()
         glPushMatrix();
         glTranslated(0,0,-currentOrtho.far_val);
         glRotated(-90, 1, 0, 0);
-
-        this->drawPlane();
+        if(PAINTING_MODE!=MODE_FICTIVE)
+            this->drawPlane();
         glPopMatrix();
     }
     else if(this->getProjection()==MPJ_RIGHT)
@@ -132,15 +132,19 @@ void GLWidget::paintGL()
         glPushMatrix();
         glTranslated(currentOrtho.far_val, 0, 0);
         glRotatef(90, 0, 0, 1);
-        this->drawPlane();
+        if(PAINTING_MODE!=MODE_FICTIVE)
+            this->drawPlane();
         glPopMatrix();
     }
     else
-        this->drawPlane();
+    {
+        if(PAINTING_MODE!=MODE_FICTIVE)
+            this->drawPlane();
+    }
 
     currentWork->drawWork(PAINTING_MODE);
-
-    drawAxes();
+    if(PAINTING_MODE!=MODE_FICTIVE)
+        drawAxes();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
@@ -150,7 +154,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     switch(*currenEvent)
     {
     case MEV_PRIM_SPHERE:
-    case MEV_PRIM_QUAD:
+    case MEV_PRIM_CUBE:
     case MEV_PRIM_PYRAMID:
     case MEV_PRIM_POINT:
     case MEV_PRIM_CYLINDER:
@@ -161,8 +165,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         previousEvent = currenEvent;
         pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
-    case MEV_TRANSLATE:
     case MEV_ROTATE:
+    case MEV_TRANSLATE:
         PAINTING_MODE = MODE_FICTIVE;
         updateGL();
         glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
@@ -182,6 +186,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
                 na = prim->getIDColor();
                 for(int i=0;i<3;i++)
                     ba[i] = (GLubyte)na[i];
+
+                qDebug()<<"PIXEL"<<pixel[0]<<" "<<pixel[1]<<" "<<pixel[2];
+
                 if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
                 {
                     SELECTED = true;
@@ -189,6 +196,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
                     //делаем точку в которой кликнули началом системы координат
                     prevMx = currentOrtho.width/2 - event->pos().x();
                     prevMy = event->pos().y() - currentOrtho.height/2;
+                    break;
 
                 }
                 else
@@ -542,7 +550,6 @@ void GLWidget::addPrimitive(QPoint current)
     glGetIntegerv( GL_VIEWPORT, viewport );
     gluUnProject(current.x(), current.y(), 0, modelview, projection, viewport, &obj[0], &obj[1], &obj[2]);
 
-    currentWork->addAction(MEV_TRANSLATE, obj);
     currentWork->addPrimitive(*currenEvent);
 }
 
@@ -553,45 +560,40 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
     if(list_elements->size()>0 && SELECTED)
     {
         Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
+        //double koef = 0;
+
+        Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
+        My = prevMy - (event->pos().y() - currentOrtho.height/2);
+        prevMx = currentOrtho.width/2 - event->pos().x();
+        prevMy = event->pos().y() - currentOrtho.height/2;
+        /*if(gScale<1)
+        {
+            koef= 1+(1-gScale);
+        }*/
+
+
 
         if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
         {
-            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
-            My = prevMy - (event->pos().y() - currentOrtho.height/2);
-            prevMx = currentOrtho.width/2 - event->pos().x();
-            prevMy = event->pos().y() - currentOrtho.height/2;
-
             translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-
             pMW->Update();
             return;
         }
 
         if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
         {
-            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
-            My = prevMy - (event->pos().y() - currentOrtho.height/2);
-            prevMx = currentOrtho.width/2 - event->pos().x();
-            prevMy = event->pos().y() - currentOrtho.height/2;
-
             translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
-
             pMW->Update();
             return;
         }
 
         if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
         {
-            Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
-            My = prevMy - (event->pos().y() - currentOrtho.height/2);
-            prevMx = currentOrtho.width/2 - event->pos().x();
-            prevMy = event->pos().y() - currentOrtho.height/2;
-
             translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
-
             pMW->Update();
             return;
         }
+
         /*
     if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE && SELECTED)
     {

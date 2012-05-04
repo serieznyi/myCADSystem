@@ -8,7 +8,8 @@ Work::Work()
     current_free_id             = 0;
     current_free_color[0]       = 0;
     current_free_color[1]       = 0;
-    current_free_color[2]       = -1;
+    current_free_color[2]       = 0;
+    quadric                     = gluNewQuadric();
 }
 
 void Work::drawWork(bool mode)
@@ -27,8 +28,8 @@ void Work::drawWork(bool mode)
                 glPushMatrix();
             }
         }
-       glPopMatrix();
     }
+    glPopMatrix();
 }
 
 void Work::addPrimitive(int i)
@@ -37,9 +38,21 @@ void Work::addPrimitive(int i)
     {
     case MEV_PRIM_SPHERE:
     {
-        break;
+        Translate *translate = new Translate(0, 0, 0);
+        translate->setGID(generateGID());
+        element_list->append(translate);
+            Rotate *rotate = new Rotate(0,0,0);
+            rotate->setGID(generateGID());
+            element_list->append(rotate);
+                Sphere *sphere = new Sphere(quadric, 1.0f);
+                sphere->setGID(generateGID());
+                generatetIDColor(sphere->getIDColor());
+                generateColor(sphere->getColor());
+                element_list->append(sphere);
+                only_prymitive->append(element_list->size()-1);
+                break;
     }
-    case MEV_PRIM_QUAD:
+    case MEV_PRIM_CUBE:
     {
         Translate *translate = new Translate(0, 0, 0);
         translate->setGID(generateGID());
@@ -49,8 +62,8 @@ void Work::addPrimitive(int i)
             element_list->append(rotate);
                 Cube *cube = new Cube(1.0f);
                 cube->setGID(generateGID());
-                cube->setIDColor(generatetIDColor());
-                cube->setColor(generateColor());
+                generatetIDColor(cube->getIDColor());
+                generateColor(cube->getColor());
                 element_list->append(cube);
                 only_prymitive->append(element_list->size()-1);
                 break;
@@ -65,8 +78,8 @@ void Work::addPrimitive(int i)
             element_list->append(rotate);
                 Pyramid *pyramid = new Pyramid(1.0f);
                 pyramid->setGID(generateGID());
-                pyramid->setIDColor(generatetIDColor());
-                pyramid->setColor(generateColor());
+                generatetIDColor(pyramid->getIDColor());
+                generateColor(pyramid->getColor());
                 element_list->append(pyramid);
                 only_prymitive->append(element_list->size()-1);
                 break;
@@ -78,7 +91,8 @@ void Work::addPrimitive(int i)
         //primitives_list->append(pyramid);
         break;
     }
-
+    case MEV_PRIM_POINT: break;
+    case MEV_PRIM_LINE: break;
     }
 }
 
@@ -109,28 +123,29 @@ long Work::generateGID()
     return current_free_id++;
 }
 
-int* Work::generatetIDColor()
+void Work::generatetIDColor(int arr[])
 {
     if(this->current_free_color[2]<255)
-        current_free_color[2]++;
+    {
+        arr[2] = current_free_color[2]++;
+    }
     else if(this->current_free_color[1]<255)
-        current_free_color[1]++;
+    {
+        arr[1] = current_free_color[1]++;
+    }
     else if(this->current_free_color[0]<255)
-        current_free_color[0]++;
-    //qDebug()<<"ID COLOR"<<current_free_color[0]<<" "<<current_free_color[1]<<" "<<current_free_color[2];
-
-    return this->current_free_color;
+    {
+        arr[0] = current_free_color[0]++;
+    }
 }
 
-int* Work::generateColor()
+void Work::generateColor(int arr[])
 {
     for(int i=0; i<3; i++)
     {
-        this->real_color[i]=(0 + rand()%255);
+        arr[i]=(0 + rand()%255);
         srand(time(NULL));
     }
-    //qDebug()<<"REAL COLOR"<<real_color[0]<<" "<<real_color[1]<<" "<<real_color[2];
-    return this->real_color;
 }
 
 QList<Element*>* Work::getList()

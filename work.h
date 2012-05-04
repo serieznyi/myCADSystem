@@ -17,8 +17,8 @@ public:
     void addPrimitive(int i);               // Добавление объекта на сцену
     void addAction(int i, double obj[3]);   // Применение действия
     long generateGID();                          // Генерация идентификатора для события
-    int* generatetIDColor();
-    int* generateColor();
+    void generatetIDColor(int arr[]);
+    void generateColor(int arr[]);
     QList<Element*>* getList();
     QList<int>* getOnlyPrimitiveList();
 public:
@@ -28,6 +28,7 @@ private:
     long                     current_free_id;           //  Текущий свободный идентификатор
     int                      current_free_color[3];     //
     QList<int>               *only_prymitive;           //  Индексы только примитивов
+    GLUquadric               *quadric;
 };
 
 

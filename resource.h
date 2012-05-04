@@ -48,7 +48,7 @@
 //ТИП ПРИМИТИВА
 #define MEV_PRIM_POINT              301 // Точка
 #define MEV_PRIM_LINE               302 // Линия
-#define MEV_PRIM_QUAD               303 // Куб
+#define MEV_PRIM_CUBE               303 // Куб
 #define MEV_PRIM_PYRAMID            304 // Пирамида
 #define MEV_PRIM_SPHERE             305 // Сфера
 #define MEV_PRIM_CYLINDER           306 // Цилиндр

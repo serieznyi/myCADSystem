@@ -2,6 +2,7 @@
 
 Element::Element()
 {
+
     //this->type_name = name;
 }
 

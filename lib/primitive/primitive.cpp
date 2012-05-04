@@ -2,6 +2,10 @@
 
 Primitive::Primitive():Element()
 {
+    //memset(ID_COLOR, 0, 3);
+    //memset(COLOR, 0, 3);
+    ID_COLOR[0]=ID_COLOR[1]=ID_COLOR[2]=0;
+    COLOR[0]=COLOR[1]=COLOR[2]=0;
     this->setTypeName(MEL_PRIMITIVE);
 }
 
@@ -10,17 +14,23 @@ int* Primitive::getIDColor()
     return this->ID_COLOR;
 }
 
-void Primitive::setIDColor(int *a)
-{
-    this->ID_COLOR = a;
-}
-
 int* Primitive::getColor()
 {
     return this->COLOR;
 }
 
-void Primitive::setColor(int *a)
+void Primitive::setPaintMode(int mode)
 {
-    this->COLOR = a;
+    this->PAINT_MODE = mode;
+}
+
+int Primitive::getPaintMode()
+{
+    return PAINT_MODE;
+}
+
+void Primitive::draw()
+{
+
+
 }

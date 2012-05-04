@@ -10,12 +10,14 @@ class Primitive : public Element
 public:
     Primitive();
     int* getIDColor();
-    void setIDColor(int *a);
-    int *getColor();
-    void setColor(int *a);
+    int* getColor();
+    virtual void draw()=0;
+    void setPaintMode(int mode);
+    int getPaintMode();
 private:
-    int *ID_COLOR;
-    int *COLOR;
+    int ID_COLOR[3];
+    int COLOR[3];
+    int PAINT_MODE;
 };
 
 

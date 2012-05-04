@@ -35,24 +35,29 @@ void SelectPrimitiveToolbar::createActions()
     this->addAction(quadAction);
     connect(quadAction, SIGNAL(triggered()), SLOT(addCube()));
 
-
     triangleAction = new QAction(QString::fromLocal8Bit("&Пирамида"), this);
     this->addAction(triangleAction);
     connect(triangleAction, SIGNAL(triggered()), SLOT(addPyramid()));
 
     sphereAction = new QAction(QString::fromLocal8Bit("&Сфера"), this);
     this->addAction(sphereAction);
+    connect(sphereAction, SIGNAL(triggered()), SLOT(addSphere()));
 
 }
 
 void SelectPrimitiveToolbar::addCube()
 {
-    changeEvent(MEV_PRIM_QUAD);
+    changeEvent(MEV_PRIM_CUBE);
 }
 
 void SelectPrimitiveToolbar::addPyramid()
 {
     changeEvent(MEV_PRIM_PYRAMID);
+}
+
+void SelectPrimitiveToolbar::addSphere()
+{
+    changeEvent(MEV_PRIM_SPHERE);
 }
 
 void SelectPrimitiveToolbar::changeEvent(int i)
