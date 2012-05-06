@@ -47,17 +47,17 @@ void SelectPrimitiveToolbar::createActions()
 
 void SelectPrimitiveToolbar::addCube()
 {
-    changeEvent(MEV_PRIM_CUBE);
+    changeEvent(MEL_CUBE);
 }
 
 void SelectPrimitiveToolbar::addPyramid()
 {
-    changeEvent(MEV_PRIM_PYRAMID);
+    changeEvent(MEL_PYRAMID);
 }
 
 void SelectPrimitiveToolbar::addSphere()
 {
-    changeEvent(MEV_PRIM_SPHERE);
+    changeEvent(MEL_SPHERE);
 }
 
 void SelectPrimitiveToolbar::changeEvent(int i)

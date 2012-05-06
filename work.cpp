@@ -36,7 +36,7 @@ void Work::addPrimitive(int i)
 {
     switch(i)
     {
-    case MEV_PRIM_SPHERE:
+    case MEL_SPHERE:
     {
         Translate *translate = new Translate(0, 0, 0);
         translate->setGID(generateGID());
@@ -52,7 +52,7 @@ void Work::addPrimitive(int i)
                 only_prymitive->append(element_list->size()-1);
                 break;
     }
-    case MEV_PRIM_CUBE:
+    case MEL_CUBE:
     {
         Translate *translate = new Translate(0, 0, 0);
         translate->setGID(generateGID());
@@ -68,7 +68,7 @@ void Work::addPrimitive(int i)
                 only_prymitive->append(element_list->size()-1);
                 break;
     }
-    case MEV_PRIM_PYRAMID:
+    case MEL_PYRAMID:
     {
         Translate *translate = new Translate(0, 0, 0);
         translate->setGID(generateGID());
@@ -84,15 +84,15 @@ void Work::addPrimitive(int i)
                 only_prymitive->append(element_list->size()-1);
                 break;
     }
-    case MEV_PRIM_CYLINDER:
+    case MEL_CYLINDER:
     {
         //Pyramid *pyramid = new Pyramid(1.0f);
         //pyramid->setID(genPrimID());
         //primitives_list->append(pyramid);
         break;
     }
-    case MEV_PRIM_POINT: break;
-    case MEV_PRIM_LINE: break;
+    case MEL_POINT: break;
+    case MEL_LINE: break;
     }
 }
 

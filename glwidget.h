@@ -11,7 +11,6 @@
 #include <math.h>
 #include "GL/glu.h"
 #include "resource.h"
-#include "abstractmainwindow.h"
 #include "work.h"
 #include "toolbars/list_primitive_toolbar.h"
 #include "lib/lib.h"
@@ -23,7 +22,7 @@ class GLWidget : public QGLWidget
     Q_OBJECT
 protected:
     void initializeGL();                                                //  Инициализация GL
-    void resizeGL(int _w, int _h);                                        //  Изменение размера области рисования
+    void resizeGL(int _w, int _h);                                       //  Изменение размера области рисования
     void paintGL();                                                     //  Главная функция рисования
 
 public:
@@ -46,6 +45,7 @@ public:
 
     void initializeLighting();
     void SaveLastState();
+    void LoadLastState();
     double ScreenToOGLv2(int last, int coord, int type);                //
     void setXRotation(int angle);                                       //
     void setYRotation(int angle);                                       //

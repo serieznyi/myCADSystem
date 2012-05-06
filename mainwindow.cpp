@@ -11,14 +11,14 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
     sceneControlPanel           = new SceneControlPanel(this);
     paintingZone                = new PaintingZone(this);
-    //listPrimitiveTollBar        = new ListPrimitiveToolbar(this);
+    listPrimitiveTollBar        = new ListPrimitiveToolbar(this);
     statusBar                   = new StatusBar();
 
     this->setMenuBar(menuBar);
     this->addToolBar(actionPrimitiveToolbar);
     this->addToolBar(selectPrimitiveToolbar);
     this->addToolBar(sceneControlPanel);
-    //this->addToolBar(listPrimitiveTollBar);
+    this->addToolBar(Qt::RightToolBarArea, listPrimitiveTollBar);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 

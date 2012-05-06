@@ -29,30 +29,19 @@
 #define MEL_CUBE                    103
 #define MEL_PYRAMID                 104
 #define MEL_CYLINDER                105
-//Действия
-#define MEL_ACTION                  151
-#define MEL_TRANSLATE               152
+#define MEL_SPHERE                  106
 
 //ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
-#define MEV_TRANSLATE               200 // Переместить
-#define MEV_ROTATE                  201 // Вращать
-#define MEV_GROUP                   202 // Сгрупировать
-#define MEV_SUBSTRACT               203 //
-#define MEV_INTERSECT               204 //
+#define MEV_ACTION                  200 // Переместить
+#define MEV_TRANSLATE               201 // Переместить
+#define MEV_ROTATE                  202 // Вращать
+#define MEV_GROUP                   203 // Сгрупировать
+#define MEV_SUBSTRACT               204 //
+#define MEV_INTERSECT               205 //
 
 //ДЕЙСТВИЯ НАД СЦЕНОЙ
 #define MEV_CAMERA_TRANSLATE        251 // Переместить камеру
 #define MEV_CAMERA_ROTATE           252 // Вращать камеру
 #define MEV_CAMERA_ZOOM             253 // Изменить масштаб
-
-//ТИП ПРИМИТИВА
-#define MEV_PRIM_POINT              301 // Точка
-#define MEV_PRIM_LINE               302 // Линия
-#define MEV_PRIM_CUBE               303 // Куб
-#define MEV_PRIM_PYRAMID            304 // Пирамида
-#define MEV_PRIM_SPHERE             305 // Сфера
-#define MEV_PRIM_CYLINDER           306 // Цилиндр
-
-
 
 #endif // RESOURCE_H

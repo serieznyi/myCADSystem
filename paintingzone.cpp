@@ -14,6 +14,7 @@ PaintingZone::PaintingZone(QWidget *parent) : QWidget(parent)
     widPerspective->setProjection(MPJ_PERSPECTIVE);
     widFront->setProjection(MPJ_FRONT);
     widRight->setProjection(MPJ_RIGHT);
+    saveProjectionLastState();
     sp_top->addWidget(widTop);
     sp_top->addWidget(widPerspective);
     sp_down->addWidget(widFront);
@@ -69,4 +70,12 @@ void PaintingZone::saveProjectionLastState()
     widTop->SaveLastState();
     widFront->SaveLastState();
     widRight->SaveLastState();
+}
+
+void PaintingZone::loadProjectionLastState()
+{
+    widPerspective->LoadLastState();
+    widTop->LoadLastState();
+    widFront->LoadLastState();
+    widRight->LoadLastState();
 }

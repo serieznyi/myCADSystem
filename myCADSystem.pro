@@ -32,7 +32,8 @@ SOURCES += \
     lib/primitive/pyramid.cpp \
     lib/primitive/primitive.cpp \
     lib/primitive/cube.cpp \
-    lib/primitive/sphere.cpp
+    lib/primitive/sphere.cpp \
+    toolbars/list_primitive_toolbar.cpp
 
 HEADERS  += \
     lib/element.h \
@@ -57,7 +58,8 @@ HEADERS  += \
     lib/primitive/primitive.h \
     lib/primitive/cube.h \
     lib/lib.h \
-    lib/primitive/sphere.h
+    lib/primitive/sphere.h \
+    toolbars/list_primitive_toolbar.h
 
 FORMS +=
 

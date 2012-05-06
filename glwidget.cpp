@@ -153,12 +153,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
     switch(*currenEvent)
     {
-    case MEV_PRIM_SPHERE:
-    case MEV_PRIM_CUBE:
-    case MEV_PRIM_PYRAMID:
-    case MEV_PRIM_POINT:
-    case MEV_PRIM_CYLINDER:
-    case MEV_PRIM_LINE:
+    case MEL_SPHERE:
+    case MEL_CUBE:
+    case MEL_PYRAMID:
+    case MEL_POINT:
+    case MEL_CYLINDER:
+    case MEL_LINE:
         /*if(event->buttons()&&Qt::LeftButton&&isTopW)
             addPrimitive(event->pos());
         else */addPrimitive();
@@ -280,11 +280,12 @@ void GLWidget::changeProection(int n)
         setProjection(MPJ_FRONT);
         break;
     case MPJ_MAXIMAZE:
+        //pMW->getPaintingZone()->saveProjectionLastState();
         pMW->getPaintingZone()->setMaximum(this->PROJECTION_TYPE);
-        pMW->getPaintingZone()->saveProjectionLastState();
         break;
     case MPJ_RESET:
         pMW->getPaintingZone()->setAllUnvisible(false);
+        pMW->getPaintingZone()->loadProjectionLastState();
         break;
     }
 }
@@ -295,6 +296,13 @@ void GLWidget::SaveLastState()
     currentOrtho.last_width = currentOrtho.width;
     this->lastProjection = getProjection();
 
+}
+
+void GLWidget::LoadLastState()
+{
+    currentOrtho.height = currentOrtho.last_height;
+    currentOrtho.width = currentOrtho.last_width;
+    setProjection(this->lastProjection);
 }
 
 void GLWidget::selectEvent(QMouseEvent *event, QPoint current)

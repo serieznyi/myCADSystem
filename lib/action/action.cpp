@@ -2,5 +2,5 @@
 
 Action::Action(bool mode):Element()
 {
-    this->setTypeName(MEL_ACTION);
+    this->setTypeName(MEV_ACTION);
 }

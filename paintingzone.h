@@ -14,6 +14,8 @@ public:
     void Update();
     void setAllUnvisible(bool a);
     void saveProjectionLastState();
+    void loadProjectionLastState();
+
 public:
     QSplitter           *sp_global;
     QSplitter           *sp_top;
