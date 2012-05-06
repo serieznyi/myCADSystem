@@ -25,6 +25,7 @@ public:
     Work* getWork();
     void Update();
     PaintingZone *getPaintingZone();
+    ListPrimitiveToolbar *getListPrimitiveTollBar();
     StatusBar* getStatusBar();
 
 private:
@@ -32,7 +33,7 @@ private:
     MenuBar                         *menuBar;
     ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
     SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // Панель выбора примитивов
-    ListPrimitiveToolbar            *listPrimitiveTollBar;      //  Панель примитивов сцены
+    ListPrimitiveToolbar            *listPrimitiveToolBar;      //  Панель примитивов сцены
     SceneControlPanel               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие

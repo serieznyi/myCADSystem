@@ -9,10 +9,12 @@
 #include "lib/lib.h"
 #include "resource.h"
 
+class MainWindow;
+
 class Work
 {
 public:
-    explicit Work();
+    explicit Work(QWidget *parent);
     void drawWork(bool mode=true);
     void addPrimitive(int i);               // Добавление объекта на сцену
     void addAction(int i, double obj[3]);   // Применение действия
@@ -24,6 +26,7 @@ public:
 public:
     int                      real_color[3];
 private:
+    MainWindow  *pMW;
     QList<Element*>          *element_list;             //  Список элементов сцены
     long                     current_free_id;           //  Текущий свободный идентификатор
     int                      current_free_color[3];     //

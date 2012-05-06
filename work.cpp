@@ -1,8 +1,10 @@
 #include "work.h"
+#include "mainwindow.h"
 #include "QDebug"
 
-Work::Work()
+Work::Work(QWidget *parent)
 {
+    pMW                         = dynamic_cast<MainWindow*>(parent);
     element_list                = new QList<Element*>;
     only_prymitive              = new QList<int>;
     current_free_id             = 0;
@@ -66,6 +68,7 @@ void Work::addPrimitive(int i)
                 generateColor(cube->getColor());
                 element_list->append(cube);
                 only_prymitive->append(element_list->size()-1);
+          //      pMW->getListPrimitiveTollBar()->addPrimitive(cube);
                 break;
     }
     case MEL_PYRAMID:

@@ -5,20 +5,20 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     //инициализация переменных
     cur_event                   = MEV_CAMERA_TRANSLATE;
     prev_event                  = 0;
-    currentWork                 = new Work();
+    currentWork                 = new Work(this);
     menuBar                     = new MenuBar();
     actionPrimitiveToolbar      = new ActionPrimitiveToolBar(this);
     selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
     sceneControlPanel           = new SceneControlPanel(this);
     paintingZone                = new PaintingZone(this);
-    listPrimitiveTollBar        = new ListPrimitiveToolbar(this);
+    listPrimitiveToolBar        = new ListPrimitiveToolbar(this);
     statusBar                   = new StatusBar();
 
     this->setMenuBar(menuBar);
     this->addToolBar(actionPrimitiveToolbar);
     this->addToolBar(selectPrimitiveToolbar);
     this->addToolBar(sceneControlPanel);
-    this->addToolBar(Qt::RightToolBarArea, listPrimitiveTollBar);
+    this->addToolBar(Qt::RightToolBarArea, listPrimitiveToolBar);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
@@ -69,14 +69,12 @@ PaintingZone* MainWindow::getPaintingZone()
     return paintingZone;
 }
 
+ListPrimitiveToolbar* MainWindow::getListPrimitiveTollBar()
+{
+    return listPrimitiveToolBar;
+}
+
 StatusBar *MainWindow::getStatusBar()
 {
     return statusBar;
 }
-
-/*
-ListPrimitiveToolbar *MainWindow::getListPrimTB()
-{
-    return listPrimitiveTollBar;
-}
-*/
