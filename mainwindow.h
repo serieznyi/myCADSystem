@@ -27,7 +27,6 @@ public:
     PaintingZone *getPaintingZone();
     ListPrimitiveToolbar *getListPrimitiveTollBar();
     StatusBar* getStatusBar();
-
 private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида
     MenuBar                         *menuBar;
@@ -39,6 +38,9 @@ private:
     int                             cur_event;                  // Текущее событие
     int                             prev_event;                 // Предыдущее событие
     Work                            *currentWork;               // Текущая работа
+public slots:
+    void showAbout();
+
 };
 
 #endif // MAINWINDOW_H

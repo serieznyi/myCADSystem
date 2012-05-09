@@ -3,6 +3,8 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
+
+#include <QtGui>
 #include <QGLWidget>
 #include <QPoint>
 #include <QVBoxLayout>
@@ -14,6 +16,7 @@
 #include "work.h"
 #include "toolbars/list_primitive_toolbar.h"
 #include "lib/lib.h"
+#include "contextmenu.h"
 
 class MainWindow;
 
@@ -22,7 +25,7 @@ class GLWidget : public QGLWidget
     Q_OBJECT
 protected:
     void initializeGL();                                                //  Инициализация GL
-    void resizeGL(int _w, int _h);                                       //  Изменение размера области рисования
+    void resizeGL(int _w, int _h);                                      //  Изменение размера области рисования
     void paintGL();                                                     //  Главная функция рисования
 
 public:
@@ -39,7 +42,7 @@ public:
     void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
     void addPrimitive();                                                //  Добавление примитива в позицию по умолчанию
     void addPrimitive(QPoint current);                                  //  Добавление примитива на сцену в указанную позицию
-    double ScreenToOGL(int coord, int type);                            // Перевод оконных координат в координаты OpenGL
+    double ScreenToOGL(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
     void drawAxes();                                                    //  Рисование осей
     void drawPlane();                                                   //  Рисование плоскости
 
@@ -54,6 +57,7 @@ public:
     void drawY();
     void drawZ();
     void qNormalizeAngle(int &angle);
+    long getSelectedPrimitiveID(QMouseEvent *event);
 
 //---------------------------ПЕРЕМЕННЫЕ---------------------------
 
@@ -91,7 +95,7 @@ public:
     };
 
     Ortho           currentOrtho;
-
+    ContextMenu     *contextMenuPrimitive;
     int             lastProjection;
     GLdouble        xRot,                   //
                     yRot,                   //
@@ -115,13 +119,15 @@ public:
 //////////////////////////////////////
     GLint Mx, My;           // Позиция Курсора (обработанная)
     GLint prevMx, prevMy;   // Предыдущая позиция курсора?
-    int selected_prim;
+    long selected_prim;
+
 
 
 
 
 public slots:
     void changeProection(int n);
+    void deletePrimitive();
 };
 
 #endif // GLWIDGET_H

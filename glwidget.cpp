@@ -9,6 +9,7 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     // ѕќ„»—“»“№!
     pMW = dynamic_cast<MainWindow*>(parent);
+    contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE,this);
     currentOrtho = Ortho();
     //color_selected_prim = {0};
     this->SELECTED            = false;
@@ -149,6 +150,11 @@ void GLWidget::paintGL()
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
+    if(event->button()==Qt::RightButton&&this->getSelectedPrimitiveID(event)>=0)
+    {
+        contextMenuPrimitive->exec(event->globalPos());
+    }
+
     p_lastPos = event->pos();
 
     switch(*currenEvent)
@@ -167,45 +173,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         break;
     case MEV_ROTATE:
     case MEV_TRANSLATE:
-        PAINTING_MODE = MODE_FICTIVE;
-        updateGL();
-        glReadPixels(event->pos().x(), event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
-        PAINTING_MODE = MODE_REAL;
-        updateGL();
-
-        if(currentWork->getOnlyPrimitiveList()->size()>0)
-        {
-            QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
-
-            for(int i=0;i<only_prim->size();i++)
-            {
-                int index = only_prim->at(i);   // »ндексы только примитивов
-                Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
-                int *na = 0;// ÷вет примитива из контейнера
-                GLubyte ba[3] = {0};
-                na = prim->getIDColor();
-                for(int i=0;i<3;i++)
-                    ba[i] = (GLubyte)na[i];
-
-                qDebug()<<"PIXEL"<<pixel[0]<<" "<<pixel[1]<<" "<<pixel[2];
-
-                if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
-                {
-                    SELECTED = true;
-                    selected_prim = index;
-                    //делаем точку в которой кликнули началом системы координат
-                    prevMx = currentOrtho.width/2 - event->pos().x();
-                    prevMy = event->pos().y() - currentOrtho.height/2;
-                    break;
-
-                }
-                else
-                {
-                    SELECTED = false;
-                }
-            }
-        }
-
+        getSelectedPrimitiveID(event);
         break;
     default:break;
     }
@@ -331,7 +299,7 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 {
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP){
+    if(this->getProjection()==MPJ_TOP){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -348,7 +316,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT){
+    if(this->getProjection()==MPJ_RIGHT){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -366,7 +334,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT){
+    if(this->getProjection()==MPJ_FRONT){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -383,7 +351,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE){
+    if(this->getProjection()==MPJ_PERSPECTIVE){
         if(current.x()>0){
             xTranslate += step_translate;
             //xCamPos -= step_translate;
@@ -413,7 +381,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 {
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP){
+    if(this->getProjection()==MPJ_TOP){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
@@ -423,7 +391,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT){
+    if(this->getProjection()==MPJ_RIGHT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
@@ -432,7 +400,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT){
+    if(this->getProjection()==MPJ_FRONT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
@@ -442,7 +410,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         return;
     }
     /*
-    if(event->buttons() && Qt::LeftButton && isPerspectiveW){
+    if(isPerspectiveW){
         if(current.y()>0){
             yCamPos -= step_translate;
             zCamPos -= step_translate;
@@ -459,28 +427,28 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
 {
-    if(event->buttons()&&Qt::LeftButton&&this->getProjection()==MPJ_TOP){
+    if(this->getProjection()==MPJ_TOP){
         if(current.x()>0)
             setYRotation(yRot + 8 * current.x());
         if(current.x()<0)
             setYRotation(yRot + 8 * current.x());
     }
 
-    if(event->buttons()&&Qt::LeftButton&&this->getProjection()==MPJ_FRONT){
+    if(this->getProjection()==MPJ_FRONT){
         if(current.x()>0)
             setZRotation(zRot + 8 * current.x());
         if(current.x()<0)
             setZRotation(zRot + 8 * current.x());
     }
 
-    if(event->buttons()&&Qt::LeftButton&&this->getProjection()==MPJ_RIGHT){
+    if(this->getProjection()==MPJ_RIGHT){
         if(current.x()>0)
             setXRotation(xRot + 8 * current.x());
         if(current.x()<0)
             setXRotation(xRot + 8 * current.x());
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE){
+    if(this->getProjection()==MPJ_PERSPECTIVE){
 
         //int sector = 50000;
 
@@ -561,6 +529,12 @@ void GLWidget::addPrimitive(QPoint current)
     currentWork->addPrimitive(*currenEvent);
 }
 
+void GLWidget::deletePrimitive()
+{
+    currentWork->deletePrimitive(selected_prim);
+    pMW->Update();
+}
+
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
 {
     QList<Element*> *list_elements = currentWork->getList();
@@ -570,10 +544,12 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
         Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
         //double koef = 0;
 
-        Mx = prevMx - (currentOrtho.width/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - currentOrtho.height/2);
-        prevMx = currentOrtho.width/2 - event->pos().x();
-        prevMy = event->pos().y() - currentOrtho.height/2;
+        double new_Mx = currentOrtho.width/2 - event->pos().x();
+        double new_My = event->pos().y() - currentOrtho.height/2;
+        Mx = prevMx - new_Mx;
+        My = prevMy - new_My;
+        prevMx = new_Mx;
+        prevMy = new_My;
         /*if(gScale<1)
         {
             koef= 1+(1-gScale);
@@ -620,7 +596,6 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
 {
-
     double step_rotate = 1;
     if(currentWork->getOnlyPrimitiveList()->size()>0)
     {
@@ -893,5 +868,49 @@ void GLWidget::qNormalizeAngle(int &angle)
 
 void GLWidget::initializeLighting()
 {
+
+}
+
+long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
+{
+    PAINTING_MODE = MODE_FICTIVE;
+    updateGL();
+    glReadPixels(event->pos().x(), currentOrtho.height - event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
+    PAINTING_MODE = MODE_REAL;
+    updateGL();
+
+    if(currentWork->getOnlyPrimitiveList()->size()>0)
+    {
+        QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
+
+        for(int i=0;i<only_prim->size();i++)
+        {
+            int index = only_prim->at(i);   // »ндексы только примитивов
+            Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
+            int *na = 0;// ÷вет примитива из контейнера
+            GLubyte ba[3] = {0};
+            na = prim->getIDColor();
+            for(int i=0;i<3;i++)
+                ba[i] = (GLubyte)na[i];
+
+            qDebug()<<"PIXEL"<<pixel[0]<<" "<<pixel[1]<<" "<<pixel[2];
+
+            if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
+            {
+                SELECTED = true;
+                //делаем точку в которой кликнули началом системы координат
+                prevMx = currentOrtho.width/2 - event->pos().x();
+                prevMy = event->pos().y() - currentOrtho.height/2;
+                selected_prim = index;
+                return index;
+
+            }
+            else
+            {
+                SELECTED = false;
+            }
+        }
+    }
+    return -1;
 
 }

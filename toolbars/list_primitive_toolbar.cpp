@@ -9,6 +9,7 @@ ListPrimitiveToolbar::ListPrimitiveToolbar(QWidget *parent) :  QToolBar(parent)
     lstWidget_primList   = new QListWidget();
 
     lt_global->addWidget(lstWidget_primList);
+    lstWidget_primList->clear();
     this->setLayout(lt_global);
 }
 
@@ -17,7 +18,6 @@ void ListPrimitiveToolbar::delPrimitive(Primitive *a)
    // ListWidgetElement *element = new ListWidgetElement();
 }
 
-
 void ListPrimitiveToolbar::UpdateList()
 {
 
@@ -25,7 +25,10 @@ void ListPrimitiveToolbar::UpdateList()
 
 void ListPrimitiveToolbar::addPrimitive(Primitive *prim)
 {
-    lstWidget_primList->addItem(new QListWidgetItem(getName(prim)));
+    QListWidgetItem *item = new QListWidgetItem(lstWidget_primList);
+    item->setText(getName(prim));
+    pMW->repaint();
+    //lstWidget_primList->addItem(item);
 }
 
 QString ListPrimitiveToolbar::getName(Primitive *element)

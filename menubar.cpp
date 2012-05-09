@@ -1,8 +1,12 @@
 #include "menubar.h"
-
+#include "mainwindow.h"
 MenuBar::MenuBar(QWidget *parent) :
     QMenuBar(parent)
 {
+    pMW = dynamic_cast<MainWindow*>(parent);
+
+    createActions();
+
     menu_file = new QMenu(QString::fromLocal8Bit("Файл"));
     this->addMenu(menu_file);
         menu_open = new QMenu(QString::fromLocal8Bit("Открыть"));
@@ -17,8 +21,13 @@ MenuBar::MenuBar(QWidget *parent) :
     this->addMenu(menu_primitive_action);
     menu_help = new QMenu(QString::fromLocal8Bit("Помощь"));
     this->addMenu(menu_help);
-        menu_about = new QMenu(QString::fromLocal8Bit("О программе"));
-        menu_help->addMenu(menu_about);
+        menu_help->addAction(show_about);
+        connect(show_about, SIGNAL(triggered()),pMW, SLOT(showAbout()));
 
     this->addMenu(menu_help);
+}
+
+void MenuBar::createActions()
+{
+    show_about = new QAction(QString::fromLocal8Bit("О программе"),this);
 }

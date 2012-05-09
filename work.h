@@ -16,15 +16,17 @@ class Work
 public:
     explicit Work(QWidget *parent);
     void drawWork(bool mode=true);
-    void addPrimitive(int i);               // Добавление объекта на сцену
-    void addAction(int i, double obj[3]);   // Применение действия
-    long generateGID();                          // Генерация идентификатора для события
+    void addPrimitive(int i);                           // Добавление объекта на сцену
+    void addAction(int i, double obj[3]);               // Применение действия
+    long generateGID();                                 // Генерация идентификатора для события
     void generatetIDColor(int arr[]);
     void generateColor(int arr[]);
     QList<Element*>* getList();
     QList<int>* getOnlyPrimitiveList();
+    void deletePrimitive(long index);
 public:
     int                      real_color[3];
+    void generateOnlyPrimitiveList();
 private:
     MainWindow  *pMW;
     QList<Element*>          *element_list;             //  Список элементов сцены

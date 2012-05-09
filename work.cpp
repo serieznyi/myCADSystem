@@ -68,7 +68,7 @@ void Work::addPrimitive(int i)
                 generateColor(cube->getColor());
                 element_list->append(cube);
                 only_prymitive->append(element_list->size()-1);
-          //      pMW->getListPrimitiveTollBar()->addPrimitive(cube);
+                pMW->getListPrimitiveTollBar()->addPrimitive(cube);
                 break;
     }
     case MEL_PYRAMID:
@@ -97,6 +97,15 @@ void Work::addPrimitive(int i)
     case MEL_POINT: break;
     case MEL_LINE: break;
     }
+}
+
+void Work::deletePrimitive(long index)
+{
+    element_list->removeAt(index);
+    element_list->removeAt(index-1);
+    element_list->removeAt(index-2);
+    only_prymitive->removeOne(index);
+    generateOnlyPrimitiveList();
 }
 
 void Work::addAction(int i, double obj[3])
@@ -159,5 +168,15 @@ QList<Element*>* Work::getList()
 QList<int> *Work::getOnlyPrimitiveList()
 {
     return only_prymitive;
+}
+
+void Work::generateOnlyPrimitiveList()
+{
+    only_prymitive->clear();
+    for(int i=0; i<element_list->size();i++)
+    {
+        if(element_list->at(i)->getTypeName()==MEL_PRIMITIVE)
+            only_prymitive->append(i);
+    }
 }
 

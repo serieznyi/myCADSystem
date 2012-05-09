@@ -10,6 +10,7 @@
 #define MODE_REAL                   true
 #define MODE_FICTIVE                false
 
+
 // ВИД
 #define MPJ_PERSPECTIVE             0
 #define MPJ_TOP                     1
@@ -17,6 +18,7 @@
 #define MPJ_FRONT                   3
 #define MPJ_MAXIMAZE                4
 #define MPJ_RESET                   5
+
 // Прочее
 #define COORD_X                     10
 #define COORD_Y                     11
@@ -43,5 +45,9 @@
 #define MEV_CAMERA_TRANSLATE        251 // Переместить камеру
 #define MEV_CAMERA_ROTATE           252 // Вращать камеру
 #define MEV_CAMERA_ZOOM             253 // Изменить масштаб
+
+//ПРОЧЕЕ
+#define MCM_SCENE                   300
+#define MCM_PRIMITIVE               301
 
 #endif // RESOURCE_H
