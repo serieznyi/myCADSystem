@@ -38,6 +38,7 @@ void ActionPrimitiveToolBar::createActions()
 
     groupAction             = new QAction(QString::fromLocal8Bit("&Сгрупировать"), this);
     this->addAction(groupAction);
+    connect(groupAction, SIGNAL(triggered()),SLOT(setGroup()));
 
     intersectionAction      = new QAction(QString::fromLocal8Bit("&Пересечение"), this);
     this->addAction(intersectionAction);
@@ -53,7 +54,13 @@ void ActionPrimitiveToolBar::setRotate()
     changeEvent(MEV_ROTATE);
 }
 
+void ActionPrimitiveToolBar::setGroup()
+{
+    changeEvent(MEV_GROUP);
+}
+
 void ActionPrimitiveToolBar::changeEvent(int i)
 {
     pMW->setCurEvent(i);
 }
+

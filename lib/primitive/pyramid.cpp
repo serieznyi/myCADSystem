@@ -19,6 +19,8 @@ void Pyramid::draw()
             else
     color = getIDColor();
 
+    glColor3ub(color[0],color[1],color[2]);
+
     GLdouble h = (sqrt(3)/2)*this->a;
        // glPushMatrix();//основание
             glRotated(90, 1, 0, 0);

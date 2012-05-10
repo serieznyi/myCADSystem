@@ -19,12 +19,12 @@ public:
     QMenu               *menu_open;
     QMenu               *menu_save;
     QMenu               *menu_save_to;
-    QMenu               *menu_exit;
     QMenu           *menu_scene_action;
     QMenu           *menu_select_primitive;
     QMenu           *menu_primitive_action;
     QMenu           *menu_help;
     QMenu               *menu_about;
+
     QAction         *close_prog;
     QAction         *show_about;
 

@@ -24,9 +24,14 @@ public:
     QList<Element*>* getList();
     QList<int>* getOnlyPrimitiveList();
     void deletePrimitive(long index);
+    void generateOnlyPrimitiveList();
 public:
     int                      real_color[3];
-    void generateOnlyPrimitiveList();
+    long                      toGroupIDs[2];
+    void setGroupObj1(long i);
+    void setGroupObj2(long i);
+    long getGroupObj1();
+    long getGroupObj2();
 private:
     MainWindow  *pMW;
     QList<Element*>          *element_list;             //  Список элементов сцены

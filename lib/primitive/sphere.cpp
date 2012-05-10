@@ -18,5 +18,8 @@ void Sphere::draw()
     color = getColor();
             else
     color = getIDColor();
+
+    glColor3ub(color[0],color[1],color[2]);
+
     gluSphere(quadric, a, 20, 20);
 }

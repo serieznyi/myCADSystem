@@ -8,6 +8,7 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     // ПОЧИСТИТЬ!
+    koef = 1;
     pMW = dynamic_cast<MainWindow*>(parent);
     contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE,this);
     currentOrtho = Ortho();
@@ -27,7 +28,7 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     xTranslate                = 0;
     yTranslate                = 0;
     zTranslate                = 0;
-    gScale              = 1.0f;
+    gScale              = 1;
     p_currentPos        = QPoint();
     comboBox            = new QComboBox();
     lay_global_v        = new QVBoxLayout();
@@ -174,6 +175,16 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     case MEV_ROTATE:
     case MEV_TRANSLATE:
         getSelectedPrimitiveID(event);
+        break;
+    case MEV_GROUP:
+        if(currentWork->getGroupObj1()==-1)
+            currentWork->setGroupObj1(getSelectedPrimitiveID(event));
+        else if(currentWork->getGroupObj2()==-1)
+            currentWork->setGroupObj2(getSelectedPrimitiveID(event));
+
+        if(currentWork->getGroupObj1()>-1&&currentWork->getGroupObj2()>-1)
+            eventGroupPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+
         break;
     default:break;
     }
@@ -388,29 +399,24 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
             gScale += step_scale;
 
         this->updateGL();
-        return;
     }
-
-    if(this->getProjection()==MPJ_RIGHT){
+    else if(this->getProjection()==MPJ_RIGHT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
             gScale += step_scale;
         this->updateGL();
-        return;
     }
-
-    if(this->getProjection()==MPJ_FRONT){
+    else if(this->getProjection()==MPJ_FRONT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
             gScale += step_scale;
 
         this->updateGL();
-        return;
     }
     /*
-    if(isPerspectiveW){
+    else if(isPerspectiveW){
         if(current.y()>0){
             yCamPos -= step_translate;
             zCamPos -= step_translate;
@@ -423,6 +429,8 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         return;
     }
 */
+
+    koef = calcKoef();
 }
 
 void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
@@ -542,7 +550,6 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
     if(list_elements->size()>0 && SELECTED)
     {
         Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
-        //double koef = 0;
 
         double new_Mx = currentOrtho.width/2 - event->pos().x();
         double new_My = event->pos().y() - currentOrtho.height/2;
@@ -550,12 +557,6 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
         My = prevMy - new_My;
         prevMx = new_Mx;
         prevMy = new_My;
-        /*if(gScale<1)
-        {
-            koef= 1+(1-gScale);
-        }*/
-
-
 
         if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
         {
@@ -577,20 +578,6 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
             pMW->Update();
             return;
         }
-
-        /*
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE && SELECTED)
-    {
-        Mx = prevMx - (w/2 - event->pos().x());
-        My = prevMy - (event->pos().y() - h/2);
-        prevMx = w/2 - event->pos().x();
-        prevMy = event->pos().y() - h/2;
-
-        translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-
-        pMW->Update();
-        return;
-    }*/
     }
 }
 
@@ -651,6 +638,32 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
                 return;
             }
         }
+    }
+}
+
+void GLWidget::eventGroupPrimitive(long obj1, long obj2)
+{
+    if(obj1==obj2)
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                        QString::fromLocal8Bit("Невозможно групировать с самим собой!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
+    }
+    if(intersectionGroupObj(obj1,obj2))
+    {
+        addPrimitive();
+        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
+                           QString::fromLocal8Bit("Объекты сгрупированы!"));
+    }
+    else
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                        QString::fromLocal8Bit("Объекты не пересекаются!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
     }
 }
 
@@ -913,4 +926,19 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
     }
     return -1;
 
+}
+
+double GLWidget::calcKoef()
+{
+    if(gScale<1)
+    {
+        return 1+(1-gScale);
+    }
+    qDebug()<<koef;
+}
+
+bool GLWidget::intersectionGroupObj(long ob1, long obj2)
+{
+
+    return true;
 }

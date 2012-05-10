@@ -95,6 +95,7 @@ public:
     };
 
     Ortho           currentOrtho;
+    double koef;
     ContextMenu     *contextMenuPrimitive;
     int             lastProjection;
     GLdouble        xRot,                   //
@@ -125,6 +126,9 @@ public:
 
 
 
+    double calcKoef();
+    void eventGroupPrimitive(long ob1, long obj2);
+    bool intersectionGroupObj(long ob1, long obj2);
 public slots:
     void changeProection(int n);
     void deletePrimitive();

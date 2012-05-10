@@ -32,12 +32,13 @@ private:
     MenuBar                         *menuBar;
     ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
     SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // Панель выбора примитивов
-    ListPrimitiveToolbar            *listPrimitiveToolBar;      //  Панель примитивов сцены
+    ListPrimitiveToolbar            *listPrimitiveToolBar;      // Панель примитивов сцены
     SceneControlPanel               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие
     int                             prev_event;                 // Предыдущее событие
     Work                            *currentWork;               // Текущая работа
+    bool                             WORK_CREATED;
 public slots:
     void showAbout();
 

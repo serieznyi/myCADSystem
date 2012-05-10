@@ -4,9 +4,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     //инициализация переменных
     cur_event                   = MEV_CAMERA_TRANSLATE;
+    WORK_CREATED                = false;
     prev_event                  = 0;
     currentWork                 = new Work(this);
-    menuBar                     = new MenuBar();
+    menuBar                     = new MenuBar(this);
     actionPrimitiveToolbar      = new ActionPrimitiveToolBar(this);
     selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
     sceneControlPanel           = new SceneControlPanel(this);
@@ -81,11 +82,7 @@ StatusBar *MainWindow::getStatusBar()
 
 void MainWindow::showAbout()
 {
-    QMessageBox::about(this, tr("About Spreadsheet"),
-            tr("<h2>Spreadsheet 1.1</h2>"
-               "<p>Copyright &copy; 2006 Software Inc."
-               "<p>Spreadsheet is a small application that "
-               "demonstrates QAction, QMainWindow, QMenuBar, "
-               "QStatusBar, QTableWidget, QToolBar, and many other "
-               "Qt classes."));
+    QMessageBox::about(this, tr("About Recent Files"),
+             tr("The <b>Recent Files</b> example demonstrates how to provide a "
+                "recently used file menu in a Qt application."));
 }

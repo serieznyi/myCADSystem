@@ -9,8 +9,11 @@ SelectPrimitiveToolbar::SelectPrimitiveToolbar(QWidget *parent) :  QToolBar(pare
     pb_point        = new QPushButton();
     pb_line         = new QPushButton();
     pb_quad         = new QPushButton();
-    pb_pyramid     = new QPushButton();
+    pb_pyramid      = new QPushButton();
     pb_sphere       = new QPushButton();
+    /////////////////////////////////////////
+    //pb_quad->setStyleSheet("color: blue;");
+
 
     lt_global->addWidget(pb_point);
     lt_global->addWidget(pb_line);

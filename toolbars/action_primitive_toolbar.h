@@ -16,7 +16,6 @@ class ActionPrimitiveToolBar : public QToolBar
     Q_OBJECT
 public:
     explicit ActionPrimitiveToolBar(QWidget *parent = 0);
-
 private:
     void createActions();
     void changeEvent(int i);
@@ -41,6 +40,7 @@ private:
 public slots:
     void setTranslate();
     void setRotate();
+    void setGroup();
 
 
 };

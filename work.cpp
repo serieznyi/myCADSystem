@@ -11,6 +11,8 @@ Work::Work(QWidget *parent)
     current_free_color[0]       = 0;
     current_free_color[1]       = 0;
     current_free_color[2]       = 0;
+    toGroupIDs[0]=-1;
+    toGroupIDs[1]=-1;
     quadric                     = gluNewQuadric();
 }
 
@@ -68,7 +70,7 @@ void Work::addPrimitive(int i)
                 generateColor(cube->getColor());
                 element_list->append(cube);
                 only_prymitive->append(element_list->size()-1);
-                pMW->getListPrimitiveTollBar()->addPrimitive(cube);
+                //pMW->getListPrimitiveTollBar()->addPrimitive(cube);
                 break;
     }
     case MEL_PYRAMID:
@@ -89,13 +91,14 @@ void Work::addPrimitive(int i)
     }
     case MEL_CYLINDER:
     {
-        //Pyramid *pyramid = new Pyramid(1.0f);
-        //pyramid->setID(genPrimID());
-        //primitives_list->append(pyramid);
+
         break;
     }
     case MEL_POINT: break;
     case MEL_LINE: break;
+    case MEV_GROUP:
+
+        break;
     }
 }
 
@@ -180,3 +183,22 @@ void Work::generateOnlyPrimitiveList()
     }
 }
 
+void Work::setGroupObj1(long i)
+{
+    toGroupIDs[0]=i;
+}
+
+void Work::setGroupObj2(long i)
+{
+    toGroupIDs[1]=i;
+}
+
+long Work::getGroupObj1()
+{
+    return toGroupIDs[0];
+}
+
+long Work::getGroupObj2()
+{
+    return toGroupIDs[1];
+}

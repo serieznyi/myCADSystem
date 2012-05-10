@@ -1,5 +1,6 @@
 #include "menubar.h"
 #include "mainwindow.h"
+
 MenuBar::MenuBar(QWidget *parent) :
     QMenuBar(parent)
 {
@@ -11,8 +12,8 @@ MenuBar::MenuBar(QWidget *parent) :
     this->addMenu(menu_file);
         menu_open = new QMenu(QString::fromLocal8Bit("Открыть"));
         menu_file->addMenu(menu_open);
-        menu_exit = new QMenu(QString::fromLocal8Bit("Выход"));
-        menu_file->addMenu(menu_exit);
+        menu_file->addAction(close_prog);
+        connect(close_prog, SIGNAL(triggered()),pMW, SLOT(close()));
     menu_scene_action = new QMenu(QString::fromLocal8Bit("Сцена"));
     this->addMenu(menu_scene_action);
     menu_select_primitive = new QMenu(QString::fromLocal8Bit("Примитивы"));
@@ -30,4 +31,5 @@ MenuBar::MenuBar(QWidget *parent) :
 void MenuBar::createActions()
 {
     show_about = new QAction(QString::fromLocal8Bit("О программе"),this);
+    close_prog = new QAction(QString::fromLocal8Bit("Выход"),this);
 }
