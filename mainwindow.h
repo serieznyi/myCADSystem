@@ -17,7 +17,7 @@
 class MainWindow : public QMainWindow
 {
 public:
-    explicit MainWindow(QWidget *parent = 0);                   // Конструктор
+    explicit MainWindow(int max_width, int max_height, QWidget *parent = 0);                   // Конструктор
     int* getCurEvent();
     void setCurEvent(int event);
     int *getPrevEvent();
@@ -39,6 +39,8 @@ private:
     int                             prev_event;                 // Предыдущее событие
     Work                            *currentWork;               // Текущая работа
     bool                             WORK_CREATED;
+public:
+    long selected_prim;
 public slots:
     void showAbout();
 

@@ -8,6 +8,7 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     // ПОЧИСТИТЬ!
+    step_rotate = 1;
     koef = 1;
     pMW = dynamic_cast<MainWindow*>(parent);
     contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE,this);
@@ -173,8 +174,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
     case MEV_ROTATE:
+        if(this->getSelectedPrimitiveID(event)>=0)
+            addAction(MEV_ROTATE);
+        break;
     case MEV_TRANSLATE:
-        getSelectedPrimitiveID(event);
+        if(this->getSelectedPrimitiveID(event)>=0)
+            addAction(MEV_TRANSLATE);
         break;
     case MEV_GROUP:
         if(currentWork->getGroupObj1()==-1)
@@ -524,6 +529,12 @@ void GLWidget::addPrimitive()
     pMW->Update();
 }
 
+void GLWidget::addPrimitive(int i)
+{
+    currentWork->addAction(i);
+    pMW->Update();
+}
+
 void GLWidget::addPrimitive(QPoint current)
 {
     double modelview[16], projection[16];
@@ -537,19 +548,22 @@ void GLWidget::addPrimitive(QPoint current)
     currentWork->addPrimitive(*currenEvent);
 }
 
+void GLWidget::addAction(int i)
+{
+    currentWork->addAction(*currenEvent);
+}
+
 void GLWidget::deletePrimitive()
 {
-    currentWork->deletePrimitive(selected_prim);
+    currentWork->deletePrimitive(pMW->selected_prim);
     pMW->Update();
 }
 
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
-{
-    QList<Element*> *list_elements = currentWork->getList();
-
-    if(list_elements->size()>0 && SELECTED)
+{    
+    if(SELECTED)
     {
-        Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(selected_prim-2));
+        Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(pMW->selected_prim+1));
 
         double new_Mx = currentOrtho.width/2 - event->pos().x();
         double new_My = event->pos().y() - currentOrtho.height/2;
@@ -583,60 +597,59 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
 {
-    double step_rotate = 1;
-    if(currentWork->getOnlyPrimitiveList()->size()>0)
+    if(SELECTED)
     {
-        QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
-
-        for(int i=0;i<only_prim->size();i++)
+        Rotate *rotate =dynamic_cast<Rotate*>(currentWork->getList()->at(pMW->selected_prim+1));
+        double step_rotate = 1;
+        switch(getProjection())
         {
-            int index = only_prim->at(i);
-            Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
-            int *na = 0;
-            GLubyte ba[3] = {0};
-            na =prim->getIDColor();
-            for(int i=0;i<3;i++)
-                ba[i] = (GLubyte)na[i];
-
-            if(ba[0]==na[0]&&ba[1]==na[1]&&ba[2]==na[2])
-            {
-                Rotate *rotate =dynamic_cast<Rotate*>(currentWork->getList()->at(index-1));
-
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
-                {
-                    if(current.x()>0){
-                        rotate->RotateZ(step_rotate);
-                    }
-                    else if(current.x()<0){
-                        rotate->RotateZ(-step_rotate);
-                    }
-                    if(current.y()>0){
-                        rotate->RotateX(step_rotate);
-                    }
-                    else if(current.y()<0){
-                        rotate->RotateX(-step_rotate);
-                    }
-                    pMW->Update();
-                    return;
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
-                {
-
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
-                {
-
-                }
-                if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_PERSPECTIVE)
-                {
-
-                }
-
-
-                //translate->move(step_translate,step_translate,step_translate);
-                //pMW->Update();
-                return;
+        case MPJ_TOP:
+            if(current.x()>0){
+                rotate->RotateY(step_rotate);
             }
+            else if(current.x()<0){
+                rotate->RotateY(-step_rotate);
+            }
+            if(current.y()>0){
+                rotate->RotateY(step_rotate);
+            }
+            else if(current.y()<0){
+                rotate->RotateY(-step_rotate);
+            }
+            pMW->Update();
+            break;
+        case MPJ_FRONT:
+            if(current.x()<0){
+                rotate->RotateZ(step_rotate);
+            }
+            else if(current.x()>0){
+                rotate->RotateZ(-step_rotate);
+            }
+            if(current.y()<0){
+                rotate->RotateZ(step_rotate);
+            }
+            else if(current.y()>0){
+                rotate->RotateZ(-step_rotate);
+            }
+            pMW->Update();
+            break;
+        case MPJ_RIGHT:
+            if(current.x()>0){
+                rotate->RotateX(step_rotate);
+            }
+            else if(current.x()<0){
+                rotate->RotateX(-step_rotate);
+            }
+            if(current.y()>0){
+                rotate->RotateX(step_rotate);
+            }
+            else if(current.y()<0){
+                rotate->RotateX(-step_rotate);
+            }
+            pMW->Update();
+            break;
+        case MPJ_PERSPECTIVE:
+            break;
         }
     }
 }
@@ -646,21 +659,23 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     if(obj1==obj2)
     {
         QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                        QString::fromLocal8Bit("Невозможно групировать с самим собой!"));
+                              QString::fromLocal8Bit("Невозможно групировать с самим собой!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
     }
     if(intersectionGroupObj(obj1,obj2))
     {
-        addPrimitive();
+        addPrimitive(MEL_GROUP);
         QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
                            QString::fromLocal8Bit("Объекты сгрупированы!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
     }
     else
     {
         QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                        QString::fromLocal8Bit("Объекты не пересекаются!"));
+                              QString::fromLocal8Bit("Объекты не пересекаются!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -892,16 +907,19 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
     PAINTING_MODE = MODE_REAL;
     updateGL();
 
-    if(currentWork->getOnlyPrimitiveList()->size()>0)
+    QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
+    QList<Element*> *list_elements= currentWork->getList();
+
+    if(only_prim->size()>0)
     {
-        QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
 
         for(int i=0;i<only_prim->size();i++)
         {
             int index = only_prim->at(i);   // Индексы только примитивов
-            Primitive *prim = dynamic_cast<Primitive*>(currentWork->getList()->at(index));
+            Primitive *prim = dynamic_cast<Primitive*>(list_elements->at(index));
             int *na = 0;// Цвет примитива из контейнера
             GLubyte ba[3] = {0};
+        //    qDebug()<<prim->getTypeName();
             na = prim->getIDColor();
             for(int i=0;i<3;i++)
                 ba[i] = (GLubyte)na[i];
@@ -914,7 +932,7 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
                 //делаем точку в которой кликнули началом системы координат
                 prevMx = currentOrtho.width/2 - event->pos().x();
                 prevMy = event->pos().y() - currentOrtho.height/2;
-                selected_prim = index;
+                pMW->selected_prim = index;
                 return index;
 
             }
@@ -935,6 +953,7 @@ double GLWidget::calcKoef()
         return 1+(1-gScale);
     }
     qDebug()<<koef;
+    return 1;
 }
 
 bool GLWidget::intersectionGroupObj(long ob1, long obj2)

@@ -35,8 +35,9 @@ QString ListPrimitiveToolbar::getName(Primitive *element)
 {
     switch(element->getTypeName())
     {
-        case MEL_CUBE: return "Куб"; break;
-        case MEL_PYRAMID: return "Пирамида"; break;
+        case MEL_CUBE: return "Куб";
+        case MEL_PYRAMID: return "Пирамида";
+        default: return "";
     }
 }
 

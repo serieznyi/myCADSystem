@@ -14,17 +14,17 @@ void Rotate::Apply(bool mode)
     glRotated(angleZ, 0, 0, 1);
 }
 
-void Rotate::RotateX(double angle)
+void Rotate::RotateX(GLdouble angle)
 {
     this->angleX+=angle;
 }
 
-void Rotate::RotateY(double angle)
+void Rotate::RotateY(GLdouble angle)
 {
     this->angleY+=angle;
 }
 
-void Rotate::RotateZ(double angle)
+void Rotate::RotateZ(GLdouble angle)
 {
     this->angleZ+=angle;
 }

@@ -15,9 +15,9 @@ public:
     double angleX;
     double angleY;
     double angleZ;
-    void RotateX(double angle);
-    void RotateY(double angle);
-    void RotateZ(double angle);
+    void RotateX(GLdouble angle);
+    void RotateY(GLdouble angle);
+    void RotateZ(GLdouble angle);
 };
 
 #endif // ROTATE_H

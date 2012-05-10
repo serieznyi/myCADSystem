@@ -32,6 +32,7 @@
 #define MEL_PYRAMID                 104
 #define MEL_CYLINDER                105
 #define MEL_SPHERE                  106
+#define MEL_GROUP                   107
 
 //ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
 #define MEV_ACTION                  200 // Переместить

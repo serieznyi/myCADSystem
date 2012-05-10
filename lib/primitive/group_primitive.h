@@ -1,18 +1,12 @@
 #ifndef GROUP_PRIMITIVE_H
 #define GROUP_PRIMITIVE_H
 
-#include "lib/lib.h"
+#include "lib/primitive/primitive.h"
 
-class Group_primitive : public Primitive
+class GroupPrimitive : public Primitive
 {
 public:
-    Group_primitive(long obj1, long obj2);
-    void addObj1(Translate *tr, Rotate *rot, Primitive prim);
-    void addObj2(Translate *tr, Rotate *rot, Primitive prim);
-public:
-    Translate *trans1, trans2;
-    Rotate  *rot1, rot2;
-    Primitive *prim1, prim2;
+    explicit GroupPrimitive(QList<Element *> *element);
 };
 
 #endif // GROUP_PRIMITIVE_H

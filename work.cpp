@@ -22,7 +22,7 @@ void Work::drawWork(bool mode)
     glPushMatrix();
     if(size > 0)
     {
-        for(int i=0;i<size;i++)
+        for(int i=size-1;i>=0;i--)
         {
             Element *elem = element_list->at(i);
             elem->Apply(mode);
@@ -42,52 +42,33 @@ void Work::addPrimitive(int i)
     {
     case MEL_SPHERE:
     {
-        Translate *translate = new Translate(0, 0, 0);
-        translate->setGID(generateGID());
-        element_list->append(translate);
-            Rotate *rotate = new Rotate(0,0,0);
-            rotate->setGID(generateGID());
-            element_list->append(rotate);
-                Sphere *sphere = new Sphere(quadric, 1.0f);
-                sphere->setGID(generateGID());
-                generatetIDColor(sphere->getIDColor());
-                generateColor(sphere->getColor());
-                element_list->append(sphere);
-                only_prymitive->append(element_list->size()-1);
-                break;
+        Sphere *sphere = new Sphere(quadric, 1.0f);
+        sphere->setGID(generateGID());
+        generatetIDColor(sphere->getIDColor());
+        generateColor(sphere->getColor());
+        element_list->append(sphere);
+        only_prymitive->append(element_list->size()-1);
+        break;
     }
     case MEL_CUBE:
     {
-        Translate *translate = new Translate(0, 0, 0);
-        translate->setGID(generateGID());
-        element_list->append(translate);
-            Rotate *rotate = new Rotate(0,0,0);
-            rotate->setGID(generateGID());
-            element_list->append(rotate);
-                Cube *cube = new Cube(1.0f);
-                cube->setGID(generateGID());
-                generatetIDColor(cube->getIDColor());
-                generateColor(cube->getColor());
-                element_list->append(cube);
-                only_prymitive->append(element_list->size()-1);
-                //pMW->getListPrimitiveTollBar()->addPrimitive(cube);
-                break;
+        Cube *cube = new Cube(1.0f);
+        cube->setGID(generateGID());
+        generatetIDColor(cube->getIDColor());
+        generateColor(cube->getColor());
+        element_list->append(cube);
+        only_prymitive->append(element_list->size()-1);
+        break;
     }
     case MEL_PYRAMID:
     {
-        Translate *translate = new Translate(0, 0, 0);
-        translate->setGID(generateGID());
-        element_list->append(translate);
-            Rotate *rotate = new Rotate(0,0,0);
-            rotate->setGID(generateGID());
-            element_list->append(rotate);
-                Pyramid *pyramid = new Pyramid(1.0f);
-                pyramid->setGID(generateGID());
-                generatetIDColor(pyramid->getIDColor());
-                generateColor(pyramid->getColor());
-                element_list->append(pyramid);
-                only_prymitive->append(element_list->size()-1);
-                break;
+        Pyramid *pyramid = new Pyramid(1.0f);
+        pyramid->setGID(generateGID());
+        generatetIDColor(pyramid->getIDColor());
+        generateColor(pyramid->getColor());
+        element_list->append(pyramid);
+        only_prymitive->append(element_list->size()-1);
+        break;
     }
     case MEL_CYLINDER:
     {
@@ -96,9 +77,6 @@ void Work::addPrimitive(int i)
     }
     case MEL_POINT: break;
     case MEL_LINE: break;
-    case MEV_GROUP:
-
-        break;
     }
 }
 
@@ -111,21 +89,62 @@ void Work::deletePrimitive(long index)
     generateOnlyPrimitiveList();
 }
 
-void Work::addAction(int i, double obj[3])
+void Work::addAction(int i)
 {
     switch(i)
     {
     case MEV_GROUP:
+    {
+        long groupObj1 = getGroupObj1();
+        long groupObj2 = getGroupObj2();
+
+        QList<Element*> *tmp = new QList<Element*>();
+        //Получение объектов для групировки и удаление их из основного списка элементов сцены
+        tmp->append(element_list->at(groupObj1));
+        for(int i=groupObj1+1 ;i<element_list->size();i++) // Получение всех связных элементов первого объекта
+        {
+            Element *elem = element_list->at(i);
+            if(elem->getTypeName()==MEV_ACTION)
+                tmp->append(element_list->at(i));
+            else
+                break;
+        }
+        tmp->append(element_list->at(groupObj2));
+        for(int i=groupObj2+1;i<element_list->size();i++) // Получение всех связных элементов второго объекта
+        {
+            Element *elem = element_list->at(i);
+            if(elem->getTypeName()==MEV_ACTION)
+                tmp->append(element_list->at(i));
+            else
+                break;
+        }
+        for(int i=0;i<tmp->size();i++) // Удаление полученных элЕментов из главного списка
+        {
+            Element *elem = tmp->at(i);
+            element_list->removeOne(elem);
+        }
+
+        //GroupPrimitive *grpPrimitive = new GroupPrimitive(tmp);
+        //  grpPrimitive->setGID(generateGID());
+        //  element_list->append(grpPrimitive);
         break;
+    }
     case MEV_TRANSLATE:
     {
-        Translate *translate = new Translate(obj[0], obj[1], obj[2]);
+        Translate *translate = new Translate(0,0,0);
         translate->setGID(generateGID());
-        element_list->append(translate);
+        element_list->insert(pMW->selected_prim+1,translate);
+        generateOnlyPrimitiveList();
         break;
     }
     case MEV_ROTATE:
+    {
+        Rotate *rotate = new Rotate(0,0,0);
+        rotate->setGID(generateGID());
+        element_list->insert(pMW->selected_prim+1,rotate);
+        generateOnlyPrimitiveList();
         break;
+    }
     case MEV_SUBSTRACT:
         break;
     case MEV_INTERSECT:

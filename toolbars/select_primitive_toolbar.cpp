@@ -21,6 +21,7 @@ SelectPrimitiveToolbar::SelectPrimitiveToolbar(QWidget *parent) :  QToolBar(pare
     lt_global->addWidget(pb_pyramid);
     lt_global->addWidget(pb_sphere);
     lt_global->addStretch(5);
+
     this->setLayout(lt_global);
 
     createActions();

@@ -117,18 +117,16 @@ public:
     double          R;
     static const GLfloat step_scale = 0.01f;
     static const GLfloat step_translate = 0.05f;
+    GLdouble step_rotate;
 //////////////////////////////////////
     GLint Mx, My;           // Позиция Курсора (обработанная)
     GLint prevMx, prevMy;   // Предыдущая позиция курсора?
-    long selected_prim;
-
-
-
-
 
     double calcKoef();
     void eventGroupPrimitive(long ob1, long obj2);
     bool intersectionGroupObj(long ob1, long obj2);
+    void addAction(int i);
+    void addPrimitive(int i);
 public slots:
     void changeProection(int n);
     void deletePrimitive();

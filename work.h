@@ -17,7 +17,7 @@ public:
     explicit Work(QWidget *parent);
     void drawWork(bool mode=true);
     void addPrimitive(int i);                           // Добавление объекта на сцену
-    void addAction(int i, double obj[3]);               // Применение действия
+    void addAction(int i);               // Применение действия
     long generateGID();                                 // Генерация идентификатора для события
     void generatetIDColor(int arr[]);
     void generateColor(int arr[]);
