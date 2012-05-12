@@ -7,7 +7,6 @@
 #include "lib/primitive/cube.h"
 #include "lib/primitive/pyramid.h"
 #include "lib/primitive/sphere.h"
-#include "lib/primitive/group_primitive.h"
 
 #include "lib/action/action.h"
 #include "lib/action/translate.h"

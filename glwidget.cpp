@@ -666,7 +666,7 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     }
     if(intersectionGroupObj(obj1,obj2))
     {
-        addPrimitive(MEL_GROUP);
+        addPrimitive(MEV_GROUP);
         QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
                            QString::fromLocal8Bit("Объекты сгрупированы!"));
         currentWork->setGroupObj1(-1);
@@ -956,8 +956,18 @@ double GLWidget::calcKoef()
     return 1;
 }
 
-bool GLWidget::intersectionGroupObj(long ob1, long obj2)
-{
-
+bool GLWidget::intersectionGroupObj(long obj1, long obj2)
+{/*
+    Element *prim1 = currentWork->element_list->at(obj1);
+    Element *prim2 = currentWork->element_list->at(obj2);
+    switch(prim1->getTypeName())
+    {
+        case MEL_CUBE:
+        //     prim1->
+            break;
+        case MEL_SPHERE:
+            break;
+    }
+*/
     return true;
 }

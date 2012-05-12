@@ -14,6 +14,8 @@ Work::Work(QWidget *parent)
     toGroupIDs[0]=-1;
     toGroupIDs[1]=-1;
     quadric                     = gluNewQuadric();
+
+    QList<Element*> *tmp = new QList<Element*>;
 }
 
 void Work::drawWork(bool mode)
@@ -117,16 +119,16 @@ void Work::addAction(int i)
                 tmp->append(element_list->at(i));
             else
                 break;
-        }
+        }        
+        //GroupPrimitive *grpPrimitive = new GroupPrimitive(tmp);
+        /*
+        grpPrimitive->setGID(generateGID());
+        element_list->append(grpPrimitive);
         for(int i=0;i<tmp->size();i++) // ”даление полученных эл≈ментов из главного списка
         {
             Element *elem = tmp->at(i);
             element_list->removeOne(elem);
-        }
-
-        //GroupPrimitive *grpPrimitive = new GroupPrimitive(tmp);
-        //  grpPrimitive->setGID(generateGID());
-        //  element_list->append(grpPrimitive);
+        }*/
         break;
     }
     case MEV_TRANSLATE:

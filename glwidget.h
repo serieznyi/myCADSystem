@@ -124,7 +124,7 @@ public:
 
     double calcKoef();
     void eventGroupPrimitive(long ob1, long obj2);
-    bool intersectionGroupObj(long ob1, long obj2);
+    bool intersectionGroupObj(long obj1, long obj2);
     void addAction(int i);
     void addPrimitive(int i);
 public slots:

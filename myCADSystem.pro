@@ -35,7 +35,7 @@ SOURCES += \
     lib/primitive/sphere.cpp \
     toolbars/list_primitive_toolbar.cpp \
     contextmenu.cpp \
-    lib/primitive/group_primitive.cpp
+    lib/container.cpp
 
 HEADERS  += \
     lib/element.h \
@@ -63,7 +63,7 @@ HEADERS  += \
     lib/primitive/sphere.h \
     toolbars/list_primitive_toolbar.h \
     contextmenu.h \
-    lib/primitive/group_primitive.h
+    lib/container.h
 
 FORMS +=
 
