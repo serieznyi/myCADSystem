@@ -6,8 +6,8 @@
 #include <GL/glu.h>
 #include "stdlib.h"
 #include "time.h"
-#include "lib/lib.h"
 #include "resource.h"
+#include "lib/lib.h"
 
 class MainWindow;
 
@@ -21,24 +21,21 @@ public:
     long generateGID();                                 // Генерация идентификатора для события
     void generatetIDColor(int arr[]);
     void generateColor(int arr[]);
-    QList<Element*>* getList();
-    QList<int>* getOnlyPrimitiveList();
+    QList<Container *> *getList();
     void deletePrimitive(long index);
-    void generateOnlyPrimitiveList();
-public:
-    int                      real_color[3];
-    long                      toGroupIDs[2];
     void setGroupObj1(long i);
     void setGroupObj2(long i);
     long getGroupObj1();
     long getGroupObj2();
+public:
+    int                      real_color[3];
+    long                      toGroupIDs[2];
 private:
     MainWindow  *pMW;
-    QList<Element*>          *element_list;             //  Список элементов сцены
-    long                     current_free_id;           //  Текущий свободный идентификатор
-    int                      current_free_color[3];     //
-    QList<int>               *only_prymitive;           //  Индексы только примитивов
-    GLUquadric               *quadric;
+    QList<Container*>          *element_list;             //  Список элементов сцены
+    long                        current_free_id;           //  Текущий свободный идентификатор
+    int                         current_free_color[3];     //
+    GLUquadric                  *quadric;
 };
 
 

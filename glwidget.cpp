@@ -151,8 +151,10 @@ void GLWidget::paintGL()
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
-{
-    if(event->button()==Qt::RightButton&&this->getSelectedPrimitiveID(event)>=0)
+{        
+    getSelectedPrimitiveID(event);
+
+    if(event->button()==Qt::RightButton&&SELECTED)
     {
         contextMenuPrimitive->exec(event->globalPos());
     }
@@ -174,18 +176,18 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
     case MEV_ROTATE:
-        if(this->getSelectedPrimitiveID(event)>=0)
+        if(SELECTED)
             addAction(MEV_ROTATE);
         break;
     case MEV_TRANSLATE:
-        if(this->getSelectedPrimitiveID(event)>=0)
+        if(SELECTED)
             addAction(MEV_TRANSLATE);
         break;
     case MEV_GROUP:
         if(currentWork->getGroupObj1()==-1)
-            currentWork->setGroupObj1(getSelectedPrimitiveID(event));
+            currentWork->setGroupObj1(pMW->selected_prim);
         else if(currentWork->getGroupObj2()==-1)
-            currentWork->setGroupObj2(getSelectedPrimitiveID(event));
+            currentWork->setGroupObj2(pMW->selected_prim);
 
         if(currentWork->getGroupObj1()>-1&&currentWork->getGroupObj2()>-1)
             eventGroupPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
@@ -294,20 +296,31 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
     switch(*currenEvent)
     {
     case MEV_CAMERA_TRANSLATE:
-        eventTranslateCamera(event, current);
+        eventTranslateCamera(event,current);
         break;
-    case MEV_CAMERA_ZOOM:
-        eventZoomCamera(event, current);
+
+    case MEV_TRANSLATE:
+        if(SELECTED)
+            eventTranslatePrimitive(event);
+        else
+            eventTranslateCamera(event,current);
         break;
+
     case MEV_CAMERA_ROTATE:
         eventRotateCamera(event, current);
         break;
-    case MEV_TRANSLATE:
-        eventTranslatePrimitive(event);
-        break;
+
     case MEV_ROTATE:
-        eventRotatePrimitive(event, current);
+        if(SELECTED)
+            eventRotatePrimitive(event, current);
+        else
+            eventRotateCamera(event,current);
         break;
+
+    case MEV_CAMERA_ZOOM:
+        eventZoomCamera(event, current);
+        break;
+
     }
 }
 
@@ -560,97 +573,94 @@ void GLWidget::deletePrimitive()
 }
 
 void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
-{    
-    if(SELECTED)
+{
+    Translate *translate =currentWork->getList()->at(pMW->selected_prim)->getTranslate();
+
+    double new_Mx = currentOrtho.width/2 - event->pos().x();
+    double new_My = event->pos().y() - currentOrtho.height/2;
+    Mx = prevMx - new_Mx;
+    My = prevMy - new_My;
+    prevMx = new_Mx;
+    prevMy = new_My;
+
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
     {
-        Translate *translate =dynamic_cast<Translate*>(currentWork->getList()->at(pMW->selected_prim+1));
+        translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
+        pMW->Update();
+        return;
+    }
 
-        double new_Mx = currentOrtho.width/2 - event->pos().x();
-        double new_My = event->pos().y() - currentOrtho.height/2;
-        Mx = prevMx - new_Mx;
-        My = prevMy - new_My;
-        prevMx = new_Mx;
-        prevMy = new_My;
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
+    {
+        translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
+        pMW->Update();
+        return;
+    }
 
-        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
-        {
-            translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-            pMW->Update();
-            return;
-        }
-
-        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
-        {
-            translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
-            pMW->Update();
-            return;
-        }
-
-        if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
-        {
-            translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
-            pMW->Update();
-            return;
-        }
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
+    {
+        translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
+        pMW->Update();
+        return;
     }
 }
 
 void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
 {
-    if(SELECTED)
+    Rotate *rotate =currentWork->getList()->at(pMW->selected_prim)->getRotate();
+
+
+    double step_rotate = 1;
+    switch(getProjection())
     {
-        Rotate *rotate =dynamic_cast<Rotate*>(currentWork->getList()->at(pMW->selected_prim+1));
-        double step_rotate = 1;
-        switch(getProjection())
-        {
-        case MPJ_TOP:
-            if(current.x()>0){
-                rotate->RotateY(step_rotate);
-            }
-            else if(current.x()<0){
-                rotate->RotateY(-step_rotate);
-            }
-            if(current.y()>0){
-                rotate->RotateY(step_rotate);
-            }
-            else if(current.y()<0){
-                rotate->RotateY(-step_rotate);
-            }
-            pMW->Update();
-            break;
-        case MPJ_FRONT:
-            if(current.x()<0){
-                rotate->RotateZ(step_rotate);
-            }
-            else if(current.x()>0){
-                rotate->RotateZ(-step_rotate);
-            }
-            if(current.y()<0){
-                rotate->RotateZ(step_rotate);
-            }
-            else if(current.y()>0){
-                rotate->RotateZ(-step_rotate);
-            }
-            pMW->Update();
-            break;
-        case MPJ_RIGHT:
-            if(current.x()>0){
-                rotate->RotateX(step_rotate);
-            }
-            else if(current.x()<0){
-                rotate->RotateX(-step_rotate);
-            }
-            if(current.y()>0){
-                rotate->RotateX(step_rotate);
-            }
-            else if(current.y()<0){
-                rotate->RotateX(-step_rotate);
-            }
-            pMW->Update();
-            break;
-        case MPJ_PERSPECTIVE:
-            break;
+    case MPJ_TOP:
+        if(current.x()>0){
+            rotate->RotateY(step_rotate);
         }
+        else if(current.x()<0){
+            rotate->RotateY(-step_rotate);
+        }
+        if(current.y()>0){
+            rotate->RotateY(step_rotate);
+        }
+        else if(current.y()<0){
+            rotate->RotateY(-step_rotate);
+        }
+
+        pMW->Update();
+        break;
+    case MPJ_FRONT:
+        if(current.x()<0){
+            rotate->RotateZ(step_rotate);
+        }
+        else if(current.x()>0){
+            rotate->RotateZ(-step_rotate);
+        }
+        if(current.y()<0){
+            rotate->RotateZ(step_rotate);
+        }
+        else if(current.y()>0){
+            rotate->RotateZ(-step_rotate);
+        }
+        pMW->Update();
+        break;
+    case MPJ_RIGHT:
+        if(current.x()>0){
+            rotate->RotateX(step_rotate);
+        }
+        else if(current.x()<0){
+            rotate->RotateX(-step_rotate);
+        }
+        if(current.y()>0){
+            rotate->RotateX(step_rotate);
+        }
+        else if(current.y()<0){
+            rotate->RotateX(-step_rotate);
+        }
+        pMW->Update();
+        break;
+    case MPJ_PERSPECTIVE:
+        break;
     }
 }
 
@@ -907,24 +917,19 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
     PAINTING_MODE = MODE_REAL;
     updateGL();
 
-    QList<int> *only_prim = currentWork->getOnlyPrimitiveList();
-    QList<Element*> *list_elements= currentWork->getList();
+    QList<Container*> *elements= currentWork->getList();
 
-    if(only_prim->size()>0)
+    if(elements->size()>0)
     {
 
-        for(int i=0;i<only_prim->size();i++)
+        for(int i=0;i<elements->size();i++)
         {
-            int index = only_prim->at(i);   // Индексы только примитивов
-            Primitive *prim = dynamic_cast<Primitive*>(list_elements->at(index));
+            Container *cont = elements->at(i);
             int *na = 0;// Цвет примитива из контейнера
             GLubyte ba[3] = {0};
-        //    qDebug()<<prim->getTypeName();
-            na = prim->getIDColor();
+            na = cont->getPrimitive()->getIDColor();
             for(int i=0;i<3;i++)
                 ba[i] = (GLubyte)na[i];
-
-            qDebug()<<"PIXEL"<<pixel[0]<<" "<<pixel[1]<<" "<<pixel[2];
 
             if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
             {
@@ -932,8 +937,8 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
                 //делаем точку в которой кликнули началом системы координат
                 prevMx = currentOrtho.width/2 - event->pos().x();
                 prevMy = event->pos().y() - currentOrtho.height/2;
-                pMW->selected_prim = index;
-                return index;
+                pMW->selected_prim = i;
+                return i;
 
             }
             else
@@ -942,6 +947,7 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
             }
         }
     }
+
     return -1;
 
 }

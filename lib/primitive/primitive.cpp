@@ -2,8 +2,7 @@
 
 Primitive::Primitive():Element()
 {
-    //memset(ID_COLOR, 0, 3);
-    //memset(COLOR, 0, 3);
+    colors_arr = new QStack<QColor>();
     ID_COLOR[0]=ID_COLOR[1]=ID_COLOR[2]=0;
     COLOR[0]=COLOR[1]=COLOR[2]=0;
     this->setTypeName(MEL_PRIMITIVE);
@@ -12,6 +11,11 @@ Primitive::Primitive():Element()
 int* Primitive::getIDColor()
 {
     return this->ID_COLOR;
+}
+
+void Primitive::setColor(QColor color)
+{
+
 }
 
 int* Primitive::getColor()

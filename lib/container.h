@@ -4,7 +4,9 @@
 #define CONTAINER_H
 
 #include <QList>
-#include "lib/lib.h"
+#include "lib/primitive/primitive.h"
+#include "lib/action/translate.h"
+#include "lib/action/rotate.h"
 
 class Container
 {
@@ -12,10 +14,16 @@ public:
     Container(Primitive *prim);
     void addTranslate(Translate *trans);
     void addRotate(Rotate *rot);
+    QList<Translate*>* getTranslateList();
+    QList<Rotate*>* getRotateList();
+    Translate* getTranslate();
+    Rotate* getRotate();
+    Primitive* getPrimitive();
+    void draw(int mode);
 private:
     Primitive *primitive;
-    QList<Translate*> *translateList;
-    QList<Rotate*> *rotateList;
+    QList<Translate*>* translateList;
+    QList<Rotate*>* rotateList;
 };
 
 #endif // CONTAINER_H
