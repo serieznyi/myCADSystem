@@ -13,13 +13,13 @@ void Sphere::Apply(bool mode)
 
 void Sphere::draw()
 {
-    int *color = 0;
+    MCOLOR *color = 0;
     if(getPaintMode())
     color = getColor();
             else
     color = getIDColor();
 
-    glColor3ub(color[0],color[1],color[2]);
+    glColor3ub(color->red,color->green,color->blue);
 
     gluSphere(quadric, a, 20, 20);
 }

@@ -925,11 +925,12 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
         for(int i=0;i<elements->size();i++)
         {
             Container *cont = elements->at(i);
-            int *na = 0;// Цвет примитива из контейнера
+            MCOLOR *color = 0;// Цвет примитива из контейнера
             GLubyte ba[3] = {0};
-            na = cont->getPrimitive()->getIDColor();
-            for(int i=0;i<3;i++)
-                ba[i] = (GLubyte)na[i];
+            color = cont->getPrimitive()->getIDColor();
+                ba[0] = (GLubyte)color->red;
+                ba[1] = (GLubyte)color->green;
+                ba[2] = (GLubyte)color->blue;
 
             if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
             {

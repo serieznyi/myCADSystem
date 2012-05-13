@@ -14,11 +14,13 @@ void Cube::Apply(bool mode)
 
 void Cube::draw()
 {
-    int *color = 0;
+    MCOLOR *color = 0;
     if(getPaintMode())
     color = getColor();
             else
     color = getIDColor();
+
+    glColor3ub(color->red,color->green,color->blue);
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -31,8 +33,6 @@ void Cube::draw()
             a,-a,a,
             a,a,a,
             -a,a,a};
-
-    glColor3ub(color[0],color[1],color[2]);
 
     glVertexPointer(3,GL_FLOAT,0,vertices);
 

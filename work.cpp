@@ -40,8 +40,8 @@ void Work::addPrimitive(int i)
     {
         Sphere *sphere = new Sphere(quadric, 1.0f);
         sphere->setGID(generateGID());
-        generatetIDColor(sphere->getIDColor());
-        generateColor(sphere->getColor());
+        sphere->setIDColor(generateIDColor());
+        sphere->setColor(generateColor());
         element_list->append(new Container(sphere));
         break;
     }
@@ -49,8 +49,8 @@ void Work::addPrimitive(int i)
     {
         Cube *cube = new Cube(1.0f);
         cube->setGID(generateGID());
-        generatetIDColor(cube->getIDColor());
-        generateColor(cube->getColor());
+        cube->setIDColor(generateIDColor());
+        cube->setColor(generateColor());
         element_list->append(new Container(cube));
         break;
     }
@@ -58,8 +58,8 @@ void Work::addPrimitive(int i)
     {
         Pyramid *pyramid = new Pyramid(1.0f);
         pyramid->setGID(generateGID());
-        generatetIDColor(pyramid->getIDColor());
-        generateColor(pyramid->getColor());
+        pyramid->setIDColor(generateIDColor());
+        pyramid->setColor(generateColor());
         element_list->append(new Container(pyramid));
         break;
     }
@@ -86,10 +86,12 @@ void Work::addAction(int i)
     {
         Container *obj1 = element_list->at(getGroupObj1());
         Container *obj2 = element_list->at(getGroupObj2());
-        obj1->getPrimitive()->set;
-        //generatetIDColor(cube->getIDColor());
+
         GroupPrimitive *groupPrim = new GroupPrimitive(obj1, obj2);
         groupPrim->setGID(generateGID());
+        groupPrim->setIDColor(generateIDColor());
+        groupPrim->setColor(generateColor());
+        groupPrim->SynchData();
         element_list->removeOne(obj1);
         element_list->removeOne(obj2);
         element_list->append(new Container(groupPrim));
@@ -123,8 +125,10 @@ long Work::generateGID()
     return current_free_id++;
 }
 
-void Work::generatetIDColor(int arr[])
+MCOLOR* Work::generateIDColor()
 {
+    int arr[3]={0};
+
     if(this->current_free_color[2]<255)
     {
         arr[2] = current_free_color[2]++;
@@ -137,15 +141,22 @@ void Work::generatetIDColor(int arr[])
     {
         arr[0] = current_free_color[0]++;
     }
+    MCOLOR *color;
+    color = new MCOLOR(arr[0],arr[1],arr[2]);
+    return color;
 }
 
-void Work::generateColor(int arr[])
+MCOLOR* Work::generateColor()
 {
+    int arr[3]={0};
+    MCOLOR *color;
     for(int i=0; i<3; i++)
     {
         arr[i]=(0 + rand()%255);
         srand(time(NULL));
     }
+    color = new MCOLOR(arr[0],arr[1],arr[2]);
+    return color;
 }
 
 QList<Container*>* Work::getList()

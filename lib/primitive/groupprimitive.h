@@ -10,6 +10,7 @@ public:
     GroupPrimitive(Container *con1, Container *con2);
     virtual void Apply(bool mode=true);
     virtual void draw();
+    void SynchData();
 private:
     Container *container1;
     Container *container2;
