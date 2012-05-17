@@ -37,9 +37,9 @@ private:
     MainWindow *pMW;
 
 public slots:
-    void addCube();
-    void addPyramid();
-    void addSphere();
+    void setCubeAction();
+    void setPyramidAction();
+    void setSphereAction();
 };
 
 #endif // PRIMITIVETOOLBAR_H

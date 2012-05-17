@@ -16,17 +16,24 @@ public:
 public:
     MainWindow             *pMW;
     QMenu           *menu_file;
-    QMenu               *menu_open;
-    QMenu               *menu_save;
-    QMenu               *menu_save_to;
+    QAction               *action_open;
+    QAction               *action_save;
+    QAction               *action_save_to;
+    QAction               *action_exit;
     QMenu           *menu_scene_action;
+    QAction               *actionTranslateCamera;
+    QAction               *actionRotateCamera;
+    QAction               *actionZoomCamera;
     QMenu           *menu_select_primitive;
+    QAction               *actionCube;
+    QAction               *actionPyramid;
+    QAction               *actionSphere;
     QMenu           *menu_primitive_action;
+    QAction               *actionTranslate;
+    QAction               *actionRotate;
+    QAction               *actionGroup;
     QMenu           *menu_help;
-    QMenu               *menu_about;
-
-    QAction         *close_prog;
-    QAction         *show_about;
+    QAction               *action_about;
 
 };
 

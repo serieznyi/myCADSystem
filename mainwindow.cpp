@@ -8,19 +8,19 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     WORK_CREATED                = false;
     prev_event                  = 0;
     currentWork                 = new Work(this);
-    menuBar                     = new MenuBar(this);
     actionPrimitiveToolbar      = new ActionPrimitiveToolBar(this);
     selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
-    sceneControlPanel           = new SceneControlPanel(this);
+    sceneControlPanel           = new SceneControlToolbar(this);
     paintingZone                = new PaintingZone(this);
-    listPrimitiveToolBar        = new ListPrimitiveToolbar(this);
+    //listPrimitiveToolBar        = new ListPrimitiveToolbar(this);
     statusBar                   = new StatusBar();
+    menuBar                     = new MenuBar(this);
 
     this->setMenuBar(menuBar);
     this->addToolBar(actionPrimitiveToolbar);
     this->addToolBar(selectPrimitiveToolbar);
     this->addToolBar(sceneControlPanel);
-    this->addToolBar(Qt::RightToolBarArea, listPrimitiveToolBar);
+    //this->addToolBar(Qt::RightToolBarArea, listPrimitiveToolBar);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
@@ -72,9 +72,19 @@ PaintingZone* MainWindow::getPaintingZone()
     return paintingZone;
 }
 
-ListPrimitiveToolbar* MainWindow::getListPrimitiveTollBar()
+SelectPrimitiveToolbar* MainWindow::getSelectPrimitiveToolbar()
 {
-    return listPrimitiveToolBar;
+    return selectPrimitiveToolbar;
+}
+
+ActionPrimitiveToolBar *MainWindow::getActionPrimitiveToolbar()
+{
+    return actionPrimitiveToolbar;
+}
+
+SceneControlToolbar *MainWindow::getSceneControlToolbar()
+{
+    return sceneControlPanel;
 }
 
 StatusBar *MainWindow::getStatusBar()

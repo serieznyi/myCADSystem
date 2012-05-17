@@ -16,7 +16,7 @@ class Work
 public:
     explicit Work(QWidget *parent);
     void drawWork(bool mode=true);
-    void addPrimitive(int i);                           // Добавление объекта на сцену
+    void addPrimitive(int i, QPoint pos=QPoint(0,0));                           // Добавление объекта на сцену
     void addAction(int i);                              // Применение действия
     long generateGID();                                 // Генерация идентификатора для события
     MCOLOR *generateIDColor();
@@ -29,8 +29,8 @@ public:
     long getGroupObj2();
 public:
     int                      real_color[3];
-    long                      toGroupIDs[2];
 private:
+    long                      forGroupID[2];
     MainWindow  *pMW;
     QList<Container*>          *element_list;             //  Список элементов сцены
     long                        current_free_id;           //  Текущий свободный идентификатор

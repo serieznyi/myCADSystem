@@ -7,6 +7,15 @@ Container::Container(Primitive *prim)
     translateList       = new QList<Translate*>();
 }
 
+Container::Container(Primitive *prim, Translate *translate)
+{
+    primitive           = prim;
+    rotateList          = new QList<Rotate*>();
+    translateList       = new QList<Translate*>();
+
+    addTranslate(translate);
+}
+
 void Container::addTranslate(Translate *trans)
 {
     translateList->append(trans);

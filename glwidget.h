@@ -40,8 +40,9 @@ public:
     void eventZoomCamera(QMouseEvent *event, QPoint current);           //  Масштабирование камеры
     void eventTranslatePrimitive(QMouseEvent *event);                   //  Перемещение примитива
     void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
-    void addPrimitive();                                                //  Добавление примитива в позицию по умолчанию
-    void addPrimitive(QPoint current);                                  //  Добавление примитива на сцену в указанную позицию
+    void addPrimitive(QPoint pos=QPoint(0,0));                                      //  Добавление примитива
+    void addAction(int i);
+    void addPrimitive(int i);
     double ScreenToOGL(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
     void drawAxes();                                                    //  Рисование осей
     void drawPlane();                                                   //  Рисование плоскости
@@ -125,8 +126,8 @@ public:
     double calcKoef();
     void eventGroupPrimitive(long ob1, long obj2);
     bool intersectionGroupObj(long obj1, long obj2);
-    void addAction(int i);
-    void addPrimitive(int i);
+    void eventSubstractPrimitive(long obj1, long obj2);
+    void eventIntersectPrimitive(long obj1, long obj2);
 public slots:
     void changeProection(int n);
     void deletePrimitive();

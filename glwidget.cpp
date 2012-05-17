@@ -57,10 +57,13 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 
 void GLWidget::initializeGL()
 {
-    glClearColor(1.0f,1.0f,1.0f,1.0f);              // цвет "очистки порта вида"
-    glEnable(GL_DEPTH_TEST);                        // буфер глубины
+    glClearColor(1.0f,1.0f,1.0f,1.0f);                  // цвет "очистки порта вида"
+    glEnable(GL_DEPTH_TEST);                            // буфер глубины
+    glClearStencil(0); // значение заполнения буфера трафарета при очистке
+    //glStencilMask(l);// число битов, задающее маску
+    glEnable(GL_STENCIL_TEST);                          // буфер трафарета
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    //glEnable(GL_COLOR_MATERIAL);                    // цвет материала
+    //glEnable(GL_COLOR_MATERIAL);                      // цвет материала
     //glEnable(GL_LIGHTING);
     //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     //glEnable(GL_LIGHT0);
@@ -112,8 +115,8 @@ void GLWidget::paintGL()
 {
     glLoadIdentity();
 
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);   // Очистка буферов
-    glPolygonMode(GL_FRONT, GL_POINTS);          // Режим отрисовки
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);   // Очистка буферов
+    glPolygonMode(GL_FRONT, GL_FILL);          // Режим отрисовки
 
     glScalef(gScale, gScale, gScale);
     glTranslatef(xTranslate, yTranslate, zTranslate);
@@ -148,6 +151,26 @@ void GLWidget::paintGL()
     currentWork->drawWork(PAINTING_MODE);
     if(PAINTING_MODE!=MODE_FICTIVE)
         drawAxes();
+    /*
+    GLUquadric *quad = gluNewQuadric();
+
+    glStencilFunc(GL_NEVER, 1, 1); // значение mask не используется
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+
+
+    glColor3d(1,0,0);
+    gluSphere(quad, 1.0, 20, 20);
+
+
+    glTranslated(0.7, 0, 0);
+
+    glStencilFunc(GL_NOTEQUAL, 1, 1); // значение mask не используется
+    glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);
+
+    glColor3d(0,1,0);
+    gluSphere(quad, 1.0, 20, 20);*/
+
+
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
@@ -169,9 +192,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     case MEL_POINT:
     case MEL_CYLINDER:
     case MEL_LINE:
-        /*if(event->buttons()&&Qt::LeftButton&&isTopW)
-            addPrimitive(event->pos());
-        else */addPrimitive();
+        addPrimitive();
         previousEvent = currenEvent;
         pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
         break;
@@ -184,6 +205,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
             addAction(MEV_TRANSLATE);
         break;
     case MEV_GROUP:
+    {
         if(currentWork->getGroupObj1()==-1)
             currentWork->setGroupObj1(pMW->selected_prim);
         else if(currentWork->getGroupObj2()==-1)
@@ -193,6 +215,31 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
             eventGroupPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
 
         break;
+    }
+    case MEV_SUBSTRACT:
+    {
+        if(currentWork->getGroupObj1()==-1)
+            currentWork->setGroupObj1(pMW->selected_prim);
+        else if(currentWork->getGroupObj2()==-1)
+            currentWork->setGroupObj2(pMW->selected_prim);
+
+        if(currentWork->getGroupObj1()>-1&&currentWork->getGroupObj2()>-1)
+            eventSubstractPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+
+        break;
+    }
+    case MEV_INTERSECT:
+    {
+        if(currentWork->getGroupObj1()==-1)
+            currentWork->setGroupObj1(pMW->selected_prim);
+        else if(currentWork->getGroupObj2()==-1)
+            currentWork->setGroupObj2(pMW->selected_prim);
+
+        if(currentWork->getGroupObj1()>-1&&currentWork->getGroupObj2()>-1)
+            eventIntersectPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+
+        break;
+    }
     default:break;
     }
 }
@@ -536,9 +583,18 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
 
 //  Примитивы
 
-void GLWidget::addPrimitive()
+void GLWidget::addPrimitive(QPoint pos)
 {
-    currentWork->addPrimitive(*currenEvent);
+    if(pos.x()==0&&pos.y()==0)
+        currentWork->addPrimitive(*currenEvent);
+    else
+    {
+        double x = ScreenToOGL(pos.x(), COORD_X);
+        double y = ScreenToOGL(pos.y(), COORD_Y);
+        qDebug()<<x<<" "<<y;
+        currentWork->addPrimitive(*currenEvent, QPoint(x,y));
+    }
+
     pMW->Update();
 }
 
@@ -546,19 +602,6 @@ void GLWidget::addPrimitive(int i)
 {
     currentWork->addAction(i);
     pMW->Update();
-}
-
-void GLWidget::addPrimitive(QPoint current)
-{
-    double modelview[16], projection[16];
-    GLdouble obj[3];
-    int viewport[4];
-    glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
-    glGetDoublev( GL_PROJECTION_MATRIX, projection );
-    glGetIntegerv( GL_VIEWPORT, viewport );
-    gluUnProject(current.x(), current.y(), 0, modelview, projection, viewport, &obj[0], &obj[1], &obj[2]);
-
-    currentWork->addPrimitive(*currenEvent);
 }
 
 void GLWidget::addAction(int i)
@@ -692,6 +735,63 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     }
 }
 
+void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
+{
+    if(obj1==obj2)
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                              QString::fromLocal8Bit("Невозможно вычесть из самого себя!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
+    }
+    if(intersectionGroupObj(obj1,obj2))
+    {
+        addPrimitive(MEV_SUBSTRACT);
+        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
+                           QString::fromLocal8Bit("Объект вычтен!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+    }
+    else
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
+    }
+
+}
+
+void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
+{
+    if(obj1==obj2)
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                              QString::fromLocal8Bit("Невозможно пересечь с самим сабой!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
+    }
+    if(intersectionGroupObj(obj1,obj2))
+    {
+        addPrimitive(MEV_INTERSECT);
+        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
+                           QString::fromLocal8Bit("Объекты пересечены!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+    }
+    else
+    {
+        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
+                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        currentWork->setGroupObj1(-1);
+        currentWork->setGroupObj2(-1);
+        return;
+    }
+}
+
 //  Рисование
 void GLWidget::drawAxes()
 {
@@ -780,7 +880,6 @@ void GLWidget::drawZ()
 
 void GLWidget::drawPlane()
 {
-    //glPushAttrib(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0f, 0.0f, 0.0f);
 
     for(double i=PLANE_MIN_X; i<=PLANE_MAX_X;i+=0.5)
@@ -793,7 +892,6 @@ void GLWidget::drawPlane()
         glVertex3d(i, 0, PLANE_MAX_Z);
         glEnd();
     }
-    //glPopAttrib();
 }
 
 //  Дополнительные
@@ -928,9 +1026,9 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
             MCOLOR *color = 0;// Цвет примитива из контейнера
             GLubyte ba[3] = {0};
             color = cont->getPrimitive()->getIDColor();
-                ba[0] = (GLubyte)color->red;
-                ba[1] = (GLubyte)color->green;
-                ba[2] = (GLubyte)color->blue;
+            ba[0] = (GLubyte)color->red;
+            ba[1] = (GLubyte)color->green;
+            ba[2] = (GLubyte)color->blue;
 
             if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
             {

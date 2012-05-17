@@ -10,8 +10,9 @@ Work::Work(QWidget *parent)
     current_free_color[0]       = 0;
     current_free_color[1]       = 0;
     current_free_color[2]       = 0;
-    toGroupIDs[0]=-1;
-    toGroupIDs[1]=-1;
+    forGroupID[0]=-1;
+    forGroupID[1]=-1;
+
     quadric                     = gluNewQuadric();
 }
 
@@ -22,17 +23,25 @@ void Work::drawWork(bool mode)
     for(int i=0;i<element_list->size();i++){
         Container *cont = element_list->at(i);
         cont->draw(mode);
-        if(cont->getPrimitive()->getTypeName()==MEL_PRIMITIVE)
+        switch(cont->getPrimitive()->getTypeName())
         {
+        case MEL_PRIMITIVE:
+        case MEL_CUBE:
+        case MEL_LINE:
+        case MEL_PYRAMID:
+        case MEL_SPHERE:
+        case MEL_GROUP:
+        case MEL_CYLINDER:
+        case MEL_POINT:
             glPopMatrix();
             glPushMatrix();
+        default:break;
         }
     }
-
     glPopMatrix();
 }
 
-void Work::addPrimitive(int i)
+void Work::addPrimitive(int i, QPoint pos)
 {
     switch(i)
     {
@@ -51,7 +60,10 @@ void Work::addPrimitive(int i)
         cube->setGID(generateGID());
         cube->setIDColor(generateIDColor());
         cube->setColor(generateColor());
-        element_list->append(new Container(cube));
+        if(pos.x()!=0&&pos.y()!=0)
+            element_list->append(new Container(cube, new Translate(pos.x(), pos.y(), 0)));
+        else
+            element_list->append(new Container(cube));
         break;
     }
     case MEL_PYRAMID:
@@ -96,8 +108,21 @@ void Work::addAction(int i)
         element_list->removeOne(obj2);
         element_list->append(new Container(groupPrim));
         break;
+    }
+    case MEV_SUBSTRACT:
+    {
+        Container *obj1 = element_list->at(getGroupObj1());
+        Container *obj2 = element_list->at(getGroupObj2());
 
-
+        SubstractPrimitive *substractPrim = new SubstractPrimitive(obj1, obj2);
+        substractPrim->setGID(generateGID());
+        substractPrim->setIDColor(generateIDColor());
+        substractPrim->setColor(generateColor());
+        substractPrim->SynchData();
+        element_list->removeOne(obj1);
+        element_list->removeOne(obj2);
+        element_list->append(new Container(substractPrim));
+        break;
     }
     case MEV_TRANSLATE:
     {
@@ -113,9 +138,22 @@ void Work::addAction(int i)
         element_list->at(pMW->selected_prim)->addRotate(rotate);
         break;
     }
-    case MEV_SUBSTRACT:
-        break;
     case MEV_INTERSECT:
+    {
+        Container *obj1 = element_list->at(getGroupObj1());
+        Container *obj2 = element_list->at(getGroupObj2());
+
+        IntersectPrimitive *intersectPrim = new IntersectPrimitive(obj1, obj2);
+        intersectPrim->setGID(generateGID());
+        intersectPrim->setIDColor(generateIDColor());
+        intersectPrim->setColor(generateColor());
+        intersectPrim->SynchData();
+        element_list->removeOne(obj1);
+        element_list->removeOne(obj2);
+        element_list->append(new Container(intersectPrim));
+        break;
+    }
+    default:
         break;
     }
 }
@@ -166,20 +204,20 @@ QList<Container*>* Work::getList()
 
 void Work::setGroupObj1(long i)
 {
-    toGroupIDs[0]=i;
+    forGroupID[0]=i;
 }
 
 void Work::setGroupObj2(long i)
 {
-    toGroupIDs[1]=i;
+    forGroupID[1]=i;
 }
 
 long Work::getGroupObj1()
 {
-    return toGroupIDs[0];
+    return forGroupID[0];
 }
 
 long Work::getGroupObj2()
 {
-    return toGroupIDs[1];
+    return forGroupID[1];
 }

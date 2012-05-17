@@ -7,6 +7,7 @@ Pyramid::Pyramid(GLfloat a):Primitive()
 
 void Pyramid::Apply(bool mode)
 {
+    this->setTypeName(MEL_PYRAMID);
     setPaintMode(mode);
     draw();
 }

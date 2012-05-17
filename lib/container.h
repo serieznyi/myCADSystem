@@ -12,6 +12,7 @@ class Container
 {
 public:
     Container(Primitive *prim);
+    Container(Primitive *prim, Translate *translate);
     void addTranslate(Translate *trans);
     void addRotate(Rotate *rot);
     QList<Translate*>* getTranslateList();

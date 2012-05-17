@@ -3,6 +3,7 @@
 
 Cube::Cube(GLfloat a=1.0f):Primitive()
 {
+    this->setTypeName(MEL_CUBE);
     this->a = a;
 }
 

@@ -3,7 +3,6 @@
 Primitive::Primitive():Element()
 {
     idcolors_arr = new QStack<MCOLOR*>();
-    this->setTypeName(MEL_PRIMITIVE);
 }
 
 void Primitive::setIDColor(MCOLOR *color)
@@ -19,7 +18,7 @@ void Primitive::setColor(MCOLOR *color)
 
 MCOLOR* Primitive::getIDColor()
 {
-    return this->COLOR;
+    return this->ID_COLOR;
 }
 
 MCOLOR* Primitive::getColor()

@@ -2,6 +2,7 @@
 
 GroupPrimitive::GroupPrimitive(Container *con1, Container *con2)
 {
+    this->setTypeName(MEL_GROUP);
     container1 = con1;
     container2 = con2;
 }
@@ -25,4 +26,16 @@ void GroupPrimitive::SynchData()
 
     container2->getPrimitive()->setIDColor(this->getIDColor());
     container2->getPrimitive()->setColor(this->getColor());
+
+    if(container1->getPrimitive()->getTypeName()==MEL_GROUP)
+    {
+        GroupPrimitive *gp = dynamic_cast<GroupPrimitive*>(container1->getPrimitive());
+        gp->SynchData();
+
+    }
+    if(container2->getPrimitive()->getTypeName()==MEL_GROUP)
+    {
+        GroupPrimitive *gp = dynamic_cast<GroupPrimitive*>(container2->getPrimitive());
+        gp->SynchData();
+    }
 }

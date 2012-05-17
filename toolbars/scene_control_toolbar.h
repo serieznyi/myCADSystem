@@ -11,11 +11,11 @@
 
 class MainWindow;
 
-class SceneControlPanel : public QToolBar
+class SceneControlToolbar : public QToolBar
 {
        Q_OBJECT
 public:
-    SceneControlPanel(QWidget *parent);
+    SceneControlToolbar(QWidget *parent);
 
 private:
     void createActions();
@@ -34,7 +34,7 @@ private:
     MainWindow *pMW;
 
 public slots:
-    void setCameraPosAction();
+    void setCameraTranslateAction();
     void setCameraRotAction();
     void setCameraZoomAction();
 

@@ -1,7 +1,7 @@
 #include "scene_control_toolbar.h"
 #include "mainwindow.h"
 
-SceneControlPanel::SceneControlPanel(QWidget *parent):QToolBar(parent)
+SceneControlToolbar::SceneControlToolbar(QWidget *parent):QToolBar(parent)
 {
         pMW = dynamic_cast<MainWindow*>(parent);
 
@@ -20,10 +20,10 @@ SceneControlPanel::SceneControlPanel(QWidget *parent):QToolBar(parent)
        createActions();
 }
 
-void SceneControlPanel::createActions()
+void SceneControlToolbar::createActions()
 {
     cameraPosAction = new QAction(QString::fromLocal8Bit("&Переместить камеру"), this);
-    connect(cameraPosAction, SIGNAL(triggered()),SLOT(setCameraPosAction()));
+    connect(cameraPosAction, SIGNAL(triggered()),SLOT(setCameraTranslateAction()));
 
     cameraRotAction = new QAction(QString::fromLocal8Bit("&Повернуть камеру"), this);
     connect(cameraRotAction, SIGNAL(triggered()), SLOT(setCameraRotAction()));
@@ -36,22 +36,22 @@ void SceneControlPanel::createActions()
     this->addAction(cameraZoomAction);
 }
 
-void SceneControlPanel::setCameraPosAction()
+void SceneControlToolbar::setCameraTranslateAction()
 {
     changeEvent(MEV_CAMERA_TRANSLATE);
 }
 
-void SceneControlPanel::setCameraRotAction()
+void SceneControlToolbar::setCameraRotAction()
 {
     changeEvent(MEV_CAMERA_ROTATE);
 }
 
-void SceneControlPanel::setCameraZoomAction()
+void SceneControlToolbar::setCameraZoomAction()
 {
     changeEvent(MEV_CAMERA_ZOOM);
 }
 
-void SceneControlPanel::changeEvent(int i)
+void SceneControlToolbar::changeEvent(int i)
 {
     pMW->setCurEvent(i);
 }

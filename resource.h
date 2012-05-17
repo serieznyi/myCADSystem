@@ -33,6 +33,8 @@
 #define MEL_CYLINDER                105
 #define MEL_SPHERE                  106
 #define MEL_GROUP                   107
+#define MEL_SUBSTRACT               108
+#define MEL_INTERSECT               109
 
 //ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
 #define MEV_ACTION                  200 // Переместить

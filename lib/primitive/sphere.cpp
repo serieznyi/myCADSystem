@@ -2,6 +2,7 @@
 
 Sphere::Sphere(GLUquadric *quad, GLfloat a):Cube(a)
 {
+    this->setTypeName(MEL_SPHERE);
     quadric = quad;
 }
 

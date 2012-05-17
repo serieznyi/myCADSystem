@@ -36,7 +36,9 @@ SOURCES += \
     toolbars/list_primitive_toolbar.cpp \
     contextmenu.cpp \
     lib/container.cpp \
-    lib/primitive/groupprimitive.cpp
+    lib/primitive/groupprimitive.cpp \
+    lib/primitive/substractprimitive.cpp \
+    lib/primitive/intersectprimitive.cpp
 
 HEADERS  += \
     lib/element.h \
@@ -65,7 +67,9 @@ HEADERS  += \
     toolbars/list_primitive_toolbar.h \
     contextmenu.h \
     lib/container.h \
-    lib/primitive/groupprimitive.h
+    lib/primitive/groupprimitive.h \
+    lib/primitive/substractprimitive.h \
+    lib/primitive/intersectprimitive.h
 
 FORMS +=
 
