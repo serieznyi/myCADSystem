@@ -6,12 +6,6 @@ Sphere::Sphere(GLUquadric *quad, GLfloat a):Cube(a)
     quadric = quad;
 }
 
-void Sphere::Apply(bool mode)
-{
-    setPaintMode(mode);
-    draw();
-}
-
 void Sphere::draw()
 {
     MCOLOR *color = 0;

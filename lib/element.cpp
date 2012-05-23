@@ -2,8 +2,6 @@
 
 Element::Element()
 {
-
-    //this->type_name = name;
 }
 
 void Element::setGID(long n)

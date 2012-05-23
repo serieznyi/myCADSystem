@@ -500,25 +500,15 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
 {
-    if(this->getProjection()==MPJ_TOP){
-        if(current.x()>0)
-            setYRotation(yRot + 8 * current.x());
-        if(current.x()<0)
-            setYRotation(yRot + 8 * current.x());
-    }
+    if(this->getProjection()==MPJ_TOP)
+        setYRotation(yRot + 8 * current.x());
 
-    if(this->getProjection()==MPJ_FRONT){
-        if(current.x()>0)
-            setZRotation(zRot + 8 * current.x());
-        if(current.x()<0)
-            setZRotation(zRot + 8 * current.x());
-    }
+    if(this->getProjection()==MPJ_FRONT)
+        setZRotation(zRot + (-8) * current.x());
 
-    if(this->getProjection()==MPJ_RIGHT){
-        if(current.x()>0)
-            setXRotation(xRot + 8 * current.x());
-        if(current.x()<0)
-            setXRotation(xRot + 8 * current.x());
+    if(this->getProjection()==MPJ_RIGHT)
+    {
+       setXRotation(xRot + 8 * current.x());
     }
 
     if(this->getProjection()==MPJ_PERSPECTIVE){

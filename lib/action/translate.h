@@ -9,7 +9,7 @@ class Translate : public Action
 {
 public:
     explicit Translate(double x=0, double y=0, double z=0);
-    virtual void Apply(bool mode=true);
+    virtual void Apply(int mode=true);
     void move(double x, double y, double z);
     void moveTo(double x, double y, double z);
 

@@ -8,12 +8,6 @@ SubstractPrimitive::SubstractPrimitive(Container *con1, Container *con2)
     resultContainer = container1;
 }
 
-void SubstractPrimitive::Apply(bool mode)
-{
-    setPaintMode(mode);
-    draw();
-}
-
 void SubstractPrimitive::draw()
 {
     glStencilFunc(GL_NEVER, 1, 1); // значение mask не используется

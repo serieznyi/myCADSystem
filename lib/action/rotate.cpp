@@ -7,7 +7,7 @@ Rotate::Rotate(double angleX, double angleY, double angleZ):Action()
     this->angleZ=angleZ;
 }
 
-void Rotate::Apply(bool mode)
+void Rotate::Apply(int mode)
 {
     glRotated(angleX, 1, 0, 0);
     glRotated(angleY, 0, 1, 0);

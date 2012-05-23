@@ -8,9 +8,8 @@ Translate::Translate(double x, double y, double z):Action()
     this->z=z;
 }
 
-void Translate::Apply(bool mode)
+void Translate::Apply(int mode)
 {
-    //qDebug()<<x<<" "<<y<<" "<<z;
     glTranslated(x,y,z);
 }
 

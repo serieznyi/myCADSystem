@@ -7,12 +7,6 @@ Cube::Cube(GLfloat a=1.0f):Primitive()
     this->a = a;
 }
 
-void Cube::Apply(bool mode)
-{
-    setPaintMode(mode);
-    draw();
-}
-
 void Cube::draw()
 {
     MCOLOR *color = 0;

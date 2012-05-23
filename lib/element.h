@@ -12,7 +12,7 @@ public:
     long getGID();               //  Получить GID
     void setTypeName(int a);    //  Установить флаг примитива
     int getTypeName();
-    virtual void Apply(bool mode=true) = 0;    //  Применить действие
+    virtual void Apply(int mode) = 0;    //  Применить действие
 
 private:
     long            GID;         //  Глобальный идентификатор элемента

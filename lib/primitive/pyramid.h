@@ -8,7 +8,6 @@ class Pyramid : public Primitive
 {
 public:
     explicit Pyramid(GLfloat a);
-    virtual void Apply(bool mode=true);
     virtual void draw();
 public:
     GLdouble a;

@@ -2,35 +2,26 @@
 
 IntersectPrimitive::IntersectPrimitive(Container *con1, Container *con2)
 {
-    this->setTypeName(MEL_GROUP);
+    this->setTypeName(MEL_INTERSECT);
     container1 = con1;
     container2 = con2;
-}
-
-
-void IntersectPrimitive::Apply(bool mode)
-{
-    setPaintMode(mode);
-    draw();
 }
 
 void IntersectPrimitive::draw()
 {
     glStencilFunc(GL_NEVER, 1, 1);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_REPLACE);
         container1->draw(getPaintMode());
     glStencilFunc(GL_NEVER, 1, 1);
-    glStencilOp(GL_INCR, GL_KEEP, GL_KEEP);
-        container1->draw(getPaintMode());
+    glStencilOp(GL_INCR, GL_KEEP, GL_REPLACE);
+        container2->draw(getPaintMode());
 
     glStencilFunc(GL_EQUAL, 2, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
         container1->draw(getPaintMode());
     glStencilFunc(GL_EQUAL, 2, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-       container1->draw(getPaintMode());
-
-
+       container2->draw(getPaintMode());
 }
 
 void IntersectPrimitive::SynchData()

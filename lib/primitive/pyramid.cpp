@@ -2,14 +2,8 @@
 
 Pyramid::Pyramid(GLfloat a):Primitive()
 {
-    this->a = a;
-}
-
-void Pyramid::Apply(bool mode)
-{
     this->setTypeName(MEL_PYRAMID);
-    setPaintMode(mode);
-    draw();
+    this->a = a;
 }
 
 void Pyramid::draw()

@@ -9,7 +9,6 @@ class Sphere : public Cube
 {
 public:
     Sphere(GLUquadric *quad, GLfloat a);
-    void Apply(bool mode);
     void draw();
     void setQuadric(GLUquadric quad);
 private:

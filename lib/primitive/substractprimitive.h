@@ -9,7 +9,6 @@ class SubstractPrimitive : public Primitive
 {
 public:
     SubstractPrimitive(Container *con1, Container *con2);
-    virtual void Apply(bool mode=true);
     virtual void draw();
     void SynchData();
 private:

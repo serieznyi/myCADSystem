@@ -5,6 +5,12 @@ Primitive::Primitive():Element()
     idcolors_arr = new QStack<MCOLOR*>();
 }
 
+void Primitive::Apply(int mode)
+{
+    setPaintMode(mode);
+    draw();
+}
+
 void Primitive::setIDColor(MCOLOR *color)
 {
     idcolors_arr->push(color);
