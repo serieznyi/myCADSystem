@@ -68,7 +68,7 @@ void Work::addPrimitive(int i, QPoint pos)
     }
     case MEL_PYRAMID:
     {
-        Pyramid *pyramid = new Pyramid(1.0f);
+        Pyramid *pyramid = new Pyramid(2.0f);
         pyramid->setGID(generateGID());
         pyramid->setIDColor(generateIDColor());
         pyramid->setColor(generateColor());
@@ -129,6 +129,13 @@ void Work::addAction(int i)
         Translate *translate = new Translate(0,0,0);
         translate->setGID(generateGID());
         element_list->at(pMW->selected_prim)->addTranslate(translate);
+        break;
+    }
+    case MEV_SCALE:
+    {
+        Scale *scale = new Scale(1,1,1);
+        scale->setGID(generateGID());
+        element_list->at(pMW->selected_prim)->addScale(scale);
         break;
     }
     case MEV_ROTATE:

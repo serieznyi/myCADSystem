@@ -6,18 +6,7 @@ ActionPrimitiveToolBar::ActionPrimitiveToolBar(QWidget *parent) :  QToolBar(pare
     pMW = dynamic_cast<MainWindow*>(parent);
 
     lt_global           = new QHBoxLayout(this);
-    pb_translate        = new QPushButton();
-    pb_rotate           = new QPushButton();
-    pb_subtraction      = new QPushButton();
-    pb_group            = new QPushButton();
-    pb_intersection     = new QPushButton();
 
-    lt_global->addWidget(pb_translate);
-    lt_global->addWidget(pb_rotate);
-    lt_global->addWidget(pb_subtraction);
-    lt_global->addWidget(pb_group);
-    lt_global->addWidget(pb_intersection);
-    lt_global->addStretch(5);
     this->setLayout(lt_global);
 
     createActions();
@@ -32,6 +21,11 @@ void ActionPrimitiveToolBar::createActions()
     translateAction         = new QAction(QString::fromLocal8Bit("&Переместить"), this);
     this->addAction(translateAction);
     connect(translateAction, SIGNAL(triggered()),SLOT(setTranslateAction()));
+
+    scaleAction         = new QAction(QString::fromLocal8Bit("&Масштабировать"), this);
+    this->addAction(scaleAction);
+    connect(scaleAction, SIGNAL(triggered()),SLOT(setScaleAction()));
+
 
     subtractionAction       = new QAction(QString::fromLocal8Bit("&Вычесть"), this);
     this->addAction(subtractionAction);
@@ -54,6 +48,11 @@ void ActionPrimitiveToolBar::setTranslateAction()
 void ActionPrimitiveToolBar::setRotateAction()
 {
     changeEvent(MEV_ROTATE);
+}
+
+void ActionPrimitiveToolBar::setScaleAction()
+{
+    changeEvent(MEV_SCALE);
 }
 
 void ActionPrimitiveToolBar::setGroupAction()

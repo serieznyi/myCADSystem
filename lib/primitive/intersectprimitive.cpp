@@ -1,6 +1,6 @@
 #include "intersectprimitive.h"
 
-IntersectPrimitive::IntersectPrimitive(Container *con1, Container *con2)
+IntersectPrimitive::IntersectPrimitive(Container *con1, Container *con2):GroupPrimitive(con1, con2)
 {
     this->setTypeName(MEL_INTERSECT);
     container1 = con1;

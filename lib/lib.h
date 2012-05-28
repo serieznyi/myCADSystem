@@ -14,5 +14,7 @@
 #include "lib/action/action.h"
 #include "lib/action/translate.h"
 #include "lib/action/rotate.h"
+#include "lib/action/scale.h"
+
 
 #endif // LIB_H

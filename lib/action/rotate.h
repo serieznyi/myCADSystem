@@ -8,7 +8,7 @@
 class Rotate : public Action
 {
 public:
-    explicit Rotate(double angleX=0, double angleY=0, double angleZ=0);
+    explicit Rotate(GLdouble angleX=0, GLdouble angleY=0, GLdouble angleZ=0);
     virtual void Apply(int mode=true);
 
 public:

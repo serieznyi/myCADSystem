@@ -8,7 +8,6 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
     // ПОЧИСТИТЬ!
-    step_rotate = 1;
     koef = 1;
     pMW = dynamic_cast<MainWindow*>(parent);
     contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE,this);
@@ -30,7 +29,8 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
     yTranslate                = 0;
     zTranslate                = 0;
     gScale              = 1;
-    p_currentPos        = QPoint();
+    currentPos        = QPoint();
+    lastPos              = QPoint();
     comboBox            = new QComboBox();
     lay_global_v        = new QVBoxLayout();
     lay_global_h        = new QHBoxLayout();
@@ -109,6 +109,10 @@ void GLWidget::resizeGL(int _w, int _h)
             currentOrtho.far_val);                                  // Размер ортогональной проекции
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    //  glGetDoublev(GL_MODELVIEW_MATRIX, &startMatrix[0][0]);
+    //  copyMatrix(inversStartMatrix, startMatrix);
+    //  inversMatrix(inversStartMatrix);
 }
 
 void GLWidget::paintGL()
@@ -182,8 +186,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         contextMenuPrimitive->exec(event->globalPos());
     }
 
-    p_lastPos = event->pos();
-
     switch(*currenEvent)
     {
     case MEL_SPHERE:
@@ -204,6 +206,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         if(SELECTED)
             addAction(MEV_TRANSLATE);
         break;
+    case MEV_SCALE:
+        if(SELECTED)
+            addAction(MEV_SCALE);
+        break;
+
     case MEV_GROUP:
     {
         if(currentWork->getGroupObj1()==-1)
@@ -242,15 +249,17 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     }
     default:break;
     }
+
+    lastPos = event->pos();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    p_currentPos.setX(event->x() - p_lastPos.x());
-    p_currentPos.setY(event->y() - p_lastPos.y());
+    currentPos.setX(event->x() - lastPos.x());
+    currentPos.setY(event->y() - lastPos.y());
     if(event->buttons() && Qt::LeftButton)
-        selectEvent(event, p_currentPos);
-    p_lastPos = event->pos();
+        selectEvent(event, currentPos);
+    lastPos = event->pos();
 
     pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
                                      "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
@@ -366,6 +375,13 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
 
     case MEV_CAMERA_ZOOM:
         eventZoomCamera(event, current);
+        break;
+
+    case MEV_SCALE:
+        if(SELECTED)
+            eventScalePrimitive(current);
+        else
+            eventZoomCamera(event, current);
         break;
 
     }
@@ -499,7 +515,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 }
 
 void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
-{
+{/*
     if(this->getProjection()==MPJ_TOP)
         setYRotation(yRot + 8 * current.x());
 
@@ -513,8 +529,22 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
 
     if(this->getProjection()==MPJ_PERSPECTIVE){
 
-        //int sector = 50000;
+          GLdouble matrix[4][4], workMatrix[4][4];
 
+          glGetDoublev(GL_MODELVIEW_MATRIX, &matrix[0][0]);
+          copyMatrix(workMatrix, inversStartMatrix);
+          multMatrix(workMatrix, matrix);
+          glLoadMatrixd(&startMatrix[0][0]);
+
+          if (prevMx != event->x()) {
+            glRotated((double)(lastPos.x() - event->x()), 0, -1, 0);
+          }
+          if (prevMy != event->y()) {
+            glRotated((double)(lastPos.y() - event->y()), -1, 0, 0);
+          }
+*/
+
+    /*
         if(current.x()>0)
         {
             setYRotation(yRot + 8 * current.x());
@@ -543,29 +573,11 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
             //xCamLook -=R*sin(n);
             // zCamLook -=R*cos(n);
         }
-        /*
 
-            QString a = QString::number(xCamLook);
-            a.append(" : ");
-            a.append(QString::number(zCamLook));
-            qDebug(a.toStdString().c_str());
+    */
+    //  glMultMatrixd(&workMatrix[0][0]);
+    // }
 
-            glBegin(GL_POLYGON);
-            for(GLfloat i = 0.0f;i<(2.0f*3.14);i+=(3.14/sector))
-            {
-                x = R_circle*sin(i);
-                y = R_circle*cos(i);
-                glVertex3f(x,y,0.5f);
-            }
-            glEnd();
-
-            if(current.y()>0){
-                yCamLook -= step_translate;
-            }
-            else if(current.y()<0){
-                yCamLook += step_translate;
-            }*/
-    }
 
     this->updateGL();
     return;
@@ -780,6 +792,20 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
         currentWork->setGroupObj2(-1);
         return;
     }
+}
+
+void GLWidget::eventScalePrimitive(QPoint poin)
+{
+    Scale *scale =currentWork->getList()->at(pMW->selected_prim)->getScale();
+
+    if(poin.y()<0){
+        scale->ScaleYXY(step_scale, step_scale, step_scale);
+    }
+    else if(poin.y()>0){
+        scale->ScaleYXY(-1*step_scale, -1*step_scale, -1*step_scale);
+    }
+
+    pMW->Update();
 }
 
 //  Рисование

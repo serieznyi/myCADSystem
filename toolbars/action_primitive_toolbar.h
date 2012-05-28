@@ -24,16 +24,11 @@ private:
 private:
     MainWindow *pMW;
 
-    QPushButton             *pb_translate;
-    QPushButton             *pb_rotate;
-    QPushButton             *pb_subtraction;
-    QPushButton             *pb_group;
-    QPushButton             *pb_intersection;
-
     QHBoxLayout             *lt_global;
 
     QAction                 *rotateAction;
     QAction                 *translateAction;
+    QAction                 *scaleAction;
     QAction                 *subtractionAction;
     QAction                 *groupAction;
     QAction                 *intersectionAction;
@@ -41,6 +36,7 @@ private:
 public slots:
     void setTranslateAction();
     void setRotateAction();
+    void setScaleAction();
     void setGroupAction();
     void setSubstractAction();
     void setIntersectAction();

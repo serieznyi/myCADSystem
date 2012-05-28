@@ -1,7 +1,8 @@
 #include "sphere.h"
 
-Sphere::Sphere(GLUquadric *quad, GLfloat a):Cube(a)
+Sphere::Sphere(GLUquadric *quad, GLfloat a):Primitive()
 {
+    this->a = a;
     this->setTypeName(MEL_SPHERE);
     quadric = quad;
 }

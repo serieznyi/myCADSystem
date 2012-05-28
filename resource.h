@@ -37,12 +37,13 @@
 #define MEL_INTERSECT               109
 
 //ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
-#define MEV_ACTION                  200 // Переместить
+#define MEV_ACTION                  200
 #define MEV_TRANSLATE               201 // Переместить
-#define MEV_ROTATE                  202 // Вращать
-#define MEV_GROUP                   203 // Сгрупировать
-#define MEV_SUBSTRACT               204 //
-#define MEV_INTERSECT               205 //
+#define MEV_SCALE                   202 // Масштабировать
+#define MEV_ROTATE                  203 // Вращать
+#define MEV_GROUP                   204 // Сгрупировать
+#define MEV_SUBSTRACT               205 //
+#define MEV_INTERSECT               206 //
 
 //ДЕЙСТВИЯ НАД СЦЕНОЙ
 #define MEV_CAMERA_TRANSLATE        251 // Переместить камеру

@@ -2,14 +2,14 @@
 #define PYRAMID_H
 
 #include "math.h"
-#include "primitive.h"
+#include "lib/primitive/primitive.h"
 
 class Pyramid : public Primitive
 {
 public:
     explicit Pyramid(GLfloat a);
     virtual void draw();
-public:
+private:
     GLdouble a;
 };
 

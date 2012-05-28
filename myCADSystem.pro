@@ -11,7 +11,6 @@ TEMPLATE = app
 
 
 SOURCES += \
-    lib/element.cpp \
     work.cpp \
     statusbar.cpp \
     paintingzone.cpp \
@@ -19,29 +18,28 @@ SOURCES += \
     mainwindow.cpp \
     main.cpp \
     glwidget.cpp \
+    contextmenu.cpp \
+    toolbars/toolbar.cpp \
     toolbars/select_primitive_toolbar.cpp \
     toolbars/scene_control_toolbar.cpp \
+    toolbars/list_primitive_toolbar.cpp \
     toolbars/action_primitive_toolbar.cpp \
-    toolbars/toolbar.cpp \
+    lib/element.cpp \
+    lib/container.cpp \
     lib/action/translate.cpp \
-    lib/action/subtraction.cpp \
     lib/action/rotate.cpp \
-    lib/action/intersection.cpp \
-    lib/action/group.cpp \
     lib/action/action.cpp \
+    lib/primitive/substractprimitive.cpp \
+    lib/primitive/sphere.cpp \
     lib/primitive/pyramid.cpp \
     lib/primitive/primitive.cpp \
-    lib/primitive/cube.cpp \
-    lib/primitive/sphere.cpp \
-    toolbars/list_primitive_toolbar.cpp \
-    contextmenu.cpp \
-    lib/container.cpp \
+    lib/primitive/intersectprimitive.cpp \
     lib/primitive/groupprimitive.cpp \
-    lib/primitive/substractprimitive.cpp \
-    lib/primitive/intersectprimitive.cpp
+    lib/primitive/cube.cpp \
+    lib/action/scale.cpp \
+    lib/action/stretch.cpp
 
 HEADERS  += \
-    lib/element.h \
     work.h \
     statusbar.h \
     resource.h \
@@ -49,27 +47,29 @@ HEADERS  += \
     menubar.h \
     mainwindow.h \
     glwidget.h \
+    contextmenu.h \
+    toolbars/toolbar.h \
     toolbars/select_primitive_toolbar.h \
     toolbars/scene_control_toolbar.h \
+    toolbars/list_primitive_toolbar.h \
     toolbars/action_primitive_toolbar.h \
-    toolbars/toolbar.h \
+    lib/lib.h \
+    lib/element.h \
+    lib/container.h \
     lib/action/translate.h \
-    lib/action/subtraction.h \
     lib/action/rotate.h \
-    lib/action/intersection.h \
-    lib/action/group.h \
     lib/action/action.h \
+    lib/primitive/substractprimitive.h \
+    lib/primitive/sphere.h \
     lib/primitive/pyramid.h \
     lib/primitive/primitive.h \
-    lib/primitive/cube.h \
-    lib/lib.h \
-    lib/primitive/sphere.h \
-    toolbars/list_primitive_toolbar.h \
-    contextmenu.h \
-    lib/container.h \
+    lib/primitive/intersectprimitive.h \
     lib/primitive/groupprimitive.h \
-    lib/primitive/substractprimitive.h \
-    lib/primitive/intersectprimitive.h
+    lib/primitive/cube.h \
+    matrix.h \
+    invers.h \
+    lib/action/scale.h \
+    lib/action/stretch.h
 
 FORMS +=
 

@@ -22,11 +22,6 @@ private:
     void changeEvent(int i);
 
 private:
-    QPushButton             *pb_point;
-    QPushButton             *pb_line;
-    QPushButton             *pb_quad;
-    QPushButton             *pb_pyramid;
-    QPushButton             *pb_sphere;
     QHBoxLayout             *lt_global;
 
     QAction                 *pointAction;

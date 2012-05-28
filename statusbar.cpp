@@ -3,5 +3,4 @@
 StatusBar::StatusBar(QWidget *parent) :
     QStatusBar(parent)
 {
-    this->showMessage("OLOLO");
 }

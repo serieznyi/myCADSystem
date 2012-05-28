@@ -2,10 +2,10 @@
 #define SPHERE_H
 
 #include "GL/glu.h"
-#include "lib/primitive/cube.h"
+#include "lib/primitive/primitive.h"
 #include "GL/glu.h"
 
-class Sphere : public Cube
+class Sphere : public Primitive
 {
 public:
     Sphere(GLUquadric *quad, GLfloat a);
@@ -13,6 +13,7 @@ public:
     void setQuadric(GLUquadric quad);
 private:
     GLUquadric               *quadric;
+     GLdouble a;
 };
 
 #endif // SPHERE_H

@@ -18,6 +18,7 @@
 #include "lib/lib.h"
 #include "contextmenu.h"
 
+
 class MainWindow;
 
 class GLWidget : public QGLWidget
@@ -27,7 +28,6 @@ protected:
     void initializeGL();                                                //  Инициализация GL
     void resizeGL(int _w, int _h);                                      //  Изменение размера области рисования
     void paintGL();                                                     //  Главная функция рисования
-
 public:
     explicit GLWidget(QWidget *parent = 0);                             //  Конструктор
     void mousePressEvent(QMouseEvent *event);                           //  Обработка нажатия клавиш мыши
@@ -40,13 +40,16 @@ public:
     void eventZoomCamera(QMouseEvent *event, QPoint current);           //  Масштабирование камеры
     void eventTranslatePrimitive(QMouseEvent *event);                   //  Перемещение примитива
     void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
+    void eventGroupPrimitive(long ob1, long obj2);
+    void eventSubstractPrimitive(long obj1, long obj2);
+    void eventIntersectPrimitive(long obj1, long obj2);
+    void eventScalePrimitive(QPoint point);
     void addPrimitive(QPoint pos=QPoint(0,0));                                      //  Добавление примитива
     void addAction(int i);
     void addPrimitive(int i);
     double ScreenToOGL(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
     void drawAxes();                                                    //  Рисование осей
     void drawPlane();                                                   //  Рисование плоскости
-
     void initializeLighting();
     void SaveLastState();
     void LoadLastState();
@@ -59,9 +62,9 @@ public:
     void drawZ();
     void qNormalizeAngle(int &angle);
     long getSelectedPrimitiveID(QMouseEvent *event);
-
+    double calcKoef();
+    bool intersectionGroupObj(long obj1, long obj2);
 //---------------------------ПЕРЕМЕННЫЕ---------------------------
-
 public:
     MainWindow      *pMW;                                               //  Указатель на виджет самого верхнего уровня
     int             PAINTING_MODE;                                      //  Режим рисования
@@ -73,7 +76,6 @@ public:
                     AXES,                                               //  Рисовать оси
                     PLANE;                                              //  Рисовать сетку
     GLubyte         pixel[3];                                           //  Цвет пикселя выбранного мышью
-
     ///////////////ПОчистить/////////////////
     struct Ortho{
         Ortho():
@@ -94,8 +96,8 @@ public:
         double near_val;
         double far_val;
     };
-
     Ortho           currentOrtho;
+
     double koef;
     ContextMenu     *contextMenuPrimitive;
     int             lastProjection;
@@ -106,8 +108,8 @@ public:
                     yTranslate,             //
                     zTranslate;             //
     GLdouble        gScale;                 // Масштаб всей сцены
-    QPoint          p_lastPos;              //
-    QPoint          p_currentPos;           //
+    QPoint          lastPos;              //
+    QPoint          currentPos;           //
     QVBoxLayout     *lay_global_v;          //
     QHBoxLayout     *lay_global_h;          //
     QComboBox       *comboBox;              //
@@ -118,16 +120,14 @@ public:
     double          R;
     static const GLfloat step_scale = 0.01f;
     static const GLfloat step_translate = 0.05f;
-    GLdouble step_rotate;
+    static const GLdouble step_rotate = 1;
+
 //////////////////////////////////////
     GLint Mx, My;           // Позиция Курсора (обработанная)
     GLint prevMx, prevMy;   // Предыдущая позиция курсора?
+    GLdouble startMatrix[4][4];
+    GLdouble inversStartMatrix[4][4];
 
-    double calcKoef();
-    void eventGroupPrimitive(long ob1, long obj2);
-    bool intersectionGroupObj(long obj1, long obj2);
-    void eventSubstractPrimitive(long obj1, long obj2);
-    void eventIntersectPrimitive(long obj1, long obj2);
 public slots:
     void changeProection(int n);
     void deletePrimitive();

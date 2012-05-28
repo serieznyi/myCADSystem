@@ -1,11 +1,10 @@
 #include "substractprimitive.h"
 
-SubstractPrimitive::SubstractPrimitive(Container *con1, Container *con2)
+SubstractPrimitive::SubstractPrimitive(Container *con1, Container *con2):GroupPrimitive(con1, con2)
 {
     this->setTypeName(MEL_SUBSTRACT);
     container1 = con1;
     container2 = con2;    
-    resultContainer = container1;
 }
 
 void SubstractPrimitive::draw()
@@ -18,16 +17,16 @@ void SubstractPrimitive::draw()
     glStencilFunc(GL_EQUAL, 0, 1); // значение mask не используется
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
-    resultContainer->draw(getPaintMode());
+    container1->draw(getPaintMode());
 }
 
 void SubstractPrimitive::SynchData()
 {
-    resultContainer->getPrimitive()->setIDColor(this->getIDColor());
+    container1->getPrimitive()->setIDColor(this->getIDColor());
 
-    if(resultContainer->getPrimitive()->getTypeName()==MEL_SUBSTRACT)
+    if(container1->getPrimitive()->getTypeName()==MEL_SUBSTRACT)
     {
-        SubstractPrimitive *gp = dynamic_cast<SubstractPrimitive*>(resultContainer->getPrimitive());
+        SubstractPrimitive *gp = dynamic_cast<SubstractPrimitive*>(container1->getPrimitive());
         gp->SynchData();
     }    
 }

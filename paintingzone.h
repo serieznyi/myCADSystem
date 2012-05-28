@@ -7,6 +7,9 @@
 #include "glwidget.h"
 #include "resource.h"
 
+//#include "matrix.h"
+//#include "invers.h"
+
 class PaintingZone : public QWidget
 {
 public:

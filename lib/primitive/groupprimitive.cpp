@@ -1,6 +1,6 @@
 #include "groupprimitive.h"
 
-GroupPrimitive::GroupPrimitive(Container *con1, Container *con2)
+GroupPrimitive::GroupPrimitive(Container *con1, Container *con2):Primitive()
 {
     this->setTypeName(MEL_GROUP);
     container1 = con1;

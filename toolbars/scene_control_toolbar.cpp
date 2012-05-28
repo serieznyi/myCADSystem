@@ -6,14 +6,6 @@ SceneControlToolbar::SceneControlToolbar(QWidget *parent):QToolBar(parent)
         pMW = dynamic_cast<MainWindow*>(parent);
 
        lt_global            = new QHBoxLayout(this);
-       pb_camera_pos        = new QPushButton(QString::fromLocal8Bit("Переместить камеру"));
-       pb_camera_rot        = new QPushButton(QString::fromLocal8Bit("Повернуть камеру"));
-       pb_camera_zoom       = new QPushButton(QString::fromLocal8Bit("Масштаб"));
-
-       lt_global->addWidget(pb_camera_pos);
-       lt_global->addWidget(pb_camera_rot);
-       lt_global->addWidget(pb_camera_zoom);
-       lt_global->addStretch(5);
 
        this->setLayout(lt_global);
 

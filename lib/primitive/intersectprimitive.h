@@ -1,19 +1,16 @@
 #ifndef INTERSECTPRIMITIVE_H
 #define INTERSECTPRIMITIVE_H
 
-#include "lib/primitive/primitive.h"
+#include "lib/primitive/groupprimitive.h"
 #include "lib/container.h"
 #include "resource.h"
 
-class IntersectPrimitive : public Primitive
+class IntersectPrimitive : public GroupPrimitive
 {
 public:
     IntersectPrimitive(Container *con1, Container *con2);
     virtual void draw();
-    void SynchData();
-private:
-    Container *container1;
-    Container *container2;
+    virtual void SynchData();
 };
 
 #endif // INTERSECTPRIMITIVE_H

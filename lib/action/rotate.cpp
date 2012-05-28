@@ -1,6 +1,6 @@
 #include "rotate.h"
 
-Rotate::Rotate(double angleX, double angleY, double angleZ):Action()
+Rotate::Rotate(GLdouble angleX, GLdouble angleY, GLdouble angleZ):Action()
 {
     this->angleX=angleX;
     this->angleY=angleY;

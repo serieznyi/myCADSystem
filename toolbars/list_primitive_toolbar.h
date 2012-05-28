@@ -45,7 +45,7 @@ public:
     Work                    *currentWork;
 
 signals:
-    
+
 public slots:
     
 };
