@@ -13,9 +13,11 @@
 #include "statusbar.h"
 #include "work.h"
 #include "resource.h"
+#include <QFileDialog>
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
 public:
     explicit MainWindow(int max_width, int max_height, QWidget *parent = 0);                   // Конструктор
     int* getCurEvent();
@@ -30,6 +32,7 @@ public:
     SceneControlToolbar* getSceneControlToolbar();
 
     StatusBar* getStatusBar();
+
 private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида
     MenuBar                         *menuBar;
@@ -44,9 +47,16 @@ private:
     bool                             WORK_CREATED;
 public:
     long selected_prim;
+    QString savedPath;
+
 public slots:
     void showAbout();
+    void saveTo();
+    void save();
+    void open();
 
 };
+
+QDataStream& operator<<(QDataStream &out, const QList<Container*> *);
 
 #endif // MAINWINDOW_H

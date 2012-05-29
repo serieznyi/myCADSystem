@@ -12,7 +12,7 @@ public:
     void changeEvent(int i);
 
 private:
-    //MainWindow *pMW;
+    MainWindow *pMW;
     ToolBar();
 };
 

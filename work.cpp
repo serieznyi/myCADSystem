@@ -27,12 +27,10 @@ void Work::drawWork(bool mode)
         {
         case MEL_PRIMITIVE:
         case MEL_CUBE:
-        case MEL_LINE:
         case MEL_PYRAMID:
         case MEL_SPHERE:
         case MEL_GROUP:
         case MEL_CYLINDER:
-        case MEL_POINT:
             glPopMatrix();
             glPushMatrix();
         default:break;
@@ -80,8 +78,6 @@ void Work::addPrimitive(int i, QPoint pos)
 
         break;
     }
-    case MEL_POINT: break;
-    case MEL_LINE: break;
     }
 }
 
@@ -132,12 +128,14 @@ void Work::addAction(int i)
         break;
     }
     case MEV_SCALE:
+    case MEV_STRETCH:
     {
         Scale *scale = new Scale(1,1,1);
         scale->setGID(generateGID());
         element_list->at(pMW->selected_prim)->addScale(scale);
         break;
     }
+
     case MEV_ROTATE:
     {
         Rotate *rotate = new Rotate(0,0,0);

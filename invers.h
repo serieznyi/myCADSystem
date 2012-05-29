@@ -3,16 +3,6 @@
 #define INVERS_H
 
 #include <math.h>
-int gaus_ostatok;
-// дефект линейного преобразования
-// 0 == ОК
-
-long double gaus_deter;
-//  в случае успешного обращения детерминант
-
-double gaus_minved;
-//  минимальный ведущий элемент
-//  можно использовать для оценки точности
 
 
 #define _NaN() (double&)*"Implementation dependent";
@@ -22,6 +12,16 @@ double gaus_minved;
 template<int N>
 inline static void inversMatrix(double m[N][N])
 {
+    int gaus_ostatok;
+    // дефект линейного преобразования
+    // 0 == ОК
+
+    long double gaus_deter;
+    //  в случае успешного обращения детерминант
+
+    double gaus_minved;
+    //  минимальный ведущий элемент
+    //  можно использовать для оценки точности
 
 
   int rn[N],cn[N];

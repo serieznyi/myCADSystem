@@ -9,6 +9,7 @@ class MainWindow;
 
 class MenuBar : public QMenuBar
 {
+    Q_OBJECT
 
 public:
     explicit MenuBar(QWidget *parent = 0);

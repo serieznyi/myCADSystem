@@ -35,5 +35,5 @@ private:
     QStack<MCOLOR*> *idcolors_arr;
 };
 
-
+QDataStream& operator<<(QDataStream &out, const Primitive *painting);
 #endif // PRIMITIVE_H

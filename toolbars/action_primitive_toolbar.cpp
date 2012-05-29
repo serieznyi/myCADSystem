@@ -26,6 +26,9 @@ void ActionPrimitiveToolBar::createActions()
     this->addAction(scaleAction);
     connect(scaleAction, SIGNAL(triggered()),SLOT(setScaleAction()));
 
+    stretchAction         = new QAction(QString::fromLocal8Bit("&Растянуть"), this);
+    this->addAction(stretchAction);
+    connect(stretchAction, SIGNAL(triggered()),SLOT(setStretchAction()));
 
     subtractionAction       = new QAction(QString::fromLocal8Bit("&Вычесть"), this);
     this->addAction(subtractionAction);
@@ -48,6 +51,11 @@ void ActionPrimitiveToolBar::setTranslateAction()
 void ActionPrimitiveToolBar::setRotateAction()
 {
     changeEvent(MEV_ROTATE);
+}
+
+void ActionPrimitiveToolBar::setStretchAction()
+{
+    changeEvent(MEV_STRETCH);
 }
 
 void ActionPrimitiveToolBar::setScaleAction()

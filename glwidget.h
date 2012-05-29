@@ -18,6 +18,9 @@
 #include "lib/lib.h"
 #include "contextmenu.h"
 
+#include "invers.h"
+#include "matrix.h"
+
 
 class MainWindow;
 
@@ -44,6 +47,7 @@ public:
     void eventSubstractPrimitive(long obj1, long obj2);
     void eventIntersectPrimitive(long obj1, long obj2);
     void eventScalePrimitive(QPoint point);
+    void eventStretchPrimitive(QPoint poin);
     void addPrimitive(QPoint pos=QPoint(0,0));                                      //  Добавление примитива
     void addAction(int i);
     void addPrimitive(int i);
@@ -128,6 +132,7 @@ public:
     GLdouble startMatrix[4][4];
     GLdouble inversStartMatrix[4][4];
 
+    QString getTextEvent(int event);
 public slots:
     void changeProection(int n);
     void deletePrimitive();

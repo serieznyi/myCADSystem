@@ -25,11 +25,14 @@ public:
     Scale* getScale();
     Rotate* getRotate();
     Primitive* getPrimitive();
+
 private:
     Primitive *primitive;
     QList<Translate*>* translateList;
     QList<Rotate*>* rotateList;
     QList<Scale*>* scaleList;
 };
+
+QDataStream& operator<<(QDataStream &out, const Container *painting);
 
 #endif // CONTAINER_H

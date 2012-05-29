@@ -9,6 +9,7 @@ SubstractPrimitive::SubstractPrimitive(Container *con1, Container *con2):GroupPr
 
 void SubstractPrimitive::draw()
 {
+    glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 1); // значение mask не используется
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 
@@ -18,6 +19,7 @@ void SubstractPrimitive::draw()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
     container1->draw(getPaintMode());
+    glDisable(GL_STENCIL_TEST);
 }
 
 void SubstractPrimitive::SynchData()

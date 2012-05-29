@@ -82,4 +82,11 @@ void Container::draw(int mode)
     primitive->Apply(mode);
 }
 
-
+QDataStream &operator<<(QDataStream &out, const Container *painting)
+{
+    //out << painting->getPrimitive();
+    //out << painting->getRotateList();
+   // out << painting->getTranslate();
+    //out << painting->getScaleList();
+    return out;
+}

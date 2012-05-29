@@ -16,10 +16,10 @@ void GroupPrimitive::draw()
 void GroupPrimitive::SynchData()
 {
     container1->getPrimitive()->setIDColor(this->getIDColor());
-    container1->getPrimitive()->setColor(this->getColor());
+ //   container1->getPrimitive()->setColor(this->getColor());
 
     container2->getPrimitive()->setIDColor(this->getIDColor());
-    container2->getPrimitive()->setColor(this->getColor());
+  //  container2->getPrimitive()->setColor(this->getColor());
 
     if(container1->getPrimitive()->getTypeName()==MEL_GROUP)
     {

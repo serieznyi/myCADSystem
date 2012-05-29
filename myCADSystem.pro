@@ -19,7 +19,6 @@ SOURCES += \
     main.cpp \
     glwidget.cpp \
     contextmenu.cpp \
-    toolbars/toolbar.cpp \
     toolbars/select_primitive_toolbar.cpp \
     toolbars/scene_control_toolbar.cpp \
     toolbars/list_primitive_toolbar.cpp \
@@ -36,8 +35,7 @@ SOURCES += \
     lib/primitive/intersectprimitive.cpp \
     lib/primitive/groupprimitive.cpp \
     lib/primitive/cube.cpp \
-    lib/action/scale.cpp \
-    lib/action/stretch.cpp
+    lib/action/scale.cpp
 
 HEADERS  += \
     work.h \
@@ -48,7 +46,6 @@ HEADERS  += \
     mainwindow.h \
     glwidget.h \
     contextmenu.h \
-    toolbars/toolbar.h \
     toolbars/select_primitive_toolbar.h \
     toolbars/scene_control_toolbar.h \
     toolbars/list_primitive_toolbar.h \
@@ -68,8 +65,7 @@ HEADERS  += \
     lib/primitive/cube.h \
     matrix.h \
     invers.h \
-    lib/action/scale.h \
-    lib/action/stretch.h
+    lib/action/scale.h
 
 FORMS +=
 

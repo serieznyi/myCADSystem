@@ -44,3 +44,8 @@ void Cube::draw()
         glDrawElements(GL_POLYGON, 4,
                        GL_UNSIGNED_BYTE, &cubeIndex[4*i]);
 }
+
+QDataStream& operator<<(QDataStream &out, const Primitive *painting)
+{
+
+}

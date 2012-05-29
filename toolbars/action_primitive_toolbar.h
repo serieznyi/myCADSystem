@@ -29,6 +29,7 @@ private:
     QAction                 *rotateAction;
     QAction                 *translateAction;
     QAction                 *scaleAction;
+    QAction                 *stretchAction;
     QAction                 *subtractionAction;
     QAction                 *groupAction;
     QAction                 *intersectionAction;
@@ -37,6 +38,7 @@ public slots:
     void setTranslateAction();
     void setRotateAction();
     void setScaleAction();
+    void setStretchAction();
     void setGroupAction();
     void setSubstractAction();
     void setIntersectAction();

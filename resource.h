@@ -26,8 +26,6 @@
 //ТИП ЭЛЕМЕНТА
 //Примитивы
 #define MEL_PRIMITIVE               100
-#define MEL_POINT                   101
-#define MEL_LINE                    102
 #define MEL_CUBE                    103
 #define MEL_PYRAMID                 104
 #define MEL_CYLINDER                105
@@ -40,10 +38,11 @@
 #define MEV_ACTION                  200
 #define MEV_TRANSLATE               201 // Переместить
 #define MEV_SCALE                   202 // Масштабировать
-#define MEV_ROTATE                  203 // Вращать
-#define MEV_GROUP                   204 // Сгрупировать
-#define MEV_SUBSTRACT               205 //
-#define MEV_INTERSECT               206 //
+#define MEV_STRETCH                 203 // Растянуть
+#define MEV_ROTATE                  204 // Вращать
+#define MEV_GROUP                   205 // Сгрупировать
+#define MEV_SUBSTRACT               206 //
+#define MEV_INTERSECT               207 //
 
 //ДЕЙСТВИЯ НАД СЦЕНОЙ
 #define MEV_CAMERA_TRANSLATE        251 // Переместить камеру

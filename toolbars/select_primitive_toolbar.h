@@ -24,12 +24,10 @@ private:
 private:
     QHBoxLayout             *lt_global;
 
-    QAction                 *pointAction;
-    QAction                 *lineAction;
     QAction                 *quadAction;
     QAction                 *triangleAction;
     QAction                 *sphereAction;
-    MainWindow *pMW;
+    MainWindow              *pMW;
 
 public slots:
     void setCubeAction();

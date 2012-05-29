@@ -45,6 +45,7 @@ void MenuBar::createActions()
     menu_file->addSeparator();
     menu_file->addAction(action_save);
     menu_file->addAction(action_save_to);
+        connect(action_save_to, SIGNAL(triggered()),pMW, SLOT(saveTo()));
     menu_file->addSeparator();
     menu_file->addAction(action_exit);
         connect(action_exit, SIGNAL(triggered()),pMW, SLOT(close()));

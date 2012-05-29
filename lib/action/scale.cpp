@@ -14,7 +14,7 @@ void Scale::Apply(int mode)
 
 void Scale::ScaleX(GLdouble x)
 {
-    this->x+=x;
+        this->x+=x;
 }
 
 void Scale::ScaleY(GLdouble y)
@@ -24,6 +24,8 @@ void Scale::ScaleY(GLdouble y)
 
 void Scale::ScaleZ(GLdouble z)
 {
+    double tz = this->z;
+   if(tz+=z >0.2)
     this->z+=z;
 }
 

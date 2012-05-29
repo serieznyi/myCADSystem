@@ -9,6 +9,7 @@ IntersectPrimitive::IntersectPrimitive(Container *con1, Container *con2):GroupPr
 
 void IntersectPrimitive::draw()
 {
+    glEnable(GL_STENCIL_TEST);                          // буфер трафарета
     glStencilFunc(GL_NEVER, 1, 1);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_REPLACE);
         container1->draw(getPaintMode());
@@ -22,6 +23,7 @@ void IntersectPrimitive::draw()
     glStencilFunc(GL_EQUAL, 2, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
        container2->draw(getPaintMode());
+    glDisable(GL_STENCIL_TEST);                          // буфер трафарета
 }
 
 void IntersectPrimitive::SynchData()

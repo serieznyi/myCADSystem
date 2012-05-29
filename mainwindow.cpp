@@ -98,3 +98,40 @@ void MainWindow::showAbout()
              tr("The <b>Recent Files</b> example demonstrates how to provide a "
                 "recently used file menu in a Qt application."));
 }
+
+void MainWindow::saveTo()
+{
+    QString path = QFileDialog::getSaveFileName();
+    qDebug()<<path;
+    path.append(".mycs");
+    this->savedPath = path;
+    QFile *fopen = new QFile(savedPath);
+    fopen->open(QIODevice::WriteOnly);
+    QDataStream out(fopen);
+    QList<Container*> *list = this->currentWork->getList();
+    out<<list;
+    fopen->close();
+}
+
+void MainWindow::save()
+{
+
+}
+
+void MainWindow::open()
+{
+
+}
+
+QDataStream& operator<<(QDataStream &out, const QList<Container*> *list)
+{
+    if(list->size()>0)
+    {
+        out<<list->size();
+        for(int i=0;i<list->size();i++)
+        {
+            out<<list->at(i);
+        }
+    }
+    return out;
+}

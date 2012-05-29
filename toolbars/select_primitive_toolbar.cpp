@@ -14,12 +14,6 @@ SelectPrimitiveToolbar::SelectPrimitiveToolbar(QWidget *parent) :  QToolBar(pare
 
 void SelectPrimitiveToolbar::createActions()
 {
-    pointAction = new QAction(QString::fromLocal8Bit("&Точка"), this);
-    this->addAction(pointAction);
-
-    lineAction = new QAction(QString::fromLocal8Bit("&Линия"), this);
-    this->addAction(lineAction);
-
     quadAction = new QAction(QString::fromLocal8Bit("&Куб"), this);
     this->addAction(quadAction);
     connect(quadAction, SIGNAL(triggered()), SLOT(setCubeAction()));
