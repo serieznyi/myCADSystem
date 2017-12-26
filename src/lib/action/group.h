@@ -3,7 +3,7 @@
 #ifndef GROUP_H
 #define GROUP_H
 
-#include "lib/action/action.h"
+#include "src/lib/action/action.h"
 
 class Group : public Action
 {

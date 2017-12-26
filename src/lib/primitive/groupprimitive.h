@@ -1,8 +1,8 @@
 #ifndef GROUPPRIMITIVE_H
 #define GROUPPRIMITIVE_H
 
-#include "lib/primitive/primitive.h"
-#include "lib/container.h"
+#include "src/lib/primitive/primitive.h"
+#include "src/lib/container.h"
 
 class GroupPrimitive : public Primitive
 {

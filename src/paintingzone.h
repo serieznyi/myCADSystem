@@ -5,7 +5,7 @@
 
 #include <QSplitter>
 #include "glwidget.h"
-#include "resource.h"
+#include "src/resource.h"
 
 //#include "matrix.h"
 //#include "invers.h"

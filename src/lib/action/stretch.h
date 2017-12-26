@@ -1,7 +1,7 @@
 #ifndef STRETCH_H
 #define STRETCH_H
 
-#include "lib/action/action.h"
+#include "src/lib/action/action.h"
 
 class Stretch : public Action
 {

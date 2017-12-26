@@ -3,7 +3,7 @@
 #ifndef SUBTRACTION_H
 #define SUBTRACTION_H
 
-#include "lib/action/action.h"
+#include "src/lib/action/action.h"
 
 class Subtraction : public Action
 {

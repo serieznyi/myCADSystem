@@ -12,10 +12,10 @@
 #include <QMouseEvent>
 #include <math.h>
 #include "GL/glu.h"
-#include "resource.h"
+#include "src/resource.h"
 #include "work.h"
 #include "toolbars/list_primitive_toolbar.h"
-#include "lib/lib.h"
+#include "src/lib/lib.h"
 #include "contextmenu.h"
 
 #include "invers.h"

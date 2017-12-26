@@ -2,7 +2,7 @@
 #define SPHERE_H
 
 #include "GL/glu.h"
-#include "lib/primitive/primitive.h"
+#include "src/lib/primitive/primitive.h"
 #include "GL/glu.h"
 
 class Sphere : public Primitive

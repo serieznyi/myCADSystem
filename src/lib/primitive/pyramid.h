@@ -2,7 +2,7 @@
 #define PYRAMID_H
 
 #include "math.h"
-#include "lib/primitive/primitive.h"
+#include "src/lib/primitive/primitive.h"
 
 class Pyramid : public Primitive
 {

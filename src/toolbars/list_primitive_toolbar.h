@@ -6,8 +6,8 @@
 #include <QToolBar>
 #include <QListWidget>
 #include <QHBoxLayout>
-#include "work.h"
-#include "lib/primitive/primitive.h"
+#include "src/work.h"
+#include "src/lib/primitive/primitive.h"
 
 class MainWindow;
 

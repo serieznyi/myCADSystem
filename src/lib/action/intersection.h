@@ -3,7 +3,7 @@
 #ifndef INTERSECTION_H
 #define INTERSECTION_H
 
-#include "lib/action/action.h"
+#include "src/lib/action/action.h"
 
 class Intersection : public Action
 {

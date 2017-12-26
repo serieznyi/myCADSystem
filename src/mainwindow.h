@@ -12,7 +12,7 @@
 #include "toolbars/list_primitive_toolbar.h"
 #include "statusbar.h"
 #include "work.h"
-#include "resource.h"
+#include "src/resource.h"
 #include <QFileDialog>
 
 class MainWindow : public QMainWindow

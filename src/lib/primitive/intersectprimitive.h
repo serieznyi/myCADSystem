@@ -1,9 +1,9 @@
 #ifndef INTERSECTPRIMITIVE_H
 #define INTERSECTPRIMITIVE_H
 
-#include "lib/primitive/groupprimitive.h"
-#include "lib/container.h"
-#include "resource.h"
+#include "src/lib/primitive/groupprimitive.h"
+#include "src/lib/container.h"
+#include "src/resource.h"
 
 class IntersectPrimitive : public GroupPrimitive
 {

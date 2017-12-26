@@ -6,8 +6,8 @@
 #include <GL/glu.h>
 #include "stdlib.h"
 #include "time.h"
-#include "resource.h"
-#include "lib/lib.h"
+#include "src/resource.h"
+#include "src/lib/lib.h"
 
 class MainWindow;
 

@@ -1,6 +1,7 @@
 #include "glwidget.h"
 #include "paintingzone.h"
 #include <QDebug>
+#include <QtWidgets/QMessageBox>
 #include "mainwindow.h"
 
 //  Главные
@@ -315,7 +316,7 @@ void GLWidget::setProjection(int i)
         this->comboBox->setCurrentIndex(0);
         break;
     }
-    this->updateGL();
+    this->update();
 }
 
 int GLWidget::getProjection()
@@ -426,7 +427,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         else if(current.y()<0){
             yTranslate += step_translate;
         }
-        this->updateGL();
+        this->update();
         return;
     }
 
@@ -444,7 +445,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
             yTranslate += step_translate;
         }
 
-        this->updateGL();
+        this->update();
         return;
     }
 
@@ -461,7 +462,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         else if(current.y()<0){
             yTranslate += step_translate;
         }
-        this->updateGL();
+        this->update();
         return;
     }
 
@@ -486,7 +487,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
             //zCamPos += step_translate;
             //zCamLook += step_translate;
         }
-        this->updateGL();
+        this->update();
         return;
     }
 
@@ -501,14 +502,14 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         else if(current.y()<0)
             gScale += step_scale;
 
-        this->updateGL();
+        this->update();
     }
     else if(this->getProjection()==MPJ_RIGHT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
             gScale += step_scale;
-        this->updateGL();
+        this->update();
     }
     else if(this->getProjection()==MPJ_FRONT){
         if(current.y()>0)
@@ -516,7 +517,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
         else if(current.y()<0)
             gScale += step_scale;
 
-        this->updateGL();
+        this->update();
     }
     /*
     else if(isPerspectiveW){
@@ -528,7 +529,7 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
             yCamPos += step_translate;
             zCamPos += step_translate;
         }
-        this->updateGL();
+        this->update();
         return;
     }
 */
@@ -598,7 +599,7 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
     }
 
 
-    this->updateGL();
+    this->update();
     return;
 }
 
@@ -1062,7 +1063,7 @@ void GLWidget::setXRotation(int angle)
     qNormalizeAngle(angle);
     if (angle != xRot) {
         xRot = angle;
-        updateGL();
+        update();
     }
 }
 
@@ -1071,7 +1072,7 @@ void GLWidget::setYRotation(int angle)
     qNormalizeAngle(angle);
     if (angle != yRot) {
         yRot = angle;
-        updateGL();
+        update();
     }
 }
 
@@ -1080,7 +1081,7 @@ void GLWidget::setZRotation(int angle)
     qNormalizeAngle(angle);
     if (angle != zRot) {
         zRot = angle;
-        updateGL();
+        update();
     }
 }
 
@@ -1102,10 +1103,10 @@ void GLWidget::initializeLighting()
 long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
 {
     PAINTING_MODE = MODE_FICTIVE;
-    updateGL();
+    update();
     glReadPixels(event->pos().x(), currentOrtho.height - event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
     PAINTING_MODE = MODE_REAL;
-    updateGL();
+    update();
 
     QList<Container*> *elements= currentWork->getList();
 

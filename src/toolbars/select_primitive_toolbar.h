@@ -7,7 +7,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QAction>
-#include "resource.h"
+#include "src/resource.h"
 
 class MainWindow;
 

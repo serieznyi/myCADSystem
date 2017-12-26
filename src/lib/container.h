@@ -4,10 +4,10 @@
 #define CONTAINER_H
 
 #include <QList>
-#include "lib/primitive/primitive.h"
-#include "lib/action/translate.h"
-#include "lib/action/rotate.h"
-#include "lib/action/scale.h"
+#include "src/lib/primitive/primitive.h"
+#include "src/lib/action/translate.h"
+#include "src/lib/action/rotate.h"
+#include "src/lib/action/scale.h"
 
 class Container
 {
