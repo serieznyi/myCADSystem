@@ -1,7 +1,7 @@
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include "lib/element.h"
 
 class Primitive : public Element

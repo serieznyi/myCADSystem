@@ -5,7 +5,7 @@
 
 //  Ãëàâíûå
 
-GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
+GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
     // ÏÎ×ÈÑÒÈÒÜ!
     koef = 1;

@@ -1,7 +1,7 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
-#include "QGLWidget"
+#include "QOpenGLWidget"
 #include <QString>
 
 class Element

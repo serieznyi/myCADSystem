@@ -2,7 +2,7 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include "lib/element.h"
 #include "resource.h"
 

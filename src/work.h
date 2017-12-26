@@ -2,7 +2,7 @@
 #ifndef WORK_H
 #define WORK_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <GL/glu.h>
 #include "stdlib.h"
 #include "time.h"

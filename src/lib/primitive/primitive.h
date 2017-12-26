@@ -1,7 +1,7 @@
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QStack>
 #include <QRgb>
 #include "lib/element.h"

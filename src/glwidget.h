@@ -5,7 +5,7 @@
 
 
 #include <QtGui>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QPoint>
 #include <QVBoxLayout>
 #include <QComboBox>
@@ -24,7 +24,7 @@
 
 class MainWindow;
 
-class GLWidget : public QGLWidget
+class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
 protected:
