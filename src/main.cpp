@@ -1,8 +1,6 @@
-// РўРѕС‡РєР° РІС…РѕРґР° РІ РїСЂРѕРіСЂР°РјРјСѓ
-
 #include <QApplication>
 #include <QtWidgets/QDesktopWidget>
-#include "src/gui/mainwindow.h"
+#include "src/gui/MainWindow.h"
 
 int main(int argc, char *argv[])
 {

@@ -4,11 +4,12 @@
 
 #include <QOpenGLWidget>
 #include "src/lib/Element.h"
+#include "src/resource.h"
 
 class Action : public Element
 {
 public:
-    explicit Action();
+    explicit Action(bool mode=true);
 };
 
 #endif // ACTION_H

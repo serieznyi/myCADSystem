@@ -1,20 +1,20 @@
 #ifndef LIB_H
 #define LIB_H
 
-#include "element.h"
+#include "Element.h"
 
-#include "primitive/primitive.h"
-#include "primitive/cube.h"
-#include "primitive/pyramid.h"
-#include "primitive/sphere.h"
-#include "primitive/groupprimitive.h"
-#include "primitive/substractprimitive.h"
-#include "primitive/intersectprimitive.h"
+#include "src/lib/primitive/Primitive.h"
+#include "src/lib/primitive/Cube.h"
+#include "src/lib/primitive/Pyramid.h"
+#include "src/lib/primitive/Sphere.h"
+#include "src/lib/primitive/GroupPrimitive.h"
+#include "src/lib/primitive/SubstractPrimitive.h"
+#include "src/lib/primitive/IntersectPrimitive.h"
 
-#include "action/action.h"
-#include "action/translate.h"
-#include "action/rotate.h"
-#include "action/scale.h"
+#include "src/lib/action/Action.h"
+#include "src/lib/action/Translate.h"
+#include "src/lib/action/Rotate.h"
+#include "src/lib/action/Scale.h"
 
 
 #endif // LIB_H

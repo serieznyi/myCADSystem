@@ -2,7 +2,7 @@
 #define PRIMITIVE_H
 
 #include <QOpenGLWidget>
-#include "src/lib/element.h"
+#include "src/lib/Element.h"
 
 class Primitive : public Element
 {
