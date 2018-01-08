@@ -1,5 +1,5 @@
 #include "action_primitive_toolbar.h"
-#include "../mainwindow.h"
+#include "src/gui/mainwindow.h"
 
 ActionPrimitiveToolBar::ActionPrimitiveToolBar(QWidget *parent) :  QToolBar(parent)
 {

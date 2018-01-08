@@ -1,5 +1,5 @@
 #include "contextmenu.h"
-#include "glwidget.h"
+#include "src/glwidget.h"
 
 ContextMenu::ContextMenu(int type, QWidget *parent):QMenu(parent)
 {

@@ -4,7 +4,7 @@
 #define PAINTINGZONE_H
 
 #include <QSplitter>
-#include "glwidget.h"
+#include "src/glwidget.h"
 #include "src/resource.h"
 
 //#include "matrix.h"

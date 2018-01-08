@@ -1,5 +1,5 @@
 #include "list_primitive_toolbar.h"
-#include "../mainwindow.h"
+#include "src/gui/mainwindow.h"
 
 ListPrimitiveToolbar::ListPrimitiveToolbar(QWidget *parent) :  QToolBar(parent)
 {

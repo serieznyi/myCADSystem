@@ -1,5 +1,5 @@
 #include "work.h"
-#include "mainwindow.h"
+#include "src/gui/mainwindow.h"
 #include "QDebug"
 
 Work::Work(QWidget *parent)

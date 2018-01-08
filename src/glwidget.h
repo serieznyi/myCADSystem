@@ -14,9 +14,9 @@
 #include "GL/glu.h"
 #include "src/resource.h"
 #include "work.h"
-#include "toolbars/list_primitive_toolbar.h"
+#include "src/gui/toolbars/list_primitive_toolbar.h"
 #include "src/lib/lib.h"
-#include "contextmenu.h"
+#include "src/gui/contextmenu.h"
 
 #include "invers.h"
 #include "matrix.h"

@@ -8,7 +8,7 @@
 #include <QHBoxLayout>
 #include <QAction>
 #include "src/resource.h"
-#include "../mainwindow.h"
+#include "src/gui/mainwindow.h"
 
 class ActionPrimitiveToolBar : public QToolBar
 {

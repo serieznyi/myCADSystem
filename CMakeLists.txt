@@ -53,32 +53,32 @@ add_executable(${PROJECT_NAME}
         src/lib/element.cpp
         src/lib/element.h
         src/lib/lib.h
-        src/toolbars/action_primitive_toolbar.cpp
-        src/toolbars/action_primitive_toolbar.h
-        src/toolbars/list_primitive_toolbar.cpp
-        src/toolbars/list_primitive_toolbar.h
-        src/toolbars/scene_control_toolbar.cpp
-        src/toolbars/scene_control_toolbar.h
-        src/toolbars/select_primitive_toolbar.cpp
-        src/toolbars/select_primitive_toolbar.h
-        src/toolbars/toolbar.cpp
-        src/toolbars/toolbar.h
-        src/contextmenu.cpp
-        src/contextmenu.h
+        src/gui/toolbars/action_primitive_toolbar.cpp
+        src/gui/toolbars/action_primitive_toolbar.h
+        src/gui/toolbars/list_primitive_toolbar.cpp
+        src/gui/toolbars/list_primitive_toolbar.h
+        src/gui/toolbars/scene_control_toolbar.cpp
+        src/gui/toolbars/scene_control_toolbar.h
+        src/gui/toolbars/select_primitive_toolbar.cpp
+        src/gui/toolbars/select_primitive_toolbar.h
+        src/gui/toolbars/toolbar.cpp
+        src/gui/toolbars/toolbar.h
+        src/gui/contextmenu.cpp
+        src/gui/contextmenu.h
         src/glwidget.cpp
         src/glwidget.h
         src/invers.h
         src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
+        src/gui/mainwindow.cpp
+        src/gui/mainwindow.h
         src/matrix.h
-        src/menubar.cpp
-        src/menubar.h
-        src/paintingzone.cpp
-        src/paintingzone.h
+        src/gui/menubar.cpp
+        src/gui/menubar.h
+        src/gui/paintingzone.cpp
+        src/gui/paintingzone.h
         src/resource.h
-        src/statusbar.cpp
-        src/statusbar.h
+        src/gui/statusbar.cpp
+        src/gui/statusbar.h
         src/work.cpp
         src/work.h
 )

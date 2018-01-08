@@ -6,12 +6,12 @@
 #include <QMainWindow>
 #include "paintingzone.h"
 #include "menubar.h"
-#include "toolbars/action_primitive_toolbar.h"
-#include "toolbars/select_primitive_toolbar.h"
-#include "toolbars/scene_control_toolbar.h"
-#include "toolbars/list_primitive_toolbar.h"
+#include "src/gui/toolbars/action_primitive_toolbar.h"
+#include "src/gui/toolbars/select_primitive_toolbar.h"
+#include "src/gui/toolbars/scene_control_toolbar.h"
+#include "src/gui/toolbars/list_primitive_toolbar.h"
 #include "statusbar.h"
-#include "work.h"
+#include "src/work.h"
 #include "src/resource.h"
 #include <QFileDialog>
 
