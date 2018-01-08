@@ -1,21 +1,34 @@
 # README
 
-## Qt5 instalation
+Prepare environment
 
-```bash
-wget wget http://download.qt.io/official_releases/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
+* Install CLion IDE
+* Install dependence libraries
 
-chmod +x qt-opensource-linux-x64-5.7.0.run
+Qt Create with Qt libraries
 
-./qt-opensource-linux-x64-5.7.0.run
-
+```
 sudo apt-get install \
-    build-essential \
-    libfontconfig1 \
-    mesa-common-dev \
-    libglu1-mesa-dev
+    qtcreator \
+    qtbase5-dev
 ```
 
-## Qt Configure
+Tested on qt 5.5.1
 
-1. Set path to Qt source in .env file like `CMAKE_PREFIX_PATH=/opt/Qt5.7.0/5.7/gcc_64`
+* Install cmake
+
+```
+sudo apt-get install cmake
+```
+
+* Install OpenGL
+
+```
+sudo apt-get install \
+    libgl1-mesa-dev \
+    libglu1-mesa \
+    libglu1-mesa-dev \
+    freeglut3-dev \
+    binutils-gold \
+    libglu1-mesa:i386
+```
