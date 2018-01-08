@@ -1,4 +1,4 @@
-// ����� ����� � ���������
+// РўРѕС‡РєР° РІС…РѕРґР° РІ РїСЂРѕРіСЂР°РјРјСѓ
 
 #include <QApplication>
 #include <QtWidgets/QDesktopWidget>

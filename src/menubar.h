@@ -1,4 +1,4 @@
-// Μενώ-αΰπ
+// ΠΠµΠ½Ρ-Π±Π°Ρ€
 #ifndef MENUBAR_H
 #define MENUBAR_H
 

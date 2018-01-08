@@ -1,4 +1,4 @@
-// Добавлением элементов на сцену
+// Р”РѕР±Р°РІР»РµРЅРёРµРј СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС†РµРЅСѓ
 
 #ifndef PRIMITIVETOOLBAR_H
 #define PRIMITIVETOOLBAR_H

@@ -1,17 +1,17 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
-#define PLANE_MIN_X                -5.0    // Размеры плоскости (Левая передняя точка, правая задняя)(XOZ)
+#define PLANE_MIN_X                -5.0    // Р Р°Р·РјРµСЂС‹ РїР»РѕСЃРєРѕСЃС‚Рё (Р›РµРІР°СЏ РїРµСЂРµРґРЅСЏСЏ С‚РѕС‡РєР°, РїСЂР°РІР°СЏ Р·Р°РґРЅСЏСЏ)(XOZ)
 #define PLANE_MAX_X                 5.0
 #define PLANE_MIN_Z                -5.0
 #define PLANE_MAX_Z                 5.0
 
-// РЕЖИМЫ РИСОВАНИЯ
+// Р Р•Р–РРњР« Р РРЎРћР’РђРќРРЇ
 #define MODE_REAL                   true
 #define MODE_FICTIVE                false
 
 
-// ВИД
+// Р’РР”
 #define MPJ_PERSPECTIVE             0
 #define MPJ_TOP                     1
 #define MPJ_RIGHT                   2
@@ -19,12 +19,12 @@
 #define MPJ_MAXIMAZE                4
 #define MPJ_RESET                   5
 
-// Прочее
+// РџСЂРѕС‡РµРµ
 #define COORD_X                     10
 #define COORD_Y                     11
 
-//ТИП ЭЛЕМЕНТА
-//Примитивы
+//РўРРџ Р­Р›Р•РњР•РќРўРђ
+//РџСЂРёРјРёС‚РёРІС‹
 #define MEL_PRIMITIVE               100
 #define MEL_CUBE                    103
 #define MEL_PYRAMID                 104
@@ -34,22 +34,22 @@
 #define MEL_SUBSTRACT               108
 #define MEL_INTERSECT               109
 
-//ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
+//Р”Р•Р™РЎРўР’РРЇ РќРђР” РџР РРњРРўРР’РђРњР
 #define MEV_ACTION                  200
-#define MEV_TRANSLATE               201 // Переместить
-#define MEV_SCALE                   202 // Масштабировать
-#define MEV_STRETCH                 203 // Растянуть
-#define MEV_ROTATE                  204 // Вращать
-#define MEV_GROUP                   205 // Сгрупировать
+#define MEV_TRANSLATE               201 // РџРµСЂРµРјРµСЃС‚РёС‚СЊ
+#define MEV_SCALE                   202 // РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°С‚СЊ
+#define MEV_STRETCH                 203 // Р Р°СЃС‚СЏРЅСѓС‚СЊ
+#define MEV_ROTATE                  204 // Р’СЂР°С‰Р°С‚СЊ
+#define MEV_GROUP                   205 // РЎРіСЂСѓРїРёСЂРѕРІР°С‚СЊ
 #define MEV_SUBSTRACT               206 //
 #define MEV_INTERSECT               207 //
 
-//ДЕЙСТВИЯ НАД СЦЕНОЙ
-#define MEV_CAMERA_TRANSLATE        251 // Переместить камеру
-#define MEV_CAMERA_ROTATE           252 // Вращать камеру
-#define MEV_CAMERA_ZOOM             253 // Изменить масштаб
+//Р”Р•Р™РЎРўР’РРЇ РќРђР” РЎР¦Р•РќРћР™
+#define MEV_CAMERA_TRANSLATE        251 // РџРµСЂРµРјРµСЃС‚РёС‚СЊ РєР°РјРµСЂСѓ
+#define MEV_CAMERA_ROTATE           252 // Р’СЂР°С‰Р°С‚СЊ РєР°РјРµСЂСѓ
+#define MEV_CAMERA_ZOOM             253 // РР·РјРµРЅРёС‚СЊ РјР°СЃС€С‚Р°Р±
 
-//ПРОЧЕЕ
+//РџР РћР§Р•Р•
 #define MCM_SCENE                   300
 #define MCM_PRIMITIVE               301
 

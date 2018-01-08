@@ -1,4 +1,4 @@
-// Область рисования
+// РћР±Р»Р°СЃС‚СЊ СЂРёСЃРѕРІР°РЅРёСЏ
 
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
@@ -28,32 +28,32 @@ class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
 protected:
-    void initializeGL();                                                //  Инициализация GL
-    void resizeGL(int _w, int _h);                                      //  Изменение размера области рисования
-    void paintGL();                                                     //  Главная функция рисования
+    void initializeGL();                                                //  РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ GL
+    void resizeGL(int _w, int _h);                                      //  РР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂР° РѕР±Р»Р°СЃС‚Рё СЂРёСЃРѕРІР°РЅРёСЏ
+    void paintGL();                                                     //  Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ СЂРёСЃРѕРІР°РЅРёСЏ
 public:
-    explicit GLWidget(QWidget *parent = 0);                             //  Конструктор
-    void mousePressEvent(QMouseEvent *event);                           //  Обработка нажатия клавиш мыши
-    void mouseMoveEvent(QMouseEvent *event);                            //  Обработка движения мыши
-    int getProjection();                                                //  Получить тип проекции вида
-    void setProjection(int i);                                          //  Установить тип проекции вида
-    void selectEvent(QMouseEvent *event, QPoint current);               //  Выбор события
-    void eventTranslateCamera(QMouseEvent *event, QPoint current);      //  Перемещение камеры
-    void eventRotateCamera(QMouseEvent *event, QPoint current);         //  Поворот камеры
-    void eventZoomCamera(QMouseEvent *event, QPoint current);           //  Масштабирование камеры
-    void eventTranslatePrimitive(QMouseEvent *event);                   //  Перемещение примитива
-    void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
+    explicit GLWidget(QWidget *parent = 0);                             //  РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    void mousePressEvent(QMouseEvent *event);                           //  РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€ РјС‹С€Рё
+    void mouseMoveEvent(QMouseEvent *event);                            //  РћР±СЂР°Р±РѕС‚РєР° РґРІРёР¶РµРЅРёСЏ РјС‹С€Рё
+    int getProjection();                                                //  РџРѕР»СѓС‡РёС‚СЊ С‚РёРї РїСЂРѕРµРєС†РёРё РІРёРґР°
+    void setProjection(int i);                                          //  РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РёРї РїСЂРѕРµРєС†РёРё РІРёРґР°
+    void selectEvent(QMouseEvent *event, QPoint current);               //  Р’С‹Р±РѕСЂ СЃРѕР±С‹С‚РёСЏ
+    void eventTranslateCamera(QMouseEvent *event, QPoint current);      //  РџРµСЂРµРјРµС‰РµРЅРёРµ РєР°РјРµСЂС‹
+    void eventRotateCamera(QMouseEvent *event, QPoint current);         //  РџРѕРІРѕСЂРѕС‚ РєР°РјРµСЂС‹
+    void eventZoomCamera(QMouseEvent *event, QPoint current);           //  РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ РєР°РјРµСЂС‹
+    void eventTranslatePrimitive(QMouseEvent *event);                   //  РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРёРјРёС‚РёРІР°
+    void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  РџРѕРІРѕСЂРѕС‚ РїСЂРёРјРёС‚РёРІР°
     void eventGroupPrimitive(long ob1, long obj2);
     void eventSubstractPrimitive(long obj1, long obj2);
     void eventIntersectPrimitive(long obj1, long obj2);
     void eventScalePrimitive(QPoint point);
     void eventStretchPrimitive(QPoint poin);
-    void addPrimitive(QPoint pos=QPoint(0,0));                                      //  Добавление примитива
+    void addPrimitive(QPoint pos=QPoint(0,0));                                      //  Р”РѕР±Р°РІР»РµРЅРёРµ РїСЂРёРјРёС‚РёРІР°
     void addAction(int i);
     void addPrimitive(int i);
-    double ScreenToOGL(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
-    void drawAxes();                                                    //  Рисование осей
-    void drawPlane();                                                   //  Рисование плоскости
+    double ScreenToOGL(int coord, int type);                            //  РџРµСЂРµРІРѕРґ РѕРєРѕРЅРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚ РІ РєРѕРѕСЂРґРёРЅР°С‚С‹ OpenGL
+    void drawAxes();                                                    //  Р РёСЃРѕРІР°РЅРёРµ РѕСЃРµР№
+    void drawPlane();                                                   //  Р РёСЃРѕРІР°РЅРёРµ РїР»РѕСЃРєРѕСЃС‚Рё
     void initializeLighting();
     void SaveLastState();
     void LoadLastState();
@@ -68,19 +68,19 @@ public:
     long getSelectedPrimitiveID(QMouseEvent *event);
     double calcKoef();
     bool intersectionGroupObj(long obj1, long obj2);
-//---------------------------ПЕРЕМЕННЫЕ---------------------------
+//---------------------------РџР•Р Р•РњР•РќРќР«Р•---------------------------
 public:
-    MainWindow      *pMW;                                               //  Указатель на виджет самого верхнего уровня
-    int             PAINTING_MODE;                                      //  Режим рисования
-    int             PROJECTION_TYPE;                                    //  Тип проекции вида
-    Work            *currentWork;                                       //  Текущий проект
-    int             *currenEvent;                                       //  Текущее событие
-    int             *previousEvent;                                     //  Предыдущее событие
-    bool            SELECTED,                                           //  Выбран объект сцены
-                    AXES,                                               //  Рисовать оси
-                    PLANE;                                              //  Рисовать сетку
-    GLubyte         pixel[3];                                           //  Цвет пикселя выбранного мышью
-    ///////////////ПОчистить/////////////////
+    MainWindow      *pMW;                                               //  РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РІРёРґР¶РµС‚ СЃР°РјРѕРіРѕ РІРµСЂС…РЅРµРіРѕ СѓСЂРѕРІРЅСЏ
+    int             PAINTING_MODE;                                      //  Р РµР¶РёРј СЂРёСЃРѕРІР°РЅРёСЏ
+    int             PROJECTION_TYPE;                                    //  РўРёРї РїСЂРѕРµРєС†РёРё РІРёРґР°
+    Work            *currentWork;                                       //  РўРµРєСѓС‰РёР№ РїСЂРѕРµРєС‚
+    int             *currenEvent;                                       //  РўРµРєСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ
+    int             *previousEvent;                                     //  РџСЂРµРґС‹РґСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ
+    bool            SELECTED,                                           //  Р’С‹Р±СЂР°РЅ РѕР±СЉРµРєС‚ СЃС†РµРЅС‹
+                    AXES,                                               //  Р РёСЃРѕРІР°С‚СЊ РѕСЃРё
+                    PLANE;                                              //  Р РёСЃРѕРІР°С‚СЊ СЃРµС‚РєСѓ
+    GLubyte         pixel[3];                                           //  Р¦РІРµС‚ РїРёРєСЃРµР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РјС‹С€СЊСЋ
+    ///////////////РџРћС‡РёСЃС‚РёС‚СЊ/////////////////
     struct Ortho{
         Ortho():
                 width(0), height(0), last_width(0), last_height(0),
@@ -111,7 +111,7 @@ public:
     GLfloat         xTranslate,             //
                     yTranslate,             //
                     zTranslate;             //
-    GLdouble        gScale;                 // Масштаб всей сцены
+    GLdouble        gScale;                 // РњР°СЃС€С‚Р°Р± РІСЃРµР№ СЃС†РµРЅС‹
     QPoint          lastPos;              //
     QPoint          currentPos;           //
     QVBoxLayout     *lay_global_v;          //
@@ -127,8 +127,8 @@ public:
     static const GLdouble step_rotate = 1;
 
 //////////////////////////////////////
-    GLint Mx, My;           // Позиция Курсора (обработанная)
-    GLint prevMx, prevMy;   // Предыдущая позиция курсора?
+    GLint Mx, My;           // РџРѕР·РёС†РёСЏ РљСѓСЂСЃРѕСЂР° (РѕР±СЂР°Р±РѕС‚Р°РЅРЅР°СЏ)
+    GLint prevMx, prevMy;   // РџСЂРµРґС‹РґСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РєСѓСЂСЃРѕСЂР°?
     GLdouble startMatrix[4][4];
     GLdouble inversStartMatrix[4][4];
 

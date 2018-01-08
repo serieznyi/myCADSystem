@@ -1,4 +1,4 @@
-﻿//  (c) Drobotenko    http://drobotenko.com
+//  (c) Drobotenko    http://drobotenko.com
 #ifndef INVERS_H
 #define INVERS_H
 

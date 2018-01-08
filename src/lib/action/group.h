@@ -1,4 +1,4 @@
-//  Действие "Групировка"
+//  Р”РµР№СЃС‚РІРёРµ "Р“СЂСѓРїРёСЂРѕРІРєР°"
 
 #ifndef LIB_ACTION_GROUP_H
 #define LIB_ACTION_GROUP_H

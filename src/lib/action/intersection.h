@@ -1,4 +1,4 @@
-//  Действие "Пересечение"
+//  Р”РµР№СЃС‚РІРёРµ "РџРµСЂРµСЃРµС‡РµРЅРёРµ"
 
 #ifndef INTERSECTION_H
 #define INTERSECTION_H

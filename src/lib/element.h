@@ -8,14 +8,14 @@ class Element
 {
 public:
     Element();
-    void setGID(long n);         //  Установить GID
-    long getGID();               //  Получить GID
-    void setTypeName(int a);    //  Установить флаг примитива
+    void setGID(long n);         //  РЈСЃС‚Р°РЅРѕРІРёС‚СЊ GID
+    long getGID();               //  РџРѕР»СѓС‡РёС‚СЊ GID
+    void setTypeName(int a);    //  РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С„Р»Р°Рі РїСЂРёРјРёС‚РёРІР°
     int getTypeName();
-    virtual void Apply(int mode) = 0;    //  Применить действие
+    virtual void Apply(int mode) = 0;    //  РџСЂРёРјРµРЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ
 
 private:
-    long            GID;         //  Глобальный идентификатор элемента
+    long            GID;         //  Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЌР»РµРјРµРЅС‚Р°
     int             type_name;
 
 };

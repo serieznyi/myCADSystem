@@ -1,4 +1,4 @@
-// Панель проекций вида
+// РџР°РЅРµР»СЊ РїСЂРѕРµРєС†РёР№ РІРёРґР°
 
 #ifndef PAINTINGZONE_H
 #define PAINTINGZONE_H
@@ -23,11 +23,11 @@ public:
     QSplitter           *sp_global;
     QSplitter           *sp_top;
     QSplitter           *sp_down;
-    GLWidget            *widPerspective;           // Перспективная проекция
+    GLWidget            *widPerspective;           // РџРµСЂСЃРїРµРєС‚РёРІРЅР°СЏ РїСЂРѕРµРєС†РёСЏ
     GLWidget            *widTop;                   // YOX
     GLWidget            *widFront;                 // ZOX
     GLWidget            *widRight;                 // XOY
-    QVBoxLayout         *lay_global;               // Глобальный менеджер компоновки
+    QVBoxLayout         *lay_global;               // Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РјРµРЅРµРґР¶РµСЂ РєРѕРјРїРѕРЅРѕРІРєРё
 public slots:
     void setMaximum(int i);
 };

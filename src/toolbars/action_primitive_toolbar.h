@@ -1,4 +1,4 @@
-// Управления объектами сцены
+// РЈРїСЂР°РІР»РµРЅРёСЏ РѕР±СЉРµРєС‚Р°РјРё СЃС†РµРЅС‹
 
 #ifndef ACTION_PRIMITIVE_TOOLBAR_H
 #define ACTION_PRIMITIVE_TOOLBAR_H

@@ -9,7 +9,7 @@ void Pyramid::Apply()
 {
     GLdouble a = 0.5;
     GLdouble h = (sqrt(3)/2)*a;
-        glPushMatrix();//основание
+        glPushMatrix();//РѕСЃРЅРѕРІР°РЅРёРµ
             glRotated(90, 1, 0, 0);
                 glBegin(GL_TRIANGLES);
                     glColor3f(1.0, 0, 0);

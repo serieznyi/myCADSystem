@@ -3,7 +3,7 @@
 
 MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWindow(parent)
 {
-    //èíèöèàëèçàöèÿ ïåðåìåííûõ
+    //Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ñ…
     cur_event                   = MEV_CAMERA_TRANSLATE;
     selected_prim = -1;
     WORK_CREATED                = false;
@@ -25,7 +25,7 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
-    //íàñòðîéêè îêíà
+    //Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð¾ÐºÐ½Ð°
     this->resize(900, 700);
     //this->setFixedSize(max_width, max_height);
     this->setWindowState(Qt::WindowMaximized);

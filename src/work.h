@@ -1,4 +1,4 @@
-// Работа (Проект)
+// Р Р°Р±РѕС‚Р° (РџСЂРѕРµРєС‚)
 #ifndef WORK_H
 #define WORK_H
 
@@ -16,9 +16,9 @@ class Work
 public:
     explicit Work(QWidget *parent);
     void drawWork(bool mode=true);
-    void addPrimitive(int i, QPoint pos=QPoint(0,0));                           // Добавление объекта на сцену
-    void addAction(int i);                              // Применение действия
-    long generateGID();                                 // Генерация идентификатора для события
+    void addPrimitive(int i, QPoint pos=QPoint(0,0));                           // Р”РѕР±Р°РІР»РµРЅРёРµ РѕР±СЉРµРєС‚Р° РЅР° СЃС†РµРЅСѓ
+    void addAction(int i);                              // РџСЂРёРјРµРЅРµРЅРёРµ РґРµР№СЃС‚РІРёСЏ
+    long generateGID();                                 // Р“РµРЅРµСЂР°С†РёСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° РґР»СЏ СЃРѕР±С‹С‚РёСЏ
     MCOLOR *generateIDColor();
     MCOLOR *generateColor();
     QList<Container *> *getList();
@@ -32,8 +32,8 @@ public:
 private:
     long                      forGroupID[2];
     MainWindow  *pMW;
-    QList<Container*>          *element_list;             //  Список элементов сцены
-    long                        current_free_id;           //  Текущий свободный идентификатор
+    QList<Container*>          *element_list;             //  РЎРїРёСЃРѕРє СЌР»РµРјРµРЅС‚РѕРІ СЃС†РµРЅС‹
+    long                        current_free_id;           //  РўРµРєСѓС‰РёР№ СЃРІРѕР±РѕРґРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
     int                         current_free_color[3];     //
     GLUquadric                  *quadric;
 };

@@ -4,11 +4,11 @@
 #include <QtWidgets/QMessageBox>
 #include "mainwindow.h"
 
-//  Главные
+//  Р“Р»Р°РІРЅС‹Рµ
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
-    // ПОЧИСТИТЬ!
+    // РџРћР§РРЎРўРРўР¬!
     koef = 1;
     pMW = dynamic_cast<MainWindow*>(parent);
     contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE,this);
@@ -35,12 +35,12 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
     comboBox            = new QComboBox();
     lay_global_v        = new QVBoxLayout();
     lay_global_h        = new QHBoxLayout();
-    comboBox->addItem(QString::fromLocal8Bit("Перспектива"));
-    comboBox->addItem(QString::fromLocal8Bit("Верх"));
-    comboBox->addItem(QString::fromLocal8Bit("Бок"));
-    comboBox->addItem(QString::fromLocal8Bit("Перед"));
-    comboBox->addItem(QString::fromLocal8Bit("Во весь экран"));
-    comboBox->addItem(QString::fromLocal8Bit("Сброс"));
+    comboBox->addItem(QString::fromLocal8Bit("РџРµСЂСЃРїРµРєС‚РёРІР°"));
+    comboBox->addItem(QString::fromLocal8Bit("Р’РµСЂС…"));
+    comboBox->addItem(QString::fromLocal8Bit("Р‘РѕРє"));
+    comboBox->addItem(QString::fromLocal8Bit("РџРµСЂРµРґ"));
+    comboBox->addItem(QString::fromLocal8Bit("Р’Рѕ РІРµСЃСЊ СЌРєСЂР°РЅ"));
+    comboBox->addItem(QString::fromLocal8Bit("РЎР±СЂРѕСЃ"));
     lay_global_h->addWidget(comboBox);
     lay_global_h->addStretch(3);
     lay_global_v->addLayout(lay_global_h);
@@ -48,8 +48,8 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
     this->setLayout(lay_global_v);
 
     ////////////////////////
-    Mx = 0; My = 0;           // Позиция Курсора (обработанная)
-    prevMx = 0; prevMy = 0;   // Предыдущая позиция курсора?
+    Mx = 0; My = 0;           // РџРѕР·РёС†РёСЏ РљСѓСЂСЃРѕСЂР° (РѕР±СЂР°Р±РѕС‚Р°РЅРЅР°СЏ)
+    prevMx = 0; prevMy = 0;   // РџСЂРµРґС‹РґСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РєСѓСЂСЃРѕСЂР°?
 
     connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeProection(int)));
 
@@ -58,11 +58,11 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
 
 void GLWidget::initializeGL()
 {
-    glClearColor(1.0f,1.0f,1.0f,1.0f);                  // цвет "очистки порта вида"
-    glEnable(GL_DEPTH_TEST);                            // буфер глубины
-    //glStencilMask(l);// число битов, задающее маску
-    glEnable(GL_STENCIL_TEST);                          // буфер трафарета
-    glClearStencil(0); // значение заполнения буфера трафарета при очистке
+    glClearColor(1.0f,1.0f,1.0f,1.0f);                  // С†РІРµС‚ "РѕС‡РёСЃС‚РєРё РїРѕСЂС‚Р° РІРёРґР°"
+    glEnable(GL_DEPTH_TEST);                            // Р±СѓС„РµСЂ РіР»СѓР±РёРЅС‹
+    //glStencilMask(l);// С‡РёСЃР»Рѕ Р±РёС‚РѕРІ, Р·Р°РґР°СЋС‰РµРµ РјР°СЃРєСѓ
+    glEnable(GL_STENCIL_TEST);                          // Р±СѓС„РµСЂ С‚СЂР°С„Р°СЂРµС‚Р°
+    glClearStencil(0); // Р·РЅР°С‡РµРЅРёРµ Р·Р°РїРѕР»РЅРµРЅРёСЏ Р±СѓС„РµСЂР° С‚СЂР°С„Р°СЂРµС‚Р° РїСЂРё РѕС‡РёСЃС‚РєРµ
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 
 
@@ -78,7 +78,7 @@ void GLWidget::initializeGL()
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 
-    glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
+    glMatrixMode(GL_MODELVIEW);                     // РІРєР»СЋС‡РёС‚СЊ РјР°С‚СЂРёС†Сѓ РІРёРґР°
 }
 
 void GLWidget::resizeGL(int _w, int _h)
@@ -104,7 +104,7 @@ void GLWidget::resizeGL(int _w, int _h)
     currentOrtho.near_val = -10;
     currentOrtho.far_val = 10;
 
-    glViewport(0, 0, currentOrtho.width, currentOrtho.height);                         // Размер порта вида
+    glViewport(0, 0, currentOrtho.width, currentOrtho.height);                         // Р Р°Р·РјРµСЂ РїРѕСЂС‚Р° РІРёРґР°
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
@@ -114,7 +114,7 @@ void GLWidget::resizeGL(int _w, int _h)
             currentOrtho.top_val,
             currentOrtho.down_val,
             currentOrtho.near_val,
-            currentOrtho.far_val);                                  // Размер ортогональной проекции
+            currentOrtho.far_val);                                  // Р Р°Р·РјРµСЂ РѕСЂС‚РѕРіРѕРЅР°Р»СЊРЅРѕР№ РїСЂРѕРµРєС†РёРё
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -127,8 +127,8 @@ void GLWidget::paintGL()
 {
     glLoadIdentity();
 
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);   // Очистка буферов
-    glPolygonMode(GL_FRONT, GL_FILL);          // Режим отрисовки
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);   // РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂРѕРІ
+    glPolygonMode(GL_FRONT, GL_FILL);          // Р РµР¶РёРј РѕС‚СЂРёСЃРѕРІРєРё
 
     glScalef(gScale, gScale, gScale);
     glTranslatef(xTranslate, yTranslate, zTranslate);
@@ -174,7 +174,7 @@ void GLWidget::paintGL()
     /*
     GLUquadric *quad = gluNewQuadric();
 
-    glStencilFunc(GL_NEVER, 1, 1); // значение mask не используется
+    glStencilFunc(GL_NEVER, 1, 1); // Р·РЅР°С‡РµРЅРёРµ mask РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 
 
@@ -184,7 +184,7 @@ void GLWidget::paintGL()
 
     glTranslated(0.7, 0, 0);
 
-    glStencilFunc(GL_NOTEQUAL, 1, 1); // значение mask не используется
+    glStencilFunc(GL_NOTEQUAL, 1, 1); // Р·РЅР°С‡РµРЅРёРµ mask РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
     glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);
 
     glColor3d(0,1,0);
@@ -282,7 +282,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
                                      "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y))
-                                     +QString::fromLocal8Bit("      Событие: ")+getTextEvent(*currenEvent));
+                                     +QString::fromLocal8Bit("      РЎРѕР±С‹С‚РёРµ: ")+getTextEvent(*currenEvent));
 }
 
 void GLWidget::setProjection(int i)
@@ -410,7 +410,7 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
     }
 }
 
-//  Камера
+//  РљР°РјРµСЂР°
 
 void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 {
@@ -603,7 +603,7 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
     return;
 }
 
-//  Примитивы
+//  РџСЂРёРјРёС‚РёРІС‹
 
 void GLWidget::addPrimitive(QPoint pos)
 {
@@ -730,8 +730,8 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно групировать с самим собой!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РќРµРІРѕР·РјРѕР¶РЅРѕ РіСЂСѓРїРёСЂРѕРІР°С‚СЊ СЃ СЃР°РјРёРј СЃРѕР±РѕР№!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -739,15 +739,15 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(MEV_GROUP);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объекты сгрупированы!"));
+        QMessageBox::about(this, QString::fromLocal8Bit("РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР°"),
+                           QString::fromLocal8Bit("РћР±СЉРµРєС‚С‹ СЃРіСЂСѓРїРёСЂРѕРІР°РЅС‹!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РћР±СЉРµРєС‚С‹ РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -758,8 +758,8 @@ void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно вычесть из самого себя!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РќРµРІРѕР·РјРѕР¶РЅРѕ РІС‹С‡РµСЃС‚СЊ РёР· СЃР°РјРѕРіРѕ СЃРµР±СЏ!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -767,15 +767,15 @@ void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(MEV_SUBSTRACT);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объект вычтен!"));
+        QMessageBox::about(this, QString::fromLocal8Bit("РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР°"),
+                           QString::fromLocal8Bit("РћР±СЉРµРєС‚ РІС‹С‡С‚РµРЅ!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РћР±СЉРµРєС‚С‹ РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -787,8 +787,8 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно пересечь с самим сабой!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РќРµРІРѕР·РјРѕР¶РЅРѕ РїРµСЂРµСЃРµС‡СЊ СЃ СЃР°РјРёРј СЃР°Р±РѕР№!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -796,15 +796,15 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(MEV_INTERSECT);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объекты пересечены!"));
+        QMessageBox::about(this, QString::fromLocal8Bit("РћРїРµСЂР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР°"),
+                           QString::fromLocal8Bit("РћР±СЉРµРєС‚С‹ РїРµСЂРµСЃРµС‡РµРЅС‹!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, QString::fromLocal8Bit("РћС€РёР±РєР°"),
+                              QString::fromLocal8Bit("РћР±СЉРµРєС‚С‹ РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ!"));
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -885,7 +885,7 @@ void GLWidget::eventStretchPrimitive(QPoint poin)
     pMW->Update();
 }
 
-//  Рисование
+//  Р РёСЃРѕРІР°РЅРёРµ
 void GLWidget::drawAxes()
 {
     glLoadIdentity();
@@ -897,8 +897,8 @@ void GLWidget::drawAxes()
 
     glLineWidth(2);
     glBegin(GL_LINES);
-    glColor3ub(255, 0, 0);//Цвет оси X
-    // Ось X
+    glColor3ub(255, 0, 0);//Р¦РІРµС‚ РѕСЃРё X
+    // РћСЃСЊ X
     glVertex3d(0, 0, 0);
     glVertex3d(1, 0, 0);
     glPushMatrix();
@@ -908,8 +908,8 @@ void GLWidget::drawAxes()
     //drawX();
     glLineWidth(2);
     glPopMatrix();
-    glColor3ub(0, 255, 0);//Цвет оси Y
-    // Ось Y
+    glColor3ub(0, 255, 0);//Р¦РІРµС‚ РѕСЃРё Y
+    // РћСЃСЊ Y
     glVertex3d(0, 0, 0);
     glVertex3d(0, 1, 0);
     glPushMatrix();
@@ -935,7 +935,7 @@ void GLWidget::drawAxes()
 
 void GLWidget::drawX()
 {
-    // Буква X
+    // Р‘СѓРєРІР° X
     glBegin(GL_LINES);
     glVertex3d(-1, 1, 0);
     glVertex3d(1, -1, 0);
@@ -987,7 +987,7 @@ void GLWidget::drawPlane()
     }
 }
 
-//  Дополнительные
+//  Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ
 
 double GLWidget::ScreenToOGL(int coord, int type) {
 
@@ -1116,7 +1116,7 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
         for(int i=0;i<elements->size();i++)
         {
             Container *cont = elements->at(i);
-            MCOLOR *color = 0;// Цвет примитива из контейнера
+            MCOLOR *color = 0;// Р¦РІРµС‚ РїСЂРёРјРёС‚РёРІР° РёР· РєРѕРЅС‚РµР№РЅРµСЂР°
             GLubyte ba[3] = {0};
             color = cont->getPrimitive()->getIDColor();
             ba[0] = (GLubyte)color->red;
@@ -1126,7 +1126,7 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event)
             if(ba[0]==pixel[0]&&ba[1]==pixel[1]&&ba[2]==pixel[2])
             {
                 SELECTED = true;
-                //делаем точку в которой кликнули началом системы координат
+                //РґРµР»Р°РµРј С‚РѕС‡РєСѓ РІ РєРѕС‚РѕСЂРѕР№ РєР»РёРєРЅСѓР»Рё РЅР°С‡Р°Р»РѕРј СЃРёСЃС‚РµРјС‹ РєРѕРѕСЂРґРёРЅР°С‚
                 prevMx = currentOrtho.width/2 - event->pos().x();
                 prevMy = event->pos().y() - currentOrtho.height/2;
                 pMW->selected_prim = i;
@@ -1175,33 +1175,33 @@ QString GLWidget::getTextEvent(int event)
     switch(event)
     {
     case MEV_ROTATE:
-        return QString::fromLocal8Bit("Поворот примитива");
+        return QString::fromLocal8Bit("РџРѕРІРѕСЂРѕС‚ РїСЂРёРјРёС‚РёРІР°");
     case MEV_TRANSLATE:
-        return QString::fromLocal8Bit("Перемещение примитива");
+        return QString::fromLocal8Bit("РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРёРјРёС‚РёРІР°");
     case MEV_SCALE:
-        return QString::fromLocal8Bit("Масштабирование примитива");
+        return QString::fromLocal8Bit("РњР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ РїСЂРёРјРёС‚РёРІР°");
     case MEV_SUBSTRACT:
-        return QString::fromLocal8Bit("Вычитание примитивов");
+        return QString::fromLocal8Bit("Р’С‹С‡РёС‚Р°РЅРёРµ РїСЂРёРјРёС‚РёРІРѕРІ");
     case MEV_STRETCH:
-        return QString::fromLocal8Bit("Растягивание примитива");
+        return QString::fromLocal8Bit("Р Р°СЃС‚СЏРіРёРІР°РЅРёРµ РїСЂРёРјРёС‚РёРІР°");
     case MEV_GROUP:
-        return QString::fromLocal8Bit("Групировка примитивов");
+        return QString::fromLocal8Bit("Р“СЂСѓРїРёСЂРѕРІРєР° РїСЂРёРјРёС‚РёРІРѕРІ");
     case MEV_INTERSECT:
-        return QString::fromLocal8Bit("Пересечение");
+        return QString::fromLocal8Bit("РџРµСЂРµСЃРµС‡РµРЅРёРµ");
     case MEV_CAMERA_ZOOM:
-        return QString::fromLocal8Bit("Масшат камеры");
+        return QString::fromLocal8Bit("РњР°СЃС€Р°С‚ РєР°РјРµСЂС‹");
     case MEV_CAMERA_TRANSLATE:
-        return QString::fromLocal8Bit("Перемещени камеры");
+        return QString::fromLocal8Bit("РџРµСЂРµРјРµС‰РµРЅРё РєР°РјРµСЂС‹");
     case MEV_CAMERA_ROTATE:
-        return QString::fromLocal8Bit("Поворот камеры");
+        return QString::fromLocal8Bit("РџРѕРІРѕСЂРѕС‚ РєР°РјРµСЂС‹");
     case MEL_CUBE:
-        return QString::fromLocal8Bit("Куб");
+        return QString::fromLocal8Bit("РљСѓР±");
     case MEL_PYRAMID:
-        return QString::fromLocal8Bit("Пирамида");
+        return QString::fromLocal8Bit("РџРёСЂР°РјРёРґР°");
     case MEL_SPHERE:
-        return QString::fromLocal8Bit("Сфера");
+        return QString::fromLocal8Bit("РЎС„РµСЂР°");
     case MEL_CYLINDER:
-        return QString::fromLocal8Bit("Цилиндр");
+        return QString::fromLocal8Bit("Р¦РёР»РёРЅРґСЂ");
     default:return "ERROR";
     }
 }

@@ -17,7 +17,7 @@ void Pyramid::draw()
     glColor3ub(color->red,color->green,color->blue);
 
     GLdouble h = (sqrt(3)/2)*this->a;
-       // glPushMatrix();//основание
+       // glPushMatrix();//РѕСЃРЅРѕРІР°РЅРёРµ
             glRotated(90, 1, 0, 0);
                 glBegin(GL_TRIANGLES);
                     glVertex3d(0, h/2, 0);

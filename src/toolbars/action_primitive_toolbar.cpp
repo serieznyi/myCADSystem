@@ -14,31 +14,31 @@ ActionPrimitiveToolBar::ActionPrimitiveToolBar(QWidget *parent) :  QToolBar(pare
 
 void ActionPrimitiveToolBar::createActions()
 {
-    rotateAction            = new QAction(QString::fromLocal8Bit("&Ïîâåðíóòü"), this);
+    rotateAction            = new QAction(QString::fromLocal8Bit("&ÐŸÐ¾Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ"), this);
     this->addAction(rotateAction);
     connect(rotateAction, SIGNAL(triggered()),SLOT(setRotateAction()));
 
-    translateAction         = new QAction(QString::fromLocal8Bit("&Ïåðåìåñòèòü"), this);
+    translateAction         = new QAction(QString::fromLocal8Bit("&ÐŸÐµÑ€ÐµÐ¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ"), this);
     this->addAction(translateAction);
     connect(translateAction, SIGNAL(triggered()),SLOT(setTranslateAction()));
 
-    scaleAction         = new QAction(QString::fromLocal8Bit("&Ìàñøòàáèðîâàòü"), this);
+    scaleAction         = new QAction(QString::fromLocal8Bit("&ÐœÐ°ÑÑˆÑ‚Ð°Ð±Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ"), this);
     this->addAction(scaleAction);
     connect(scaleAction, SIGNAL(triggered()),SLOT(setScaleAction()));
 
-    stretchAction         = new QAction(QString::fromLocal8Bit("&Ðàñòÿíóòü"), this);
+    stretchAction         = new QAction(QString::fromLocal8Bit("&Ð Ð°ÑÑ‚ÑÐ½ÑƒÑ‚ÑŒ"), this);
     this->addAction(stretchAction);
     connect(stretchAction, SIGNAL(triggered()),SLOT(setStretchAction()));
 
-    subtractionAction       = new QAction(QString::fromLocal8Bit("&Âû÷åñòü"), this);
+    subtractionAction       = new QAction(QString::fromLocal8Bit("&Ð’Ñ‹Ñ‡ÐµÑÑ‚ÑŒ"), this);
     this->addAction(subtractionAction);
     connect(subtractionAction, SIGNAL(triggered()),SLOT(setSubstractAction()));
 
-    groupAction             = new QAction(QString::fromLocal8Bit("&Ñãðóïèðîâàòü"), this);
+    groupAction             = new QAction(QString::fromLocal8Bit("&Ð¡Ð³Ñ€ÑƒÐ¿Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ"), this);
     this->addAction(groupAction);
     connect(groupAction, SIGNAL(triggered()),SLOT(setGroupAction()));
 
-    intersectionAction      = new QAction(QString::fromLocal8Bit("&Ïåðåñå÷åíèå"), this);
+    intersectionAction      = new QAction(QString::fromLocal8Bit("&ÐŸÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸Ðµ"), this);
     this->addAction(intersectionAction);
     connect(intersectionAction, SIGNAL(triggered()),SLOT(setIntersectAction()));
 }

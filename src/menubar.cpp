@@ -6,15 +6,15 @@ MenuBar::MenuBar(QWidget *parent) :
 {
     pMW = dynamic_cast<MainWindow*>(parent);
 
-    menu_file = new QMenu(QString::fromLocal8Bit("Ôàéë"));
+    menu_file = new QMenu(QString::fromLocal8Bit("Ð¤Ð°Ð¹Ð»"));
         this->addMenu(menu_file);
-    menu_scene_action = new QMenu(QString::fromLocal8Bit("Ñöåíà"));
+    menu_scene_action = new QMenu(QString::fromLocal8Bit("Ð¡Ñ†ÐµÐ½Ð°"));
         this->addMenu(menu_scene_action);
-    menu_select_primitive = new QMenu(QString::fromLocal8Bit("Ïðèìèòèâû"));
+    menu_select_primitive = new QMenu(QString::fromLocal8Bit("ÐŸÑ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²Ñ‹"));
         this->addMenu(menu_select_primitive);
-    menu_primitive_action = new QMenu(QString::fromLocal8Bit("Äåéñòâèÿ íàä ïðèìèòèâàìè"));
+    menu_primitive_action = new QMenu(QString::fromLocal8Bit("Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ñ Ð½Ð°Ð´ Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²Ð°Ð¼Ð¸"));
         this->addMenu(menu_primitive_action);
-    menu_help = new QMenu(QString::fromLocal8Bit("Ïîìîùü"));
+    menu_help = new QMenu(QString::fromLocal8Bit("ÐŸÐ¾Ð¼Ð¾Ñ‰ÑŒ"));
         this->addMenu(menu_help);
 
     createActions();
@@ -22,24 +22,24 @@ MenuBar::MenuBar(QWidget *parent) :
 
 void MenuBar::createActions()
 {
-    action_open         = new QAction(QString::fromLocal8Bit("Îòêðûòü"),this);
-    action_save         = new QAction(QString::fromLocal8Bit("Ñîõðàíèòü"),this);
-    action_save_to      = new QAction(QString::fromLocal8Bit("Ñîõðàíèòü êàê..."),this);
-    action_exit         = new QAction(QString::fromLocal8Bit("Âûõîä"),this);
+    action_open         = new QAction(QString::fromLocal8Bit("ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ"),this);
+    action_save         = new QAction(QString::fromLocal8Bit("Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ"),this);
+    action_save_to      = new QAction(QString::fromLocal8Bit("Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ ÐºÐ°Ðº..."),this);
+    action_exit         = new QAction(QString::fromLocal8Bit("Ð’Ñ‹Ñ…Ð¾Ð´"),this);
 
-    actionTranslateCamera   = new QAction(QString::fromLocal8Bit("Ïåðåìåñòèòü êàìåðó"),this);
-    actionRotateCamera      = new QAction(QString::fromLocal8Bit("Ïîâåðíóòü êàìåðó"),this);
-    actionZoomCamera        = new QAction(QString::fromLocal8Bit("Èçìåíèòü ìàñøòàá"),this);
+    actionTranslateCamera   = new QAction(QString::fromLocal8Bit("ÐŸÐµÑ€ÐµÐ¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ ÐºÐ°Ð¼ÐµÑ€Ñƒ"),this);
+    actionRotateCamera      = new QAction(QString::fromLocal8Bit("ÐŸÐ¾Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ ÐºÐ°Ð¼ÐµÑ€Ñƒ"),this);
+    actionZoomCamera        = new QAction(QString::fromLocal8Bit("Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð¼Ð°ÑÑˆÑ‚Ð°Ð±"),this);
 
-    actionCube          = new QAction(QString::fromLocal8Bit("Êóá"),this);
-    actionSphere        = new QAction(QString::fromLocal8Bit("Ñôåðà"),this);
-    actionPyramid       = new QAction(QString::fromLocal8Bit("Ïèðàìèäà"),this);
+    actionCube          = new QAction(QString::fromLocal8Bit("ÐšÑƒÐ±"),this);
+    actionSphere        = new QAction(QString::fromLocal8Bit("Ð¡Ñ„ÐµÑ€Ð°"),this);
+    actionPyramid       = new QAction(QString::fromLocal8Bit("ÐŸÐ¸Ñ€Ð°Ð¼Ð¸Ð´Ð°"),this);
 
-    actionTranslate         = new QAction(QString::fromLocal8Bit("Ïåðåìåñòèòü"),this);
-    actionRotate            = new QAction(QString::fromLocal8Bit("Ïîâåðíóòü"),this);
-    actionGroup             = new QAction(QString::fromLocal8Bit("Ñãðóïèðîâàòü"),this);
+    actionTranslate         = new QAction(QString::fromLocal8Bit("ÐŸÐµÑ€ÐµÐ¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ"),this);
+    actionRotate            = new QAction(QString::fromLocal8Bit("ÐŸÐ¾Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ"),this);
+    actionGroup             = new QAction(QString::fromLocal8Bit("Ð¡Ð³Ñ€ÑƒÐ¿Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ"),this);
 
-    action_about        = new QAction(QString::fromLocal8Bit("Î ïðîãðàììå"),this);
+    action_about        = new QAction(QString::fromLocal8Bit("Ðž Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ðµ"),this);
 
     menu_file->addAction(action_open);
     menu_file->addSeparator();

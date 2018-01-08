@@ -1,4 +1,4 @@
-//  Действие "Вычитание"
+//  Р”РµР№СЃС‚РІРёРµ "Р’С‹С‡РёС‚Р°РЅРёРµ"
 
 #ifndef SUBTRACTION_H
 #define SUBTRACTION_H

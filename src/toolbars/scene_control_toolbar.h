@@ -1,4 +1,4 @@
-//Управление сценой
+//РЈРїСЂР°РІР»РµРЅРёРµ СЃС†РµРЅРѕР№
 
 #ifndef GLOBALCONTROLPANEL_H
 #define GLOBALCONTROLPANEL_H

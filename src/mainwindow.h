@@ -1,4 +1,4 @@
-// Главное окно программы
+// Р“Р»Р°РІРЅРѕРµ РѕРєРЅРѕ РїСЂРѕРіСЂР°РјРјС‹
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(int max_width, int max_height, QWidget *parent = 0);                   // Конструктор
+    explicit MainWindow(int max_width, int max_height, QWidget *parent = 0);                   // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
     int* getCurEvent();
     void setCurEvent(int event);
     int *getPrevEvent();
@@ -36,16 +36,16 @@ public:
     StatusBar* getStatusBar();
 
 private:
-    PaintingZone                    *paintingZone;              // Виджет проекций вида
+    PaintingZone                    *paintingZone;              // Р’РёРґР¶РµС‚ РїСЂРѕРµРєС†РёР№ РІРёРґР°
     MenuBar                         *menuBar;
-    ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
-    SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // Панель выбора примитивов
-    ListPrimitiveToolbar            *listPrimitiveToolBar;      // Панель примитивов сцены
-    SceneControlToolbar               *sceneControlPanel;         // Панель управления сценой
-    StatusBar                       *statusBar;                 // Панель вывода доп. информации
-    int                             cur_event;                  // Текущее событие
-    int                             prev_event;                 // Предыдущее событие
-    Work                            *currentWork;               // Текущая работа
+    ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // РџР°РЅРµР»СЊ СѓРїСЂР°РІР»РµРЅРёСЏ РїСЂРёРјРёС‚РёРІР°РјРё
+    SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // РџР°РЅРµР»СЊ РІС‹Р±РѕСЂР° РїСЂРёРјРёС‚РёРІРѕРІ
+    ListPrimitiveToolbar            *listPrimitiveToolBar;      // РџР°РЅРµР»СЊ РїСЂРёРјРёС‚РёРІРѕРІ СЃС†РµРЅС‹
+    SceneControlToolbar               *sceneControlPanel;         // РџР°РЅРµР»СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃС†РµРЅРѕР№
+    StatusBar                       *statusBar;                 // РџР°РЅРµР»СЊ РІС‹РІРѕРґР° РґРѕРї. РёРЅС„РѕСЂРјР°С†РёРё
+    int                             cur_event;                  // РўРµРєСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ
+    int                             prev_event;                 // РџСЂРµРґС‹РґСѓС‰РµРµ СЃРѕР±С‹С‚РёРµ
+    Work                            *currentWork;               // РўРµРєСѓС‰Р°СЏ СЂР°Р±РѕС‚Р°
     bool                             WORK_CREATED;
 public:
     long selected_prim;

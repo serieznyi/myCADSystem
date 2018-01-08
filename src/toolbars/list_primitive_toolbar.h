@@ -1,4 +1,4 @@
-//  Список примитивов сцены
+//  РЎРїРёСЃРѕРє РїСЂРёРјРёС‚РёРІРѕРІ СЃС†РµРЅС‹
 
 #ifndef LIST_PRIMITIVE_TOOLBAR_H
 #define LIST_PRIMITIVE_TOOLBAR_H
@@ -33,8 +33,8 @@ public:
     {
         switch(element->getTypeName())
         {
-            case MEL_CUBE: return "Куб"; break;
-            case MEL_PYRAMID: return "Пирамида"; break;
+            case MEL_CUBE: return "РљСѓР±"; break;
+            case MEL_PYRAMID: return "РџРёСЂР°РјРёРґР°"; break;
         }
     }*/
     
