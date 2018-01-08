@@ -1,4 +1,4 @@
-# README
+# README (Ubuntu)
 
 Prepare environment
 
@@ -15,10 +15,17 @@ sudo apt-get install \
 
 Tested on qt 5.5.1
 
-* Install cmake
+* Install cmake 3.10
 
 ```
-sudo apt-get install cmake
+cd /tmp
+wget https://cmake.org/files/v3.10/cmake-3.10.1.tar.gz
+tar -xvzf cmake-3.10.1.tar.gz
+cd cmake-3.10.1/
+sudo ./bootstrap
+sudo make
+sudo make install
+
 ```
 
 * Install OpenGL
