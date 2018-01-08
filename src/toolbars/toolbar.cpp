@@ -1,5 +1,5 @@
-#include "toolbars/toolbar.h"
-#include "mainwindow.h"
+#include "toolbar.h"
+#include "../mainwindow.h"
 
 ToolBar::ToolBar(QWidget *parent):QToolBar(parent)
 {

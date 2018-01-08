@@ -7,7 +7,8 @@ Primitive::Primitive():Element()
 
 void Primitive::draw()
 {
-    this->Apply();
+    // TODO remove not required argument in virtual method
+    this->Apply(0);
 }
 
 int* Primitive::getColor()

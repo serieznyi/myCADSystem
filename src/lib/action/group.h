@@ -1,7 +1,7 @@
 //  Действие "Групировка"
 
-#ifndef GROUP_H
-#define GROUP_H
+#ifndef LIB_ACTION_GROUP_H
+#define LIB_ACTION_GROUP_H
 
 #include "src/lib/action/action.h"
 
@@ -12,4 +12,4 @@ public:
     virtual void Apply(bool mode=true);
 };
 
-#endif // GROUP_H
+#endif

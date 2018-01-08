@@ -1,15 +1,14 @@
 // Управления объектами сцены
 
-#ifndef TOOLBAR_H
-#define TOOLBAR_H
+#ifndef ACTION_PRIMITIVE_TOOLBAR_H
+#define ACTION_PRIMITIVE_TOOLBAR_H
 
 #include <QToolBar>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QAction>
 #include "src/resource.h"
-
-class MainWindow;
+#include "../mainwindow.h"
 
 class ActionPrimitiveToolBar : public QToolBar
 {
@@ -46,4 +45,4 @@ public slots:
 
 };
 
-#endif // TOOLBAR_H
+#endif // ACTION_PRIMITIVE_TOOLBAR_H

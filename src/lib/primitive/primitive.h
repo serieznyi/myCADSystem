@@ -25,7 +25,7 @@ public:
     void setIDColor(MCOLOR *color);
     void setColor(MCOLOR *color);
     virtual void draw()=0;
-    virtual void Apply(int mode);
+    void Apply(int mode);
     void setPaintMode(int mode);
     int getPaintMode();
 private:

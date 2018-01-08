@@ -1,5 +1,5 @@
 #include "scene_control_toolbar.h"
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 SceneControlToolbar::SceneControlToolbar(QWidget *parent):QToolBar(parent)
 {

@@ -15,6 +15,8 @@
 #include "src/resource.h"
 #include <QFileDialog>
 
+class ActionPrimitiveToolBar;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

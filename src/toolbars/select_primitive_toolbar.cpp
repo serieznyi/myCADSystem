@@ -1,5 +1,5 @@
 #include "select_primitive_toolbar.h"
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 SelectPrimitiveToolbar::SelectPrimitiveToolbar(QWidget *parent) :  QToolBar(parent)
 {
