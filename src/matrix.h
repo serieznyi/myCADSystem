@@ -6,6 +6,15 @@
 #define MATRIX_H
 
 template <int N>
+void zeroMatirx(double dstMatrix[N][N]) {
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      dstMatrix[i][j] = 0.0;
+    }
+  }
+}
+
+template <int N>
 void copyMatrix(double dstMatrix[N][N], double srcMatrix[N][N]) {
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
@@ -26,15 +35,6 @@ void multMatrix(double resAndFirstMatrix[N][N], double secondMatrix[N][N]) {
     }
   }
   copyMatrix(resAndFirstMatrix, workMatrix);
-}
-
-template <int N>
-void zeroMatirx(double dstMatrix[N][N]) {
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      dstMatrix[i][j] = 0.0;
-    }
-  }
 }
 
 #endif // MATRIX_H
