@@ -4,7 +4,7 @@
 MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWindow(parent)
 {
     //инициализация переменных
-    cur_event                   = MEV_CAMERA_TRANSLATE;
+    cur_event                   = CAMERA_TRANSLATE;
     selected_prim = -1;
     WORK_CREATED                = false;
     prev_event                  = 0;

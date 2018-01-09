@@ -90,7 +90,7 @@ void Work::addAction(int i)
 {
     switch(i)
     {
-    case MEV_GROUP:
+    case ACTION_GROUP:
     {
         Container *obj1 = element_list->at(getGroupObj1());
         Container *obj2 = element_list->at(getGroupObj2());
@@ -105,7 +105,7 @@ void Work::addAction(int i)
         element_list->append(new Container(groupPrim));
         break;
     }
-    case MEV_SUBSTRACT:
+    case ACTION_SUBSTRACT:
     {
         Container *obj1 = element_list->at(getGroupObj1());
         Container *obj2 = element_list->at(getGroupObj2());
@@ -120,15 +120,15 @@ void Work::addAction(int i)
         element_list->append(new Container(substractPrim));
         break;
     }
-    case MEV_TRANSLATE:
+    case ACTION_TRANSLATE:
     {
         Translate *translate = new Translate(0,0,0);
         translate->setGID(generateGID());
         element_list->at(pMW->selected_prim)->addTranslate(translate);
         break;
     }
-    case MEV_SCALE:
-    case MEV_STRETCH:
+    case ACTION_SCALE:
+    case ACTION_STRETCH:
     {
         Scale *scale = new Scale(1,1,1);
         scale->setGID(generateGID());
@@ -136,14 +136,14 @@ void Work::addAction(int i)
         break;
     }
 
-    case MEV_ROTATE:
+    case ACTION_ROTATE:
     {
         Rotate *rotate = new Rotate(0,0,0);
         rotate->setGID(generateGID());
         element_list->at(pMW->selected_prim)->addRotate(rotate);
         break;
     }
-    case MEV_INTERSECT:
+    case ACTION_INTERSECT:
     {
         Container *obj1 = element_list->at(getGroupObj1());
         Container *obj2 = element_list->at(getGroupObj2());

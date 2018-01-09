@@ -4,9 +4,13 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow *w = new MainWindow(a.desktop()->screenGeometry().width(),
-                                   a.desktop()->screenGeometry().height());
-    w->show();
-    return a.exec();
+    QApplication application(argc, argv);
+
+    QRect desktopGeometry = application.desktop()->screenGeometry();
+
+    MainWindow *mainWindow = new MainWindow(desktopGeometry.width(), desktopGeometry.height());
+
+    mainWindow->show();
+
+    return application.exec();
 }

@@ -136,7 +136,7 @@ void GLWidget::paintGL()
     glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    if(this->getProjection()==MPJ_FRONT)
+    if(this->getProjection()==VIEW_FRONT)
     {
         glPushMatrix();
         glTranslated(0,0,-currentOrtho.far_val);
@@ -145,7 +145,7 @@ void GLWidget::paintGL()
             this->drawPlane();
         glPopMatrix();
     }
-    else if(this->getProjection()==MPJ_RIGHT)
+    else if(this->getProjection()==VIEW_RIGHT)
     {
         glPushMatrix();
         glTranslated(currentOrtho.far_val, 0, 0);
@@ -210,26 +210,26 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     case MEL_CYLINDER:
         addPrimitive();
         previousEvent = currenEvent;
-        pMW->setCurEvent(MEV_CAMERA_TRANSLATE);
+        pMW->setCurEvent(CAMERA_TRANSLATE);
         break;
-    case MEV_ROTATE:
+    case ACTION_ROTATE:
         if(SELECTED)
-            addAction(MEV_ROTATE);
+            addAction(ACTION_ROTATE);
         break;
-    case MEV_TRANSLATE:
+    case ACTION_TRANSLATE:
         if(SELECTED)
-            addAction(MEV_TRANSLATE);
+            addAction(ACTION_TRANSLATE);
         break;
-    case MEV_SCALE:
+    case ACTION_SCALE:
         if(SELECTED)
-            addAction(MEV_SCALE);
+            addAction(ACTION_SCALE);
         break;
-    case MEV_STRETCH:
+    case ACTION_STRETCH:
         if(SELECTED)
-            addAction(MEV_STRETCH);
+            addAction(ACTION_STRETCH);
         break;
 
-    case MEV_GROUP:
+    case ACTION_GROUP:
     {
         if(currentWork->getGroupObj1()==-1)
             currentWork->setGroupObj1(pMW->selected_prim);
@@ -241,7 +241,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
         break;
     }
-    case MEV_SUBSTRACT:
+    case ACTION_SUBSTRACT:
     {
         if(currentWork->getGroupObj1()==-1)
             currentWork->setGroupObj1(pMW->selected_prim);
@@ -253,7 +253,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
         break;
     }
-    case MEV_INTERSECT:
+    case ACTION_INTERSECT:
     {
         if(currentWork->getGroupObj1()==-1)
             currentWork->setGroupObj1(pMW->selected_prim);
@@ -291,25 +291,25 @@ void GLWidget::setProjection(int i)
     glLoadIdentity();
     switch(i)
     {
-    case MPJ_FRONT:
+    case VIEW_FRONT:
         xRot = 0;
         yRot = 0;
         zRot = 0;
         this->comboBox->setCurrentIndex(3);
         break;
-    case MPJ_TOP:
+    case VIEW_TOP:
         xRot = -90.0f*16;
         yRot = 0;
         zRot = 0;
         this->comboBox->setCurrentIndex(1);
         break;
-    case MPJ_RIGHT:
+    case VIEW_RIGHT:
         xRot = 0;
         yRot = 90.0f*16;
         zRot = 0;
         this->comboBox->setCurrentIndex(2);
         break;
-    case MPJ_PERSPECTIVE:
+    case VIEW_PERSPECTIVE:
         xRot = 10.0f*16;
         yRot = 10.0f*16;
         zRot = 0;
@@ -328,23 +328,23 @@ void GLWidget::changeProection(int n)
 {
     switch(n)
     {
-    case MPJ_PERSPECTIVE:
-        setProjection(MPJ_PERSPECTIVE);
+    case VIEW_PERSPECTIVE:
+        setProjection(VIEW_PERSPECTIVE);
         break;
-    case MPJ_TOP:
-        setProjection(MPJ_TOP);
+    case VIEW_TOP:
+        setProjection(VIEW_TOP);
         break;
-    case MPJ_RIGHT:
-        setProjection(MPJ_RIGHT);
+    case VIEW_RIGHT:
+        setProjection(VIEW_RIGHT);
         break;
-    case MPJ_FRONT:
-        setProjection(MPJ_FRONT);
+    case VIEW_FRONT:
+        setProjection(VIEW_FRONT);
         break;
-    case MPJ_MAXIMAZE:
+    case VIEW_FULL_SCREEN:
         //pMW->getPaintingZone()->saveProjectionLastState();
         pMW->getPaintingZone()->setMaximum(this->PROJECTION_TYPE);
         break;
-    case MPJ_RESET:
+    case VIEW_RESET:
         pMW->getPaintingZone()->setAllUnvisible(false);
         pMW->getPaintingZone()->loadProjectionLastState();
         break;
@@ -370,39 +370,39 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
 {
     switch(*currenEvent)
     {
-    case MEV_CAMERA_TRANSLATE:
+    case CAMERA_TRANSLATE:
         eventTranslateCamera(event,current);
         break;
 
-    case MEV_TRANSLATE:
+    case ACTION_TRANSLATE:
         if(SELECTED)
             eventTranslatePrimitive(event);
         else
             eventTranslateCamera(event,current);
         break;
 
-    case MEV_CAMERA_ROTATE:
+    case CAMERA_ROTATE:
         eventRotateCamera(event, current);
         break;
 
-    case MEV_ROTATE:
+    case ACTION_ROTATE:
         if(SELECTED)
             eventRotatePrimitive(event, current);
         else
             eventRotateCamera(event,current);
         break;
 
-    case MEV_CAMERA_ZOOM:
+    case CAMERA_ZOOM:
         eventZoomCamera(event, current);
         break;
 
-    case MEV_SCALE:
+    case ACTION_SCALE:
         if(SELECTED)
             eventScalePrimitive(current);
         else
             eventZoomCamera(event, current);
         break;
-    case MEV_STRETCH:
+    case ACTION_STRETCH:
         if(SELECTED)
             eventStretchPrimitive(current);
         break;
@@ -414,7 +414,7 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 {
-    if(this->getProjection()==MPJ_TOP){
+    if(this->getProjection()==VIEW_TOP){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -431,7 +431,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(this->getProjection()==MPJ_RIGHT){
+    if(this->getProjection()==VIEW_RIGHT){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -449,7 +449,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(this->getProjection()==MPJ_FRONT){
+    if(this->getProjection()==VIEW_FRONT){
         if(current.x()>0){
             xTranslate += step_translate;
         }
@@ -466,7 +466,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
         return;
     }
 
-    if(this->getProjection()==MPJ_PERSPECTIVE){
+    if(this->getProjection()==VIEW_PERSPECTIVE){
         if(current.x()>0){
             xTranslate += step_translate;
             //xCamPos -= step_translate;
@@ -496,7 +496,7 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 {
-    if(this->getProjection()==MPJ_TOP){
+    if(this->getProjection()==VIEW_TOP){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
@@ -504,14 +504,14 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 
         this->update();
     }
-    else if(this->getProjection()==MPJ_RIGHT){
+    else if(this->getProjection()==VIEW_RIGHT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
             gScale += step_scale;
         this->update();
     }
-    else if(this->getProjection()==MPJ_FRONT){
+    else if(this->getProjection()==VIEW_FRONT){
         if(current.y()>0)
             gScale -= step_scale;
         else if(current.y()<0)
@@ -539,18 +539,18 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current)
 
 void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current)
 {
-    if(this->getProjection()==MPJ_TOP)
+    if(this->getProjection()==VIEW_TOP)
         setYRotation(yRot + 8 * current.x());
 
-    if(this->getProjection()==MPJ_FRONT)
+    if(this->getProjection()==VIEW_FRONT)
         setZRotation(zRot + (-8) * current.x());
 
-    if(this->getProjection()==MPJ_RIGHT)
+    if(this->getProjection()==VIEW_RIGHT)
     {
         setXRotation(xRot + 8 * current.x());
     }
 
-    if(this->getProjection()==MPJ_PERSPECTIVE){
+    if(this->getProjection()==VIEW_PERSPECTIVE){
 
         GLdouble matrix[4][4], workMatrix[4][4];
 
@@ -648,21 +648,21 @@ void GLWidget::eventTranslatePrimitive(QMouseEvent *event)
     prevMx = new_Mx;
     prevMy = new_My;
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_TOP)
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==VIEW_TOP)
     {
         translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
         pMW->Update();
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_FRONT)
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==VIEW_FRONT)
     {
         translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
         pMW->Update();
         return;
     }
 
-    if(event->buttons() && Qt::LeftButton && this->getProjection()==MPJ_RIGHT)
+    if(event->buttons() && Qt::LeftButton && this->getProjection()==VIEW_RIGHT)
     {
         translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
         pMW->Update();
@@ -675,7 +675,7 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
     Rotate *rotate =currentWork->getList()->at(pMW->selected_prim)->getRotate();
     switch(getProjection())
     {
-    case MPJ_TOP:
+    case VIEW_TOP:
         if(current.x()>0){
             rotate->RotateY(step_rotate);
         }
@@ -691,7 +691,7 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
 
         pMW->Update();
         break;
-    case MPJ_FRONT:
+    case VIEW_FRONT:
         if(current.x()<0){
             rotate->RotateZ(step_rotate);
         }
@@ -706,7 +706,7 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
         }
         pMW->Update();
         break;
-    case MPJ_RIGHT:
+    case VIEW_RIGHT:
         if(current.x()>0){
             rotate->RotateX(step_rotate);
         }
@@ -721,7 +721,7 @@ void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current)
         }
         pMW->Update();
         break;
-    case MPJ_PERSPECTIVE:
+    case VIEW_PERSPECTIVE:
         break;
     }
 }
@@ -738,7 +738,7 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     }
     if(intersectionGroupObj(obj1,obj2))
     {
-        addPrimitive(MEV_GROUP);
+        addPrimitive(ACTION_GROUP);
         QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
                            QString::fromLocal8Bit("Объекты сгрупированы!"));
         currentWork->setGroupObj1(-1);
@@ -766,7 +766,7 @@ void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
     }
     if(intersectionGroupObj(obj1,obj2))
     {
-        addPrimitive(MEV_SUBSTRACT);
+        addPrimitive(ACTION_SUBSTRACT);
         QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
                            QString::fromLocal8Bit("Объект вычтен!"));
         currentWork->setGroupObj1(-1);
@@ -795,7 +795,7 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
     }
     if(intersectionGroupObj(obj1,obj2))
     {
-        addPrimitive(MEV_INTERSECT);
+        addPrimitive(ACTION_INTERSECT);
         QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
                            QString::fromLocal8Bit("Объекты пересечены!"));
         currentWork->setGroupObj1(-1);
@@ -831,7 +831,7 @@ void GLWidget::eventStretchPrimitive(QPoint poin)
 
     switch(getProjection())
     {
-    case MPJ_TOP:
+    case VIEW_TOP:
         if(poin.x()>0){
             scale->ScaleX(step_scale);
         }
@@ -847,7 +847,7 @@ void GLWidget::eventStretchPrimitive(QPoint poin)
 
         pMW->Update();
         break;
-    case MPJ_FRONT:
+    case VIEW_FRONT:
         if(poin.x()>0){
             scale->ScaleX(step_scale);
         }
@@ -863,7 +863,7 @@ void GLWidget::eventStretchPrimitive(QPoint poin)
 
         pMW->Update();
         break;
-    case MPJ_RIGHT:
+    case VIEW_RIGHT:
         if(poin.x()>0){
             scale->ScaleZ(step_scale);
         }
@@ -1174,25 +1174,25 @@ QString GLWidget::getTextEvent(int event)
 {
     switch(event)
     {
-    case MEV_ROTATE:
+    case ACTION_ROTATE:
         return QString::fromLocal8Bit("Поворот примитива");
-    case MEV_TRANSLATE:
+    case ACTION_TRANSLATE:
         return QString::fromLocal8Bit("Перемещение примитива");
-    case MEV_SCALE:
+    case ACTION_SCALE:
         return QString::fromLocal8Bit("Масштабирование примитива");
-    case MEV_SUBSTRACT:
+    case ACTION_SUBSTRACT:
         return QString::fromLocal8Bit("Вычитание примитивов");
-    case MEV_STRETCH:
+    case ACTION_STRETCH:
         return QString::fromLocal8Bit("Растягивание примитива");
-    case MEV_GROUP:
+    case ACTION_GROUP:
         return QString::fromLocal8Bit("Групировка примитивов");
-    case MEV_INTERSECT:
+    case ACTION_INTERSECT:
         return QString::fromLocal8Bit("Пересечение");
-    case MEV_CAMERA_ZOOM:
+    case CAMERA_ZOOM:
         return QString::fromLocal8Bit("Масшат камеры");
-    case MEV_CAMERA_TRANSLATE:
+    case CAMERA_TRANSLATE:
         return QString::fromLocal8Bit("Перемещени камеры");
-    case MEV_CAMERA_ROTATE:
+    case CAMERA_ROTATE:
         return QString::fromLocal8Bit("Поворот камеры");
     case MEL_CUBE:
         return QString::fromLocal8Bit("Куб");

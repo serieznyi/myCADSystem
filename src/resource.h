@@ -1,9 +1,9 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
-#define PLANE_MIN_X                -5.0    // Размеры плоскости (Левая передняя точка, правая задняя)(XOZ)
+#define PLANE_MIN_X                (-5.0)    // Размеры плоскости (Левая передняя точка, правая задняя)(XOZ)
 #define PLANE_MAX_X                 5.0
-#define PLANE_MIN_Z                -5.0
+#define PLANE_MIN_Z                (-5.0)
 #define PLANE_MAX_Z                 5.0
 
 // РЕЖИМЫ РИСОВАНИЯ
@@ -12,12 +12,12 @@
 
 
 // ВИД
-#define MPJ_PERSPECTIVE             0
-#define MPJ_TOP                     1
-#define MPJ_RIGHT                   2
-#define MPJ_FRONT                   3
-#define MPJ_MAXIMAZE                4
-#define MPJ_RESET                   5
+#define VIEW_PERSPECTIVE             0
+#define VIEW_TOP                     1
+#define VIEW_RIGHT                   2
+#define VIEW_FRONT                   3
+#define VIEW_FULL_SCREEN                4
+#define VIEW_RESET                   5
 
 // Прочее
 #define COORD_X                     10
@@ -35,19 +35,19 @@
 #define MEL_INTERSECT               109
 
 //ДЕЙСТВИЯ НАД ПРИМИТИВАМИ
-#define MEV_ACTION                  200
-#define MEV_TRANSLATE               201 // Переместить
-#define MEV_SCALE                   202 // Масштабировать
-#define MEV_STRETCH                 203 // Растянуть
-#define MEV_ROTATE                  204 // Вращать
-#define MEV_GROUP                   205 // Сгрупировать
-#define MEV_SUBSTRACT               206 //
-#define MEV_INTERSECT               207 //
+#define ACTION_ACTION               200
+#define ACTION_TRANSLATE            201 // Переместить
+#define ACTION_SCALE                202 // Масштабировать
+#define ACTION_STRETCH              203 // Растянуть
+#define ACTION_ROTATE               204 // Вращать
+#define ACTION_GROUP                205 // Сгрупировать
+#define ACTION_SUBSTRACT            206 // Вычитание
+#define ACTION_INTERSECT            207 // Пересечение
 
 //ДЕЙСТВИЯ НАД СЦЕНОЙ
-#define MEV_CAMERA_TRANSLATE        251 // Переместить камеру
-#define MEV_CAMERA_ROTATE           252 // Вращать камеру
-#define MEV_CAMERA_ZOOM             253 // Изменить масштаб
+#define CAMERA_TRANSLATE        251 // Переместить камеру
+#define CAMERA_ROTATE           252 // Вращать камеру
+#define CAMERA_ZOOM             253 // Изменить масштаб
 
 //ПРОЧЕЕ
 #define MCM_SCENE                   300

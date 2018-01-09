@@ -45,37 +45,37 @@ void ActionPrimitiveToolBar::createActions()
 
 void ActionPrimitiveToolBar::setTranslateAction()
 {
-    changeEvent(MEV_TRANSLATE);
+    changeEvent(ACTION_TRANSLATE);
 }
 
 void ActionPrimitiveToolBar::setRotateAction()
 {
-    changeEvent(MEV_ROTATE);
+    changeEvent(ACTION_ROTATE);
 }
 
 void ActionPrimitiveToolBar::setStretchAction()
 {
-    changeEvent(MEV_STRETCH);
+    changeEvent(ACTION_STRETCH);
 }
 
 void ActionPrimitiveToolBar::setScaleAction()
 {
-    changeEvent(MEV_SCALE);
+    changeEvent(ACTION_SCALE);
 }
 
 void ActionPrimitiveToolBar::setGroupAction()
 {
-    changeEvent(MEV_GROUP);
+    changeEvent(ACTION_GROUP);
 }
 
 void ActionPrimitiveToolBar::setSubstractAction()
 {
-    changeEvent(MEV_SUBSTRACT);
+    changeEvent(ACTION_SUBSTRACT);
 }
 
 void ActionPrimitiveToolBar::setIntersectAction()
 {
-    changeEvent(MEV_INTERSECT);
+    changeEvent(ACTION_INTERSECT);
 }
 
 void ActionPrimitiveToolBar::changeEvent(int i)

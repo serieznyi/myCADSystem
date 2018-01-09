@@ -30,17 +30,17 @@ void SceneControlToolbar::createActions()
 
 void SceneControlToolbar::setCameraTranslateAction()
 {
-    changeEvent(MEV_CAMERA_TRANSLATE);
+    changeEvent(CAMERA_TRANSLATE);
 }
 
 void SceneControlToolbar::setCameraRotAction()
 {
-    changeEvent(MEV_CAMERA_ROTATE);
+    changeEvent(CAMERA_ROTATE);
 }
 
 void SceneControlToolbar::setCameraZoomAction()
 {
-    changeEvent(MEV_CAMERA_ZOOM);
+    changeEvent(CAMERA_ZOOM);
 }
 
 void SceneControlToolbar::changeEvent(int i)
