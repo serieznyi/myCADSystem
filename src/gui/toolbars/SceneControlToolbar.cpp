@@ -14,13 +14,13 @@ SceneControlToolbar::SceneControlToolbar(QWidget *parent):QToolBar(parent)
 
 void SceneControlToolbar::createActions()
 {
-    cameraPosAction = new QAction(QString::fromLocal8Bit("&Переместить камеру"), this);
+    cameraPosAction = new QAction("&Переместить камеру", this);
     connect(cameraPosAction, SIGNAL(triggered()),SLOT(setCameraTranslateAction()));
 
-    cameraRotAction = new QAction(QString::fromLocal8Bit("&Повернуть камеру"), this);
+    cameraRotAction = new QAction("&Повернуть камеру", this);
     connect(cameraRotAction, SIGNAL(triggered()), SLOT(setCameraRotAction()));
 
-    cameraZoomAction = new QAction(QString::fromLocal8Bit("&Масштаб"), this);
+    cameraZoomAction = new QAction("&Масштаб", this);
     connect(cameraZoomAction, SIGNAL(triggered()), SLOT(setCameraZoomAction()));
 
     this->addAction(cameraPosAction);

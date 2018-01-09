@@ -6,15 +6,15 @@ MenuBar::MenuBar(QWidget *parent) :
 {
     pMW = dynamic_cast<MainWindow*>(parent);
 
-    menu_file = new QMenu(QString::fromLocal8Bit("Файл"));
+    menu_file = new QMenu("Файл");
         this->addMenu(menu_file);
-    menu_scene_action = new QMenu(QString::fromLocal8Bit("Сцена"));
+    menu_scene_action = new QMenu("Сцена");
         this->addMenu(menu_scene_action);
-    menu_select_primitive = new QMenu(QString::fromLocal8Bit("Примитивы"));
+    menu_select_primitive = new QMenu("Примитивы");
         this->addMenu(menu_select_primitive);
-    menu_primitive_action = new QMenu(QString::fromLocal8Bit("Действия над примитивами"));
+    menu_primitive_action = new QMenu("Действия над примитивами");
         this->addMenu(menu_primitive_action);
-    menu_help = new QMenu(QString::fromLocal8Bit("Помощь"));
+    menu_help = new QMenu("Помощь");
         this->addMenu(menu_help);
 
     createActions();
@@ -22,24 +22,24 @@ MenuBar::MenuBar(QWidget *parent) :
 
 void MenuBar::createActions()
 {
-    action_open         = new QAction(QString::fromLocal8Bit("Открыть"),this);
-    action_save         = new QAction(QString::fromLocal8Bit("Сохранить"),this);
-    action_save_to      = new QAction(QString::fromLocal8Bit("Сохранить как..."),this);
-    action_exit         = new QAction(QString::fromLocal8Bit("Выход"),this);
+    action_open         = new QAction("Открыть",this);
+    action_save         = new QAction("Сохранить",this);
+    action_save_to      = new QAction("Сохранить как...",this);
+    action_exit         = new QAction("Выход",this);
 
-    actionTranslateCamera   = new QAction(QString::fromLocal8Bit("Переместить камеру"),this);
-    actionRotateCamera      = new QAction(QString::fromLocal8Bit("Повернуть камеру"),this);
-    actionZoomCamera        = new QAction(QString::fromLocal8Bit("Изменить масштаб"),this);
+    actionTranslateCamera   = new QAction("Переместить камеру",this);
+    actionRotateCamera      = new QAction("Повернуть камеру",this);
+    actionZoomCamera        = new QAction("Изменить масштаб",this);
 
-    actionCube          = new QAction(QString::fromLocal8Bit("Куб"),this);
-    actionSphere        = new QAction(QString::fromLocal8Bit("Сфера"),this);
-    actionPyramid       = new QAction(QString::fromLocal8Bit("Пирамида"),this);
+    actionCube          = new QAction("Куб",this);
+    actionSphere        = new QAction("Сфера",this);
+    actionPyramid       = new QAction("Пирамида",this);
 
-    actionTranslate         = new QAction(QString::fromLocal8Bit("Переместить"),this);
-    actionRotate            = new QAction(QString::fromLocal8Bit("Повернуть"),this);
-    actionGroup             = new QAction(QString::fromLocal8Bit("Сгрупировать"),this);
+    actionTranslate         = new QAction("Переместить",this);
+    actionRotate            = new QAction("Повернуть",this);
+    actionGroup             = new QAction("Сгрупировать",this);
 
-    action_about        = new QAction(QString::fromLocal8Bit("О программе"),this);
+    action_about        = new QAction("О программе",this);
 
     menu_file->addAction(action_open);
     menu_file->addSeparator();

@@ -35,12 +35,12 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
     comboBox            = new QComboBox();
     lay_global_v        = new QVBoxLayout();
     lay_global_h        = new QHBoxLayout();
-    comboBox->addItem(QString::fromLocal8Bit("Перспектива"));
-    comboBox->addItem(QString::fromLocal8Bit("Верх"));
-    comboBox->addItem(QString::fromLocal8Bit("Бок"));
-    comboBox->addItem(QString::fromLocal8Bit("Перед"));
-    comboBox->addItem(QString::fromLocal8Bit("Во весь экран"));
-    comboBox->addItem(QString::fromLocal8Bit("Сброс"));
+    comboBox->addItem("Перспектива");
+    comboBox->addItem("Верх");
+    comboBox->addItem("Бок");
+    comboBox->addItem("Перед");
+    comboBox->addItem("Во весь экран");
+    comboBox->addItem("Сброс");
     lay_global_h->addWidget(comboBox);
     lay_global_h->addStretch(3);
     lay_global_v->addLayout(lay_global_h);
@@ -282,7 +282,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     pMW->getStatusBar()->showMessage("Window: "+QString::number(event->pos().x())+"   "+QString::number(event->pos().y())+
                                      "      OpenGL: "+QString::number(ScreenToOGL(event->pos().x(), COORD_X))+"   "
                                      +QString::number(ScreenToOGL(event->pos().y(), COORD_Y))
-                                     +QString::fromLocal8Bit("      Событие: ")+getTextEvent(*currenEvent));
+                                     +"      Событие: "+getTextEvent(*currenEvent));
 }
 
 void GLWidget::setProjection(int i)
@@ -730,8 +730,8 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно групировать с самим собой!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Невозможно групировать с самим собой!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -739,15 +739,15 @@ void GLWidget::eventGroupPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(ACTION_GROUP);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объекты сгрупированы!"));
+        QMessageBox::about(this, "Операция выполнена",
+                           "Объекты сгрупированы!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Объекты не пересекаются!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -758,8 +758,8 @@ void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно вычесть из самого себя!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Невозможно вычесть из самого себя!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -767,15 +767,15 @@ void GLWidget::eventSubstractPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(ACTION_SUBSTRACT);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объект вычтен!"));
+        QMessageBox::about(this, "Операция выполнена",
+                           "Объект вычтен!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Объекты не пересекаются!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -787,8 +787,8 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
 {
     if(obj1==obj2)
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Невозможно пересечь с самим сабой!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Невозможно пересечь с самим сабой!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -796,15 +796,15 @@ void GLWidget::eventIntersectPrimitive(long obj1, long obj2)
     if(intersectionGroupObj(obj1,obj2))
     {
         addPrimitive(ACTION_INTERSECT);
-        QMessageBox::about(this, QString::fromLocal8Bit("Операция выполнена"),
-                           QString::fromLocal8Bit("Объекты пересечены!"));
+        QMessageBox::about(this, "Операция выполнена",
+                           "Объекты пересечены!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
     }
     else
     {
-        QMessageBox::critical(this, QString::fromLocal8Bit("Ошибка"),
-                              QString::fromLocal8Bit("Объекты не пересекаются!"));
+        QMessageBox::critical(this, "Ошибка",
+                              "Объекты не пересекаются!");
         currentWork->setGroupObj1(-1);
         currentWork->setGroupObj2(-1);
         return;
@@ -1175,33 +1175,33 @@ QString GLWidget::getTextEvent(int event)
     switch(event)
     {
     case ACTION_ROTATE:
-        return QString::fromLocal8Bit("Поворот примитива");
+        return "Поворот примитива";
     case ACTION_TRANSLATE:
-        return QString::fromLocal8Bit("Перемещение примитива");
+        return "Перемещение примитива";
     case ACTION_SCALE:
-        return QString::fromLocal8Bit("Масштабирование примитива");
+        return "Масштабирование примитива";
     case ACTION_SUBSTRACT:
-        return QString::fromLocal8Bit("Вычитание примитивов");
+        return "Вычитание примитивов";
     case ACTION_STRETCH:
-        return QString::fromLocal8Bit("Растягивание примитива");
+        return "Растягивание примитива";
     case ACTION_GROUP:
-        return QString::fromLocal8Bit("Групировка примитивов");
+        return "Групировка примитивов";
     case ACTION_INTERSECT:
-        return QString::fromLocal8Bit("Пересечение");
+        return "Пересечение";
     case CAMERA_ZOOM:
-        return QString::fromLocal8Bit("Масшат камеры");
+        return "Масшат камеры";
     case CAMERA_TRANSLATE:
-        return QString::fromLocal8Bit("Перемещени камеры");
+        return "Перемещени камеры";
     case CAMERA_ROTATE:
-        return QString::fromLocal8Bit("Поворот камеры");
+        return "Поворот камеры";
     case MEL_CUBE:
-        return QString::fromLocal8Bit("Куб");
+        return "Куб";
     case MEL_PYRAMID:
-        return QString::fromLocal8Bit("Пирамида");
+        return "Пирамида";
     case MEL_SPHERE:
-        return QString::fromLocal8Bit("Сфера");
+        return "Сфера";
     case MEL_CYLINDER:
-        return QString::fromLocal8Bit("Цилиндр");
+        return "Цилиндр";
     default:return "ERROR";
     }
 }

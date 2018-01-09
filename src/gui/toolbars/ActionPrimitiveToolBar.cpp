@@ -14,31 +14,31 @@ ActionPrimitiveToolBar::ActionPrimitiveToolBar(QWidget *parent) :  QToolBar(pare
 
 void ActionPrimitiveToolBar::createActions()
 {
-    rotateAction            = new QAction(QString::fromLocal8Bit("&Повернуть"), this);
+    rotateAction            = new QAction("&Повернуть", this);
     this->addAction(rotateAction);
     connect(rotateAction, SIGNAL(triggered()),SLOT(setRotateAction()));
 
-    translateAction         = new QAction(QString::fromLocal8Bit("&Переместить"), this);
+    translateAction         = new QAction("&Переместить", this);
     this->addAction(translateAction);
     connect(translateAction, SIGNAL(triggered()),SLOT(setTranslateAction()));
 
-    scaleAction         = new QAction(QString::fromLocal8Bit("&Масштабировать"), this);
+    scaleAction         = new QAction("&Масштабировать", this);
     this->addAction(scaleAction);
     connect(scaleAction, SIGNAL(triggered()),SLOT(setScaleAction()));
 
-    stretchAction         = new QAction(QString::fromLocal8Bit("&Растянуть"), this);
+    stretchAction         = new QAction("&Растянуть", this);
     this->addAction(stretchAction);
     connect(stretchAction, SIGNAL(triggered()),SLOT(setStretchAction()));
 
-    subtractionAction       = new QAction(QString::fromLocal8Bit("&Вычесть"), this);
+    subtractionAction       = new QAction("&Вычесть", this);
     this->addAction(subtractionAction);
     connect(subtractionAction, SIGNAL(triggered()),SLOT(setSubstractAction()));
 
-    groupAction             = new QAction(QString::fromLocal8Bit("&Сгрупировать"), this);
+    groupAction             = new QAction("&Сгрупировать", this);
     this->addAction(groupAction);
     connect(groupAction, SIGNAL(triggered()),SLOT(setGroupAction()));
 
-    intersectionAction      = new QAction(QString::fromLocal8Bit("&Пересечение"), this);
+    intersectionAction      = new QAction("&Пересечение", this);
     this->addAction(intersectionAction);
     connect(intersectionAction, SIGNAL(triggered()),SLOT(setIntersectAction()));
 }

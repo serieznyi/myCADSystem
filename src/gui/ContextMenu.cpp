@@ -13,12 +13,12 @@ ContextMenu::ContextMenu(int type, QWidget *parent):QMenu(parent)
 
 void ContextMenu::createPrimitiveContexMenu()
 {
-    primitiveDeleteAction = new QAction(QString::fromLocal8Bit("&Удалить"), this);
+    primitiveDeleteAction = new QAction("&Удалить", this);
     connect(primitiveDeleteAction, SIGNAL(triggered()), pGLW, SLOT(deletePrimitive()));
     this->addSeparator();
     this->addAction(primitiveDeleteAction);
 
-    primitivePropertiesAction = new QAction(QString::fromLocal8Bit("&Свойства"), this);
+    primitivePropertiesAction = new QAction("&Свойства", this);
     this->addAction(primitivePropertiesAction);
 }
 

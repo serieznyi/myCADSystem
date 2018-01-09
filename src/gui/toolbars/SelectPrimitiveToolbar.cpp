@@ -14,15 +14,15 @@ SelectPrimitiveToolbar::SelectPrimitiveToolbar(QWidget *parent) :  QToolBar(pare
 
 void SelectPrimitiveToolbar::createActions()
 {
-    quadAction = new QAction(QString::fromLocal8Bit("&Куб"), this);
+    quadAction = new QAction("&Куб", this);
     this->addAction(quadAction);
     connect(quadAction, SIGNAL(triggered()), SLOT(setCubeAction()));
 
-    triangleAction = new QAction(QString::fromLocal8Bit("&Пирамида"), this);
+    triangleAction = new QAction("&Пирамида", this);
     this->addAction(triangleAction);
     connect(triangleAction, SIGNAL(triggered()), SLOT(setPyramidAction()));
 
-    sphereAction = new QAction(QString::fromLocal8Bit("&Сфера"), this);
+    sphereAction = new QAction("&Сфера", this);
     this->addAction(sphereAction);
     connect(sphereAction, SIGNAL(triggered()), SLOT(setSphereAction()));
 

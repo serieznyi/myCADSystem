@@ -31,7 +31,7 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     this->setWindowState(Qt::WindowMaximized);
     //this->move(10, 10);
     this->setMinimumSize(700, 500);
-    this->setWindowTitle(QString::fromLocal8Bit("MyCADSystem v1"));
+    this->setWindowTitle("MyCADSystem v1");
     this->show();
 }
 
