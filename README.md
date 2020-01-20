@@ -1,8 +1,7 @@
 # README (Ubuntu)
 
-Prepare environment
+## Prepare environment
 
-* Install CLion IDE
 * Install dependence libraries
 
 Qt Create with Qt libraries
@@ -15,15 +14,15 @@ sudo apt-get install \
 
 Tested on qt 5.5.1
 
-* Install cmake 3.10
+* Install cmake 3.16.1
 
 ```
-cd /tmp
-wget https://cmake.org/files/v3.10/cmake-3.10.1.tar.gz
-tar -xvzf cmake-3.10.1.tar.gz
-cd cmake-3.10.1/
-sudo ./bootstrap
-sudo make
+cd /tmp && \
+wget https://cmake.org/files/v3.16/cmake-3.16.1.tar.gz && \
+tar -xvzf cmake-3.16.1.tar.gz && \
+cd cmake-3.16.1/ && \
+sudo ./bootstrap && \
+sudo make && \
 sudo make install
 
 ```
@@ -39,3 +38,17 @@ sudo apt-get install \
     binutils-gold \
     libglu1-mesa:i386
 ```
+
+## Build and Run
+
+```bash
+# Prepare build
+cmake . -B./build/
+
+# Build
+cmake --build ./build/
+
+# Run bin
+./build/myCADSystem
+```
+
