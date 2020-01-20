@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.15)
 
 project(myCADSystem)
 
-# TODO change on 17
-set (CMAKE_CXX_STANDARD 98)
+set_target_properties(${TARGET} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
+        )
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
