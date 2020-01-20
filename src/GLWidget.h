@@ -122,9 +122,9 @@ public:
                     _z;
     double          n;
     double          R;
-    static const GLfloat step_scale = 0.01f;
-    static const GLfloat step_translate = 0.05f;
-    static const GLdouble step_rotate = 1;
+    constexpr static const GLfloat step_scale = 0.01f;
+    constexpr static const GLfloat step_translate = 0.05f;
+    constexpr static const GLdouble step_rotate = 1;
 
 //////////////////////////////////////
     GLint Mx, My;           // Позиция Курсора (обработанная)
