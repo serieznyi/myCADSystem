@@ -9,7 +9,6 @@
 #include "src/gui/toolbars/ActionPrimitiveToolBar.h"
 #include "src/gui/toolbars/SelectPrimitiveToolbar.h"
 #include "src/gui/toolbars/SceneControlToolbar.h"
-#include "src/gui/toolbars/ListPrimitiveToolbar.h"
 #include "StatusBar.h"
 #include "src/Work.h"
 #include "src/resource.h"
@@ -40,7 +39,6 @@ private:
     MenuBar                         *menuBar;
     ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
     SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // Панель выбора примитивов
-    ListPrimitiveToolbar            *listPrimitiveToolBar;      // Панель примитивов сцены
     SceneControlToolbar               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие

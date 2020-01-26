@@ -13,7 +13,6 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
     sceneControlPanel           = new SceneControlToolbar(this);
     paintingZone                = new PaintingZone(this);
-    //listPrimitiveToolBar        = new ListPrimitiveToolbar(this);
     statusBar                   = new StatusBar();
     menuBar                     = new MenuBar(this);
 
@@ -21,7 +20,6 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     this->addToolBar(actionPrimitiveToolbar);
     this->addToolBar(selectPrimitiveToolbar);
     this->addToolBar(sceneControlPanel);
-    //this->addToolBar(Qt::RightToolBarArea, listPrimitiveToolBar);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
