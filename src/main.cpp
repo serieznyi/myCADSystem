@@ -5,11 +5,11 @@
 int main(int argc, char *argv[]) {
     QApplication application(argc, argv);
 
-    QRect desktopGeometry = application.desktop()->screenGeometry();
+    QRect desktop_geometry = QApplication::desktop()->screenGeometry();
 
-    MainWindow *mainWindow = new MainWindow(desktopGeometry.width(), desktopGeometry.height());
+    auto *main_window = new MainWindow(desktop_geometry.width(), desktop_geometry.height());
 
-    mainWindow->show();
+    main_window->show();
 
-    return application.exec();
+    return QApplication::exec();
 }

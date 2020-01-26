@@ -1,43 +1,43 @@
 #include "intersect-primitive.h"
 
-IntersectPrimitive::IntersectPrimitive(Container *con1, Container *con2) : GroupPrimitive(con1, con2) {
-  this->setTypeName(MEL_INTERSECT);
-  container1 = con1;
-  container2 = con2;
+IntersectPrimitive::IntersectPrimitive(Container *con_1, Container *con_2) : GroupPrimitive(con_1, con_2) {
+  this->SetTypeName(MEL_INTERSECT);
+  container_1_ = con_1;
+  container_2_ = con_2;
 }
 
-void IntersectPrimitive::draw() {
+void IntersectPrimitive::Draw() {
   glEnable(GL_STENCIL_TEST);                          // буфер трафарета
   glStencilFunc(GL_NEVER, 1, 1);
   glStencilOp(GL_REPLACE, GL_KEEP, GL_REPLACE);
-  container1->draw(getPaintMode());
+  container_1_->Draw(GetPaintMode());
   glStencilFunc(GL_NEVER, 1, 1);
   glStencilOp(GL_INCR, GL_KEEP, GL_REPLACE);
-  container2->draw(getPaintMode());
+  container_2_->Draw(GetPaintMode());
 
   glStencilFunc(GL_EQUAL, 2, 1);
   glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-  container1->draw(getPaintMode());
+  container_1_->Draw(GetPaintMode());
   glStencilFunc(GL_EQUAL, 2, 1);
   glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-  container2->draw(getPaintMode());
+  container_2_->Draw(GetPaintMode());
   glDisable(GL_STENCIL_TEST);                          // буфер трафарета
 }
 
-void IntersectPrimitive::SynchData() {
-  container1->getPrimitive()->setIDColor(this->getIDColor());
-  container1->getPrimitive()->setColor(this->getColor());
+void IntersectPrimitive::SyncData() {
+  container_1_->GetPrimitive()->SetIdColor(this->GetIdColor());
+  container_1_->GetPrimitive()->SetColor(this->GetColor());
 
-  container2->getPrimitive()->setIDColor(this->getIDColor());
-  container2->getPrimitive()->setColor(this->getColor());
+  container_2_->GetPrimitive()->SetIdColor(this->GetIdColor());
+  container_2_->GetPrimitive()->SetColor(this->GetColor());
 
-  if (container1->getPrimitive()->getTypeName() == MEL_INTERSECT) {
-    IntersectPrimitive *gp = dynamic_cast<IntersectPrimitive *>(container1->getPrimitive());
-    gp->SynchData();
+  if (container_1_->GetPrimitive()->GetTypeName() == MEL_INTERSECT) {
+    IntersectPrimitive *gp = dynamic_cast<IntersectPrimitive *>(container_1_->GetPrimitive());
+    gp->SyncData();
 
   }
-  if (container2->getPrimitive()->getTypeName() == MEL_INTERSECT) {
-    IntersectPrimitive *gp = dynamic_cast<IntersectPrimitive *>(container2->getPrimitive());
-    gp->SynchData();
+  if (container_2_->GetPrimitive()->GetTypeName() == MEL_INTERSECT) {
+    IntersectPrimitive *gp = dynamic_cast<IntersectPrimitive *>(container_2_->GetPrimitive());
+    gp->SyncData();
   }
 }

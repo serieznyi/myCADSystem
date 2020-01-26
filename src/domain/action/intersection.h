@@ -1,7 +1,7 @@
 //  Действие "Пересечение"
 
-#ifndef INTERSECTION_H
-#define INTERSECTION_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_ACTION_INTERSECTION_H_
+#define MYCADSYSTEM_SRC_DOMAIN_ACTION_INTERSECTION_H_
 
 #include "src/domain/action.h"
 
@@ -11,4 +11,4 @@ class Intersection : public Action {
   virtual void Apply(bool mode = true);
 };
 
-#endif // INTERSECTION_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_ACTION_INTERSECTION_H_

@@ -1,7 +1,7 @@
 //  Контейнер хранящий прмитив и все связные с ним операции
 
-#ifndef CONTAINER_H
-#define CONTAINER_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_CONTAINER_H_
+#define MYCADSYSTEM_SRC_DOMAIN_CONTAINER_H_
 
 #include <QList>
 #include "src/domain/primitive.h"
@@ -11,27 +11,27 @@
 
 class Container {
  public:
-  Container(Primitive *prim);
+  explicit Container(Primitive *prim);
   Container(Primitive *prim, Translate *translate);
-  void addTranslate(Translate *trans);
-  void addRotate(Rotate *rot);
-  void addScale(Scale *scale);
-  void draw(int mode);
-  QList<Translate *> *getTranslateList();
-  QList<Rotate *> *getRotateList();
-  QList<Scale *> *getScaleList();
-  Translate *getTranslate();
-  Scale *getScale();
-  Rotate *getRotate();
-  Primitive *getPrimitive();
+  void AddTranslate(Translate *trans);
+  void AddRotate(Rotate *rot);
+  void AddScale(Scale *scale);
+  void Draw(int mode);
+  QList<Translate *> *GetTranslateList();
+  QList<Rotate *> *GetRotateList();
+  QList<Scale *> *GetScaleList();
+  Translate *GetTranslate();
+  Scale *GetScale();
+  Rotate *GetRotate();
+  Primitive *GetPrimitive();
 
  private:
-  Primitive *primitive;
-  QList<Translate *> *translateList;
-  QList<Rotate *> *rotateList;
-  QList<Scale *> *scaleList;
+  Primitive *primitive_;
+  QList<Translate *> *translate_list_;
+  QList<Rotate *> *rotate_list_;
+  QList<Scale *> *scale_list_;
 };
 
 QDataStream &operator<<(QDataStream &out, const Container *painting);
 
-#endif // CONTAINER_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_CONTAINER_H_

@@ -1,5 +1,5 @@
-#ifndef CONTEXTMENU_H
-#define CONTEXTMENU_H
+#ifndef MYCADSYSTEM_SRC_GUI_CONTEXT_MENU_H_
+#define MYCADSYSTEM_SRC_GUI_CONTEXT_MENU_H_
 
 #include <QMenu>
 #include <QAction>
@@ -10,13 +10,13 @@ class GLWidget;
 class ContextMenu : public QMenu {
  public:
   ContextMenu(int type, QWidget *parent);
-  void createPrimitiveContexMenu();
-  void createSceneContexMenu();
+  void CreatePrimitiveContextMenu();
+  void CreateSceneContextMenu();
  public:
-  GLWidget *pGLW;
-  QAction *primitiveDeleteAction;
-  QAction *primitivePropertiesAction;
+  GLWidget *p_glw_;
+  QAction *primitive_delete_action_;
+  QAction *primitive_properties_action_;
 
 };
 
-#endif // CONTEXTMENU_H
+#endif //MYCADSYSTEM_SRC_GUI_CONTEXT_MENU_H_

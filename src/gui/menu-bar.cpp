@@ -2,134 +2,134 @@
 #include "src/gui/main-window.h"
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
-  pMW = dynamic_cast<MainWindow *>(parent);
+  p_mw_ = dynamic_cast<MainWindow *>(parent);
 
-  fileMenu = new QMenu("Файл");
-  this->addMenu(fileMenu);
+  file_menu_ = new QMenu("Файл");
+  this->addMenu(file_menu_);
 
-  sceneActionMenu = new QMenu("Сцена");
-  this->addMenu(sceneActionMenu);
+  scene_action_menu_ = new QMenu("Сцена");
+  this->addMenu(scene_action_menu_);
 
-  primitiveMenu = new QMenu("Примитивы");
-  this->addMenu(primitiveMenu);
+  primitive_menu_ = new QMenu("Примитивы");
+  this->addMenu(primitive_menu_);
 
-  primitiveActionMenu = new QMenu("Действия над примитивами");
-  this->addMenu(primitiveActionMenu);
+  primitive_action_menu_ = new QMenu("Действия над примитивами");
+  this->addMenu(primitive_action_menu_);
 
-  helpMenu = new QMenu("Помощь");
-  this->addMenu(helpMenu);
+  help_menu_ = new QMenu("Помощь");
+  this->addMenu(help_menu_);
 
-  createActions();
+  CreateActions();
 }
 
-void MenuBar::createActions() {
+void MenuBar::CreateActions() {
 
   // File
-  fileOpenAction = new QAction("Открыть", this);
-  fileMenu->addAction(fileOpenAction);
+  file_open_action_ = new QAction("Открыть", this);
+  file_menu_->addAction(file_open_action_);
 
-  fileMenu->addSeparator();
+  file_menu_->addSeparator();
 
-  fileSaveAction = new QAction("Сохранить", this);
-  fileMenu->addAction(fileSaveAction);
+  file_save_action_ = new QAction("Сохранить", this);
+  file_menu_->addAction(file_save_action_);
 
-  fileSaveToAction = new QAction("Сохранить как...", this);
-  fileMenu->addAction(fileSaveToAction);
-  connect(fileSaveToAction, SIGNAL(triggered()), pMW, SLOT(saveTo()));
+  file_save_to_action_ = new QAction("Сохранить как...", this);
+  file_menu_->addAction(file_save_to_action_);
+  connect(file_save_to_action_, SIGNAL(triggered()), p_mw_, SLOT(saveTo()));
 
-  fileMenu->addSeparator();
+  file_menu_->addSeparator();
 
-  exitAction = new QAction("Выход", this);
-  fileMenu->addAction(exitAction);
-  connect(exitAction, SIGNAL(triggered()), pMW, SLOT(close()));
+  exit_action_ = new QAction("Выход", this);
+  file_menu_->addAction(exit_action_);
+  connect(exit_action_, SIGNAL(triggered()), p_mw_, SLOT(close()));
 
   // About
-  action_about = new QAction("О программе", this);
-  helpMenu->addAction(action_about);
+  action_about_ = new QAction("О программе", this);
+  help_menu_->addAction(action_about_);
 
   // Camera actions
-  actionTranslateCamera = new QAction("Переместить камеру", this);
-  sceneActionMenu->addAction(actionTranslateCamera);
-  connect(actionTranslateCamera, SIGNAL(triggered()), SLOT(chooseCameraTranslateAction()));
+  action_translate_camera_ = new QAction("Переместить камеру", this);
+  scene_action_menu_->addAction(action_translate_camera_);
+  connect(action_translate_camera_, SIGNAL(triggered()), SLOT(ChooseCameraTranslateAction()));
 
-  actionRotateCamera = new QAction("Повернуть камеру", this);
-  sceneActionMenu->addAction(actionRotateCamera);
-  connect(actionRotateCamera, SIGNAL(triggered()), SLOT(chooseCameraRotAction()));
+  action_rotate_camera_ = new QAction("Повернуть камеру", this);
+  scene_action_menu_->addAction(action_rotate_camera_);
+  connect(action_rotate_camera_, SIGNAL(triggered()), SLOT(ChooseCameraRotAction()));
 
-  actionZoomCamera = new QAction("Изменить масштаб", this);
-  sceneActionMenu->addAction(actionZoomCamera);
-  connect(actionZoomCamera, SIGNAL(triggered()), SLOT(chooseCameraZoomAction()));
+  action_zoom_camera_ = new QAction("Изменить масштаб", this);
+  scene_action_menu_->addAction(action_zoom_camera_);
+  connect(action_zoom_camera_, SIGNAL(triggered()), SLOT(ChooseCameraZoomAction()));
 
   // Primitives
-  actionCube = new QAction("Куб", this);
-  primitiveMenu->addAction(actionCube);
-  connect(actionCube, SIGNAL(triggered()), SLOT(choosePrimitiveCubeAction()));
+  action_cube_ = new QAction("Куб", this);
+  primitive_menu_->addAction(action_cube_);
+  connect(action_cube_, SIGNAL(triggered()), SLOT(ChoosePrimitiveCubeAction()));
 
-  actionSphere = new QAction("Сфера", this);
-  primitiveMenu->addAction(actionSphere);
-  connect(actionSphere, SIGNAL(triggered()), SLOT(choosePrimitiveSphereAction()));
+  action_sphere_ = new QAction("Сфера", this);
+  primitive_menu_->addAction(action_sphere_);
+  connect(action_sphere_, SIGNAL(triggered()), SLOT(ChoosePrimitiveSphereAction()));
 
-  actionPyramid = new QAction("Пирамида", this);
-  primitiveMenu->addAction(actionPyramid);
-  connect(actionPyramid, SIGNAL(triggered()), SLOT(choosePrimitivePyramidAction()));
+  action_pyramid_ = new QAction("Пирамида", this);
+  primitive_menu_->addAction(action_pyramid_);
+  connect(action_pyramid_, SIGNAL(triggered()), SLOT(ChoosePrimitivePyramidAction()));
 
   // Primitive actions
-  actionTranslate = new QAction("Переместить", this);
-  primitiveActionMenu->addAction(actionTranslate);
-  connect(actionTranslate, SIGNAL(triggered()), SLOT(choosePrimitiveTranslateAction()));
+  action_translate_ = new QAction("Переместить", this);
+  primitive_action_menu_->addAction(action_translate_);
+  connect(action_translate_, SIGNAL(triggered()), SLOT(ChoosePrimitiveTranslateAction()));
 
-  actionRotate = new QAction("Повернуть", this);
-  primitiveActionMenu->addAction(actionRotate);
-  connect(actionRotate, SIGNAL(triggered()), SLOT(choosePrimitiveRotateAction()));
+  action_rotate_ = new QAction("Повернуть", this);
+  primitive_action_menu_->addAction(action_rotate_);
+  connect(action_rotate_, SIGNAL(triggered()), SLOT(ChoosePrimitiveRotateAction()));
 
-  actionGroup = new QAction("Сгрупировать", this);
-  primitiveActionMenu->addAction(actionGroup);
-  connect(actionGroup, SIGNAL(triggered()), SLOT(choosePrimitiveGroupAction()));
+  action_group_ = new QAction("Сгрупировать", this);
+  primitive_action_menu_->addAction(action_group_);
+  connect(action_group_, SIGNAL(triggered()), SLOT(ChoosePrimitiveGroupAction()));
 
 }
 
-void MenuBar::choosePrimitiveCubeAction() {
+void MenuBar::ChoosePrimitiveCubeAction() {
 
-  choosePrimitiveEvent(MEL_CUBE);
+  ChoosePrimitiveEvent(MEL_CUBE);
 }
 
-void MenuBar::choosePrimitivePyramidAction() {
-  choosePrimitiveEvent(MEL_PYRAMID);
+void MenuBar::ChoosePrimitivePyramidAction() {
+  ChoosePrimitiveEvent(MEL_PYRAMID);
 }
 
-void MenuBar::choosePrimitiveSphereAction() {
-  choosePrimitiveEvent(MEL_SPHERE);
+void MenuBar::ChoosePrimitiveSphereAction() {
+  ChoosePrimitiveEvent(MEL_SPHERE);
 }
 
-void MenuBar::choosePrimitiveEvent(int i) {
-  pMW->setPrevEvent(*(pMW->getCurEvent()));
-  pMW->setCurEvent(i);
+void MenuBar::ChoosePrimitiveEvent(int i) {
+  p_mw_->SetPrevEvent(*(p_mw_->GetCurEvent()));
+  p_mw_->SetCurEvent(i);
 }
 
-void MenuBar::choosePrimitiveTranslateAction() {
-  choosePrimitiveActionEvent(ACTION_TRANSLATE);
+void MenuBar::ChoosePrimitiveTranslateAction() {
+  ChoosePrimitiveActionEvent(ACTION_TRANSLATE);
 }
 
-void MenuBar::choosePrimitiveRotateAction() {
-  choosePrimitiveActionEvent(ACTION_ROTATE);
+void MenuBar::ChoosePrimitiveRotateAction() {
+  ChoosePrimitiveActionEvent(ACTION_ROTATE);
 }
 
-void MenuBar::choosePrimitiveGroupAction() {
-  choosePrimitiveActionEvent(ACTION_GROUP);
+void MenuBar::ChoosePrimitiveGroupAction() {
+  ChoosePrimitiveActionEvent(ACTION_GROUP);
 }
 
-void MenuBar::choosePrimitiveActionEvent(int i) {
-  pMW->setCurEvent(i);
+void MenuBar::ChoosePrimitiveActionEvent(int i) {
+  p_mw_->SetCurEvent(i);
 }
 
-void MenuBar::chooseCameraTranslateAction() {
-  pMW->setCurEvent(CAMERA_TRANSLATE);
+void MenuBar::ChooseCameraTranslateAction() {
+  p_mw_->SetCurEvent(CAMERA_TRANSLATE);
 }
 
-void MenuBar::chooseCameraRotAction() {
-  pMW->setCurEvent(CAMERA_ROTATE);
+void MenuBar::ChooseCameraRotAction() {
+  p_mw_->SetCurEvent(CAMERA_ROTATE);
 }
 
-void MenuBar::chooseCameraZoomAction() {
-  pMW->setCurEvent(CAMERA_ZOOM);
+void MenuBar::ChooseCameraZoomAction() {
+  p_mw_->SetCurEvent(CAMERA_ZOOM);
 }

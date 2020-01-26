@@ -1,7 +1,7 @@
 // Область рисования
 
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef MYCADSYSTEM_SRC_GL_WIDGET_H_
+#define MYCADSYSTEM_SRC_GL_WIDGET_H_
 
 #include <QtGui>
 #include <QOpenGLWidget>
@@ -23,113 +23,106 @@ class MainWindow;
 class GLWidget : public QOpenGLWidget {
  Q_OBJECT
  protected:
-  void initializeGL();                                                //  Инициализация GL
-  void resizeGL(int _w, int _h);                                      //  Изменение размера области рисования
-  void paintGL();                                                     //  Главная функция рисования
+  void initializeGL() override;                                                //  Инициализация GL
+  void resizeGL(int w_arg, int h_arg) override;                                      //  Изменение размера области рисования
+  void paintGL() override;                                                     //  Главная функция рисования
  public:
-  explicit GLWidget(QWidget *parent = 0);                             //  Конструктор
-  void mousePressEvent(QMouseEvent *event);                           //  Обработка нажатия клавиш мыши
-  void mouseMoveEvent(QMouseEvent *event);                            //  Обработка движения мыши
-  int getProjection();                                                //  Получить тип проекции вида
-  void setProjection(int i);                                          //  Установить тип проекции вида
-  void selectEvent(QMouseEvent *event, QPoint current);               //  Выбор события
-  void eventTranslateCamera(QMouseEvent *event, QPoint current);      //  Перемещение камеры
-  void eventRotateCamera(QMouseEvent *event, QPoint current);         //  Поворот камеры
-  void eventZoomCamera(QMouseEvent *event, QPoint current);           //  Масштабирование камеры
-  void eventTranslatePrimitive(QMouseEvent *event);                   //  Перемещение примитива
-  void eventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
-  void eventGroupPrimitive(long ob1, long obj2);
-  void eventSubstractPrimitive(long obj1, long obj2);
-  void eventIntersectPrimitive(long obj1, long obj2);
-  void eventScalePrimitive(QPoint point);
-  void eventStretchPrimitive(QPoint poin);
-  void addPrimitive(QPoint pos = QPoint(0, 0));                                      //  Добавление примитива
-  void addAction(int i);
-  void addPrimitive(int i);
-  double ScreenToOGL(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
-  void drawAxes();                                                    //  Рисование осей
-  void drawPlane();                                                   //  Рисование плоскости
-  void initializeLighting();
+  explicit GLWidget(QWidget *parent = nullptr);                             //  Конструктор
+  void mousePressEvent(QMouseEvent *event) override;                           //  Обработка нажатия клавиш мыши
+  void mouseMoveEvent(QMouseEvent *event) override;                            //  Обработка движения мыши
+  int GetProjection();                                                //  Получить тип проекции вида
+  void SetProjection(int i);                                          //  Установить тип проекции вида
+  void SelectEvent(QMouseEvent *event, QPoint current);               //  Выбор события
+  void EventTranslateCamera(QMouseEvent *event, QPoint current);      //  Перемещение камеры
+  void EventRotateCamera(QMouseEvent *event, QPoint current);         //  Поворот камеры
+  void EventZoomCamera(QMouseEvent *event, QPoint current);           //  Масштабирование камеры
+  void EventTranslatePrimitive(QMouseEvent *event);                   //  Перемещение примитива
+  void EventRotatePrimitive(QMouseEvent *event, QPoint current);      //  Поворот примитива
+  void EventGroupPrimitive(long obj_1, long obj_2);
+  void EventSubstractPrimitive(long obj_1, long obj_2);
+  void EventIntersectPrimitive(long obj_1, long obj_2);
+  void EventScalePrimitive(QPoint point);
+  void EventStretchPrimitive(QPoint point);
+  void AddPrimitive(QPoint pos = QPoint(0, 0));                                      //  Добавление примитива
+  void AddAction(int i);
+  void AddPrimitive(int i);
+  double ScreenToOgl(int coord, int type);                            //  Перевод оконных координат в координаты OpenGL
+  void DrawAxes();                                                    //  Рисование осей
+  void DrawPlane();                                                   //  Рисование плоскости
   void SaveLastState();
   void LoadLastState();
-  double ScreenToOGLv2(int last, int coord, int type);                //
-  void setXRotation(int angle);                                       //
-  void setYRotation(int angle);                                       //
-  void setZRotation(int angle);                                       //
-  void drawX();
-  void drawY();
-  void drawZ();
-  void qNormalizeAngle(int &angle);
-  long getSelectedPrimitiveID(QMouseEvent *event);
-  double calcKoef();
-  bool intersectionGroupObj(long obj1, long obj2);
+  double ScreenToOgLv2(int last, int coord, int type);                //
+  void SetXRotation(int angle);                                       //
+  void SetYRotation(int angle);                                       //
+  void SetZRotation(int angle);                                       //
+  void DrawX();
+  void DrawY();
+  void DrawZ();
+  void QNormalizeAngle(int &angle);
+  long GetSelectedPrimitiveId(QMouseEvent *event);
+  double CalcKoef();
+  bool IntersectionGroupObj(long obj_1, long obj_2);
 //---------------------------ПЕРЕМЕННЫЕ---------------------------
  public:
-  MainWindow *pMW;                                               //  Указатель на виджет самого верхнего уровня
-  int PAINTING_MODE;                                      //  Режим рисования
-  int PROJECTION_TYPE;                                    //  Тип проекции вида
-  Work *currentWork;                                       //  Текущий проект
-  int *currenEvent;                                       //  Текущее событие
-  int *previousEvent;                                     //  Предыдущее событие
-  bool SELECTED,                                           //  Выбран объект сцены
-      AXES,                                               //  Рисовать оси
-      PLANE;                                              //  Рисовать сетку
-  GLubyte pixel[3];                                           //  Цвет пикселя выбранного мышью
+  MainWindow *p_mw_;                                               //  Указатель на виджет самого верхнего уровня
+  int painting_mode_;                                      //  Режим рисования
+  int projection_type_;                                    //  Тип проекции вида
+  Work *current_work_;                                       //  Текущий проект
+  int *curren_event_;                                       //  Текущее событие
+  int *previous_event_;                                     //  Предыдущее событие
+  bool selected_;                                           //  Выбран объект сцены
+  bool axes_;                                               //  Рисовать оси
+  bool plane_;                                              //  Рисовать сетку
+  GLubyte pixel_[3];                                           //  Цвет пикселя выбранного мышью
   ///////////////ПОчистить/////////////////
   struct Ortho {
     Ortho() :
-        width(0), height(0), last_width(0), last_height(0),
-        left_val(0), right_val(0), top_val(0), down_val(0),
-        near_val(0), far_val(0) {
+        width_(0), height_(0), last_width_(0), last_height_(0),
+        left_val_(0), right_val_(0), top_val_(0), down_val_(0),
+        near_val_(0), far_val_(0) {
     }
 
-    double width;
-    double height;
-    double last_width;
-    double last_height;
-    double left_val;
-    double right_val;
-    double top_val;
-    double down_val;
-    double near_val;
-    double far_val;
+    double width_;
+    double height_;
+    double last_width_;
+    double last_height_;
+    double left_val_;
+    double right_val_;
+    double top_val_;
+    double down_val_;
+    double near_val_;
+    double far_val_;
   };
-  Ortho currentOrtho;
+  Ortho current_ortho_;
 
-  double koef;
-  ContextMenu *contextMenuPrimitive;
-  int lastProjection;
-  GLdouble xRot,                   //
-      yRot,                   //
-      zRot;                   //
-  GLfloat xTranslate,             //
-      yTranslate,             //
-      zTranslate;             //
-  GLdouble gScale;                 // Масштаб всей сцены
-  QPoint lastPos;              //
-  QPoint currentPos;           //
-  QVBoxLayout *lay_global_v;          //
-  QHBoxLayout *lay_global_h;          //
-  QComboBox *comboBox;              //
-  GLfloat _x,
-      _y,
-      _z;
-  double n;
-  double R;
-  constexpr static const GLfloat step_scale = 0.01f;
-  constexpr static const GLfloat step_translate = 0.05f;
-  constexpr static const GLdouble step_rotate = 1;
+  double koef_;
+  ContextMenu *context_menu_primitive_;
+  int last_projection_;
+  GLdouble x_rot_, y_rot_, z_rot_;
+  GLfloat x_translate_, y_translate_, z_translate_;
+  GLdouble g_scale_;                 // Масштаб всей сцены
+  QPoint last_pos_;
+  QPoint current_pos_;
+  QVBoxLayout *lay_global_v_;
+  QHBoxLayout *lay_global_h_;
+  QComboBox *combo_box_;
+  GLfloat x_, y_, z_;
+  double n_;
+  double r_;
+  constexpr static const GLfloat step_scale_ = 0.01f;
+  constexpr static const GLfloat step_translate_ = 0.05f;
+  constexpr static const GLdouble step_rotate_ = 1;
 
 //////////////////////////////////////
-  GLint Mx, My;           // Позиция Курсора (обработанная)
-  GLint prevMx, prevMy;   // Предыдущая позиция курсора?
-  GLdouble startMatrix[4][4];
-  GLdouble inversStartMatrix[4][4];
+  GLint mx_, my_;           // Позиция Курсора (обработанная)
+  GLint prev_mx_, prev_my_;   // Предыдущая позиция курсора?
+  GLdouble start_matrix_[4][4];
+  GLdouble invers_start_matrix_[4][4];
 
-  QString getTextEvent(int event);
+  QString GetTextEvent(int event);
  public slots:
-  void changeProection(int n);
-  void deletePrimitive();
+  void ChangeProection(int n);
+  void DeletePrimitive();
 };
 
-#endif // GLWIDGET_H
+#endif //MYCADSYSTEM_SRC_GL_WIDGET_H_

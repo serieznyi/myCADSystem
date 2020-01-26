@@ -1,7 +1,7 @@
 // Панель проекций вида
 
-#ifndef PAINTINGZONE_H
-#define PAINTINGZONE_H
+#ifndef MYCADSYSTEM_SRC_GUI_PAINTING_ZONE_H_
+#define MYCADSYSTEM_SRC_GUI_PAINTING_ZONE_H_
 
 #include <QSplitter>
 #include "src/gl-widget.h"
@@ -9,23 +9,24 @@
 
 class PaintingZone : public QWidget {
  public:
-  explicit PaintingZone(QWidget *parent = 0);
+  explicit PaintingZone(QWidget *parent = nullptr);
   void Update();
-  void setAllUnvisible(bool a);
-  void saveProjectionLastState();
-  void loadProjectionLastState();
+  // TODO split on showAllView / hideAllView
+  void SetAllUnvisible(bool a);
+  void SaveProjectionLastState();
+  void LoadProjectionLastState();
 
  public:
-  QSplitter *sp_global;
-  QSplitter *sp_top;
-  QSplitter *sp_down;
-  GLWidget *widPerspective;           // Перспективная проекция
-  GLWidget *widTop;                   // YOX
-  GLWidget *widFront;                 // ZOX
-  GLWidget *widRight;                 // XOY
-  QVBoxLayout *lay_global;               // Глобальный менеджер компоновки
+  QSplitter *sp_global_;
+  QSplitter *sp_top_;
+  QSplitter *sp_down_;
+  GLWidget *wid_perspective_;           // Перспективная проекция
+  GLWidget *wid_top_;                   // YOX
+  GLWidget *wid_front_;                 // ZOX
+  GLWidget *wid_right_;                 // XOY
+  QVBoxLayout *lay_global_;               // Глобальный менеджер компоновки
  public slots:
-  void setMaximum(int i);
+  void SetMaximum(int i);
 };
 
-#endif // PAINTINGZONE_H
+#endif //MYCADSYSTEM_SRC_GUI_PAINTING_ZONE_H_

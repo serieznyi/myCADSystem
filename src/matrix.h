@@ -2,11 +2,11 @@
 /*                  (c) Igor Lobov, 2011                             */
 /*********************************************************************/
 
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef MYCADSYSTEM_SRC_MATRIX_H_
+#define MYCADSYSTEM_SRC_MATRIX_H_
 
 template<int N>
-void zeroMatrix(double matrix[N][N]) {
+void ZeroMatrix(double matrix[N][N]) {
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       matrix[i][j] = 0.0;
@@ -15,26 +15,26 @@ void zeroMatrix(double matrix[N][N]) {
 }
 
 template<int N>
-void copyMatrix(double resultMatrix[N][N], double sourceMatrix[N][N]) {
+void CopyMatrix(double result_matrix[N][N], double source_matrix[N][N]) {
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
-      resultMatrix[i][j] = sourceMatrix[i][j];
+      result_matrix[i][j] = source_matrix[i][j];
     }
   }
 }
 
 template<int N>
-void multMatrix(double resAndFirstMatrix[N][N], double secondMatrix[N][N]) {
-  double workMatrix[N][N];
-  zeroMatrix(workMatrix);
+void MultiMatrix(double res_and_first_matrix[N][N], double second_matrix[N][N]) {
+  double work_matrix[N][N];
+  ZeroMatrix(work_matrix);
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       for (int k = 0; k < N; k++) {
-        workMatrix[i][j] += resAndFirstMatrix[k][j] * secondMatrix[i][k];
+        work_matrix[i][j] += res_and_first_matrix[k][j] * second_matrix[i][k];
       }
     }
   }
-  copyMatrix(resAndFirstMatrix, workMatrix);
+  CopyMatrix(res_and_first_matrix, work_matrix);
 }
 
-#endif // MATRIX_H
+#endif //MYCADSYSTEM_SRC_MATRIX_H_

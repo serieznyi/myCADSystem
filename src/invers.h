@@ -1,15 +1,15 @@
 //  (c) Drobotenko    http://drobotenko.com
-#ifndef INVERS_H
-#define INVERS_H
+#ifndef MYCADSYSTEM_SRC_INVERS_H_
+#define MYCADSYSTEM_SRC_INVERS_H_
 
-#include <math.h>
+#include <cmath>
 
-#define _NaN() (double&)*"Implementation dependent";
+#define NA_N() (double&)*"Implementation dependent";
 //  заполнитель для неразрешенных измерений
 //  при невозможности обращения
 
 template<int N>
-inline static void inversMatrix(double m[N][N]) {
+inline static void InversMatrix(double **m) {
   int gaus_ostatok;
   // дефект линейного преобразования
   // 0 == ОК
@@ -49,10 +49,10 @@ inline static void inversMatrix(double m[N][N]) {
       for (j = N; j--;) {
         if (~rn[j])
           for (k = N; k--;)
-            m[j][k] = _NaN();
+            m[j][k] = NA_N();
         if (~cn[j])
           for (k = N; k--;)
-            m[k][j] = _NaN();
+            m[k][j] = NA_N();
       }
       return;
     }
@@ -85,6 +85,6 @@ inline static void inversMatrix(double m[N][N]) {
   }
 }
 
-#endif // INVERS_H
+#endif //MYCADSYSTEM_SRC_INVERS_H_
 
 

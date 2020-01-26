@@ -1,17 +1,17 @@
-#ifndef GROUPPRIMITIVE_H
-#define GROUPPRIMITIVE_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_GROUP_PRIMITIVE_H_
+#define MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_GROUP_PRIMITIVE_H_
 
 #include "src/domain/primitive.h"
 #include "src/domain/container.h"
 
 class GroupPrimitive : public Primitive {
  public:
-  GroupPrimitive(Container *con1, Container *con2);
-  virtual void draw();
-  void SynchData();
+  GroupPrimitive(Container *con_1, Container *con_2);
+  void Draw() override;
+  virtual void SyncData();
  public:
-  Container *container1;
-  Container *container2;
+  Container *container_1_;
+  Container *container_2_;
 };
 
-#endif // GROUPPRIMITIVE_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_GROUP_PRIMITIVE_H_

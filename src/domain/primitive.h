@@ -1,35 +1,35 @@
-#ifndef PRIMITIVE_H
-#define PRIMITIVE_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_H_
+#define MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_H_
 
 #include <QStack>
 #include "src/domain/element.h"
 #include "src/constants.h"
 
-struct MCOLOR {
-  MCOLOR(int r, int g, int b) : red(r), green(g), blue(b) {}
-  int red;
-  int green;
-  int blue;
+struct Mcolor {
+  Mcolor(int r, int g, int b) : red_(r), green_(g), blue_(b) {}
+  int red_;
+  int green_;
+  int blue_;
 };
 
 class Primitive : public Element {
 
  public:
   Primitive();
-  MCOLOR *getIDColor();
-  MCOLOR *getColor();
-  void setIDColor(MCOLOR *color);
-  void setColor(MCOLOR *color);
-  virtual void draw() = 0;
+  Mcolor *GetIdColor();
+  Mcolor *GetColor();
+  void SetIdColor(Mcolor *color);
+  void SetColor(Mcolor *color);
+  virtual void Draw() = 0;
   void Apply(int mode);
-  void setPaintMode(int mode);
-  int getPaintMode();
+  void SetPaintMode(int mode);
+  int GetPaintMode();
  private:
-  int PAINT_MODE;
-  MCOLOR *COLOR;
-  MCOLOR *ID_COLOR;
-  QStack<MCOLOR *> *idcolors_arr;
+  int paint_mode_;
+  Mcolor *color_;
+  Mcolor *id_color_;
+  QStack<Mcolor *> *id_colors_arr_;
 };
 
 QDataStream &operator<<(QDataStream &out, const Primitive *painting);
-#endif // PRIMITIVE_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_H_

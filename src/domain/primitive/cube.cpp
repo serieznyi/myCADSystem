@@ -2,26 +2,26 @@
 #include "QDebug"
 
 Cube::Cube(GLfloat a) : Primitive() {
-  this->setTypeName(MEL_CUBE);
-  this->a = a;
+  this->SetTypeName(MEL_CUBE);
+  this->a_ = a;
 }
 
-void Cube::draw() {
-  MCOLOR *color = getPaintMode() ? getColor() : getIDColor();
+void Cube::Draw() {
+  Mcolor *color = GetPaintMode() ? GetColor() : GetIdColor();
 
-  glColor3ub(color->red, color->green, color->blue);
+  glColor3ub(color->red_, color->green_, color->blue_);
 
   glEnableClientState(GL_VERTEX_ARRAY);
 
   const GLfloat vertices[] = {
-      -a, -a, -a,
-      a, -a, -a,
-      a, a, -a,
-      -a, a, -a,
-      -a, -a, a,
-      a, -a, a,
-      a, a, a,
-      -a, a, a};
+      -a_, -a_, -a_,
+      a_, -a_, -a_,
+      a_, a_, -a_,
+      -a_, a_, -a_,
+      -a_, -a_, a_,
+      a_, -a_, a_,
+      a_, a_, a_,
+      -a_, a_, a_};
 
   glVertexPointer(3, GL_FLOAT, 0, vertices);
 

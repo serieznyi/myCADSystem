@@ -1,70 +1,70 @@
 #include "painting-zone.h"
 
 PaintingZone::PaintingZone(QWidget *parent) : QWidget(parent) {
-  widTop = new GLWidget(parent);
-  widPerspective = new GLWidget(parent);
-  widFront = new GLWidget(parent);
-  widRight = new GLWidget(parent);
-  sp_global = new QSplitter(Qt::Vertical);
-  sp_top = new QSplitter(Qt::Horizontal);
-  sp_down = new QSplitter(Qt::Horizontal);
-  lay_global = new QVBoxLayout();
-  widTop->setProjection(VIEW_TOP);
-  widPerspective->setProjection(VIEW_PERSPECTIVE);
-  widFront->setProjection(VIEW_FRONT);
-  widRight->setProjection(VIEW_RIGHT);
-  saveProjectionLastState();
-  sp_top->addWidget(widTop);
-  sp_top->addWidget(widPerspective);
-  sp_down->addWidget(widFront);
-  sp_down->addWidget(widRight);
-  sp_global->addWidget(sp_top);
-  sp_global->addWidget(sp_down);
-  lay_global->addWidget(sp_global);
-  this->setLayout(lay_global);
+  wid_top_ = new GLWidget(parent);
+  wid_perspective_ = new GLWidget(parent);
+  wid_front_ = new GLWidget(parent);
+  wid_right_ = new GLWidget(parent);
+  sp_global_ = new QSplitter(Qt::Vertical);
+  sp_top_ = new QSplitter(Qt::Horizontal);
+  sp_down_ = new QSplitter(Qt::Horizontal);
+  lay_global_ = new QVBoxLayout();
+  wid_top_->SetProjection(VIEW_TOP);
+  wid_perspective_->SetProjection(VIEW_PERSPECTIVE);
+  wid_front_->SetProjection(VIEW_FRONT);
+  wid_right_->SetProjection(VIEW_RIGHT);
+  SaveProjectionLastState();
+  sp_top_->addWidget(wid_top_);
+  sp_top_->addWidget(wid_perspective_);
+  sp_down_->addWidget(wid_front_);
+  sp_down_->addWidget(wid_right_);
+  sp_global_->addWidget(sp_top_);
+  sp_global_->addWidget(sp_down_);
+  lay_global_->addWidget(sp_global_);
+  this->setLayout(lay_global_);
 }
 
 void PaintingZone::Update() {
-  widPerspective->repaint();
-  widTop->repaint();
-  widFront->repaint();
-  widRight->repaint();
+  wid_perspective_->repaint();
+  wid_top_->repaint();
+  wid_front_->repaint();
+  wid_right_->repaint();
 }
 
-void PaintingZone::setMaximum(int i) {
+void PaintingZone::SetMaximum(int i) {
   switch (i) {
-    case VIEW_FRONT:setAllUnvisible(true);
-      widFront->setVisible(true);
+    case VIEW_FRONT:SetAllUnvisible(true);
+      wid_front_->setVisible(true);
       break;
-    case VIEW_TOP:setAllUnvisible(true);
-      widTop->setVisible(true);
+    case VIEW_TOP:SetAllUnvisible(true);
+      wid_top_->setVisible(true);
       break;
-    case VIEW_RIGHT:setAllUnvisible(true);
-      widRight->setVisible(true);
+    case VIEW_RIGHT:SetAllUnvisible(true);
+      wid_right_->setVisible(true);
       break;
-    case VIEW_PERSPECTIVE:setAllUnvisible(true);
-      widPerspective->setVisible(true);
+    case VIEW_PERSPECTIVE:SetAllUnvisible(true);
+      wid_perspective_->setVisible(true);
       break;
   }
 }
 
-void PaintingZone::setAllUnvisible(bool a) {
-  widTop->setHidden(a);
-  widFront->setHidden(a);
-  widRight->setHidden(a);
-  widPerspective->setHidden(a);
+void PaintingZone::SetAllUnvisible(bool a) {
+  wid_top_->setHidden(a);
+  wid_front_->setHidden(a);
+  wid_right_->setHidden(a);
+  wid_perspective_->setHidden(a);
 }
 
-void PaintingZone::saveProjectionLastState() {
-  widPerspective->SaveLastState();
-  widTop->SaveLastState();
-  widFront->SaveLastState();
-  widRight->SaveLastState();
+void PaintingZone::SaveProjectionLastState() {
+  wid_perspective_->SaveLastState();
+  wid_top_->SaveLastState();
+  wid_front_->SaveLastState();
+  wid_right_->SaveLastState();
 }
 
-void PaintingZone::loadProjectionLastState() {
-  widPerspective->LoadLastState();
-  widTop->LoadLastState();
-  widFront->LoadLastState();
-  widRight->LoadLastState();
+void PaintingZone::LoadProjectionLastState() {
+  wid_perspective_->LoadLastState();
+  wid_top_->LoadLastState();
+  wid_front_->LoadLastState();
+  wid_right_->LoadLastState();
 }

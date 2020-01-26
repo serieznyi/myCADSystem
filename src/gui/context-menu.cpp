@@ -2,25 +2,25 @@
 #include "src/gl-widget.h"
 
 ContextMenu::ContextMenu(int type, QWidget *parent) : QMenu(parent) {
-  pGLW = dynamic_cast<GLWidget *>(parent);
+  p_glw_ = dynamic_cast<GLWidget *>(parent);
   switch (type) {
-    case MCM_SCENE: createSceneContexMenu();
+    case MCM_SCENE: CreateSceneContextMenu();
       break;
-    case MCM_PRIMITIVE: createPrimitiveContexMenu();
+    case MCM_PRIMITIVE: CreatePrimitiveContextMenu();
       break;
   }
 }
 
-void ContextMenu::createPrimitiveContexMenu() {
-  primitiveDeleteAction = new QAction("&Удалить", this);
-  connect(primitiveDeleteAction, SIGNAL(triggered()), pGLW, SLOT(deletePrimitive()));
+void ContextMenu::CreatePrimitiveContextMenu() {
+  primitive_delete_action_ = new QAction("&Удалить", this);
+  connect(primitive_delete_action_, SIGNAL(triggered()), p_glw_, SLOT(deletePrimitive()));
   this->addSeparator();
-  this->addAction(primitiveDeleteAction);
+  this->addAction(primitive_delete_action_);
 
-  primitivePropertiesAction = new QAction("&Свойства", this);
-  this->addAction(primitivePropertiesAction);
+  primitive_properties_action_ = new QAction("&Свойства", this);
+  this->addAction(primitive_properties_action_);
 }
 
-void ContextMenu::createSceneContexMenu() {
+void ContextMenu::CreateSceneContextMenu() {
 
 }

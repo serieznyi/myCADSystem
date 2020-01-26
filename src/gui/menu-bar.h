@@ -1,6 +1,6 @@
 // Меню-бар
-#ifndef MENUBAR_H
-#define MENUBAR_H
+#ifndef MYCADSYSTEM_SRC_GUI_MENU_BAR_H_
+#define MYCADSYSTEM_SRC_GUI_MENU_BAR_H_
 
 #include <QMenu>
 #include <QMenuBar>
@@ -12,43 +12,43 @@ class MenuBar : public QMenuBar {
 
  public:
   explicit MenuBar(QWidget *parent = 0);
-  void createActions();
+  void CreateActions();
  public:
-  MainWindow *pMW;
-  QMenu *fileMenu;
-  QAction *fileOpenAction;
-  QAction *fileSaveAction;
-  QAction *fileSaveToAction;
-  QAction *exitAction;
-  QMenu *sceneActionMenu;
-  QAction *actionTranslateCamera;
-  QAction *actionRotateCamera;
-  QAction *actionZoomCamera;
-  QMenu *primitiveMenu;
-  QAction *actionCube;
-  QAction *actionPyramid;
-  QAction *actionSphere;
-  QMenu *primitiveActionMenu;
-  QAction *actionTranslate;
-  QAction *actionRotate;
-  QAction *actionGroup;
-  QMenu *helpMenu;
-  QAction *action_about;
+  MainWindow *p_mw_;
+  QMenu *file_menu_;
+  QAction *file_open_action_;
+  QAction *file_save_action_;
+  QAction *file_save_to_action_;
+  QAction *exit_action_;
+  QMenu *scene_action_menu_;
+  QAction *action_translate_camera_;
+  QAction *action_rotate_camera_;
+  QAction *action_zoom_camera_;
+  QMenu *primitive_menu_;
+  QAction *action_cube_;
+  QAction *action_pyramid_;
+  QAction *action_sphere_;
+  QMenu *primitive_action_menu_;
+  QAction *action_translate_;
+  QAction *action_rotate_;
+  QAction *action_group_;
+  QMenu *help_menu_;
+  QAction *action_about_;
 
  private:
-  void choosePrimitiveEvent(int i);
-  void choosePrimitiveActionEvent(int i);
+  void ChoosePrimitiveEvent(int i);
+  void ChoosePrimitiveActionEvent(int i);
 
  public slots:
-  void choosePrimitiveSphereAction();
-  void choosePrimitivePyramidAction();
-  void choosePrimitiveCubeAction();
-  void choosePrimitiveTranslateAction();
-  void choosePrimitiveRotateAction();
-  void choosePrimitiveGroupAction();
-  void chooseCameraTranslateAction();
-  void chooseCameraRotAction();
-  void chooseCameraZoomAction();
+  void ChoosePrimitiveSphereAction();
+  void ChoosePrimitivePyramidAction();
+  void ChoosePrimitiveCubeAction();
+  void ChoosePrimitiveTranslateAction();
+  void ChoosePrimitiveRotateAction();
+  void ChoosePrimitiveGroupAction();
+  void ChooseCameraTranslateAction();
+  void ChooseCameraRotAction();
+  void ChooseCameraZoomAction();
 };
 
-#endif // MENUBAR_H
+#endif //MYCADSYSTEM_SRC_GUI_MENU_BAR_H_

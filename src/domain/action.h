@@ -1,6 +1,6 @@
 // Базовый класс действий
-#ifndef ACTION_H
-#define ACTION_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_ACTION_H_
+#define MYCADSYSTEM_SRC_DOMAIN_ACTION_H_
 
 #include "src/domain/element.h"
 #include "src/constants.h"
@@ -10,4 +10,4 @@ class Action : public Element {
   explicit Action(bool mode = true);
 };
 
-#endif // ACTION_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_ACTION_H_

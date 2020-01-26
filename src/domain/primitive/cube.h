@@ -1,14 +1,14 @@
-#ifndef CUBE_H
-#define CUBE_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_CUBE_H_
+#define MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_CUBE_H_
 
 #include "src/domain/primitive.h"
 
 class Cube : public Primitive {
  public:
   explicit Cube(GLfloat a);
-  virtual void draw();
+  void Draw() override;
  public:
-  GLdouble a;
+  GLdouble a_;
 };
 
-#endif // CUBE_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_CUBE_H_

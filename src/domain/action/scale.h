@@ -1,5 +1,5 @@
-#ifndef SCALE_H
-#define SCALE_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_ACTION_SCALE_H_
+#define MYCADSYSTEM_SRC_DOMAIN_ACTION_SCALE_H_
 
 #include "src/domain/action.h"
 
@@ -10,9 +10,9 @@ class Scale : public Action {
   void ScaleX(GLdouble x);
   void ScaleY(GLdouble y);
   void ScaleZ(GLdouble z);
-  void ScaleYXY(GLdouble x, GLdouble y, GLdouble z);
+  void ScaleYxy(GLdouble x, GLdouble y, GLdouble z);
  private:
-  double x, y, z;
+  double x_, y_, z_;
 };
 
-#endif // SCALE_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_ACTION_SCALE_H_

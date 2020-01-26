@@ -1,39 +1,39 @@
 #include "src/domain/primitive.h"
 
 Primitive::Primitive() : Element() {
-  idcolors_arr = new QStack<MCOLOR *>();
+  id_colors_arr_ = new QStack<Mcolor *>();
 }
 
 void Primitive::Apply(int mode) {
-  setPaintMode(mode);
-  draw();
+  SetPaintMode(mode);
+  Draw();
 }
 
-void Primitive::setIDColor(MCOLOR *color) {
-  idcolors_arr->push(color);
-  ID_COLOR = color;
+void Primitive::SetIdColor(Mcolor *color) {
+  id_colors_arr_->push(color);
+  id_color_ = color;
 }
 
-void Primitive::setColor(MCOLOR *color) {
-  this->COLOR = color;
+void Primitive::SetColor(Mcolor *color) {
+  this->color_ = color;
 }
 
-MCOLOR *Primitive::getIDColor() {
-  return this->ID_COLOR;
+Mcolor *Primitive::GetIdColor() {
+  return this->id_color_;
 }
 
-MCOLOR *Primitive::getColor() {
-  return this->COLOR;
+Mcolor *Primitive::GetColor() {
+  return this->color_;
 }
 
-void Primitive::setPaintMode(int mode) {
-  this->PAINT_MODE = mode;
+void Primitive::SetPaintMode(int mode) {
+  this->paint_mode_ = mode;
 }
 
-int Primitive::getPaintMode() {
-  return PAINT_MODE;
+int Primitive::GetPaintMode() {
+  return paint_mode_;
 }
 
-void Primitive::draw() {
+void Primitive::Draw() {
 
 }

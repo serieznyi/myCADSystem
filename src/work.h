@@ -1,6 +1,6 @@
 // Работа (Проект)
-#ifndef WORK_H
-#define WORK_H
+#ifndef MYCADSYSTEM_SRC_WORK_H_
+#define MYCADSYSTEM_SRC_WORK_H_
 
 #include <QOpenGLWidget>
 #include <GL/glu.h>
@@ -15,27 +15,27 @@ class MainWindow;
 class Work {
  public:
   explicit Work(QWidget *parent);
-  void drawWork(bool mode = true);
-  void addPrimitive(int i, QPoint pos = QPoint(0, 0));                           // Добавление объекта на сцену
-  void addAction(int i);                              // Применение действия
-  long generateGID();                                 // Генерация идентификатора для события
-  MCOLOR *generateIDColor();
-  MCOLOR *generateColor();
-  QList<Container *> *getList();
-  void deletePrimitive(long index);
-  void setGroupObj1(long i);
-  void setGroupObj2(long i);
-  long getGroupObj1();
-  long getGroupObj2();
+  void DrawWork(bool mode = true);
+  void AddPrimitive(int i, QPoint pos = QPoint(0, 0));                           // Добавление объекта на сцену
+  void AddAction(int i);                              // Применение действия
+  long GenerateGid();                                 // Генерация идентификатора для события
+  Mcolor *GenerateIdColor();
+  Mcolor *GenerateColor();
+  QList<Container *> *GetList();
+  void DeletePrimitive(long index);
+  void SetGroupObj1(long i);
+  void SetGroupObj2(long i);
+  long GetGroupObj1();
+  long GetGroupObj2();
  public:
-  int real_color[3];
+  int real_color_[3];
  private:
-  long forGroupID[2];
-  MainWindow *pMW;
-  QList<Container *> *element_list;             //  Список элементов сцены
-  long current_free_id;           //  Текущий свободный идентификатор
-  int current_free_color[3];     //
-  GLUquadric *quadric;
+  long for_group_id_[2];
+  MainWindow *p_mw_;
+  QList<Container *> *element_list_;             //  Список элементов сцены
+  long current_free_id_;           //  Текущий свободный идентификатор
+  int current_free_color_[3];     //
+  GLUquadric *quadric_;
 };
 
-#endif // WORK_H
+#endif //MYCADSYSTEM_SRC_WORK_H_

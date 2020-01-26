@@ -1,5 +1,5 @@
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#ifndef MYCADSYSTEM_SRC_CONSTANTS_H_
+#define MYCADSYSTEM_SRC_CONSTANTS_H_
 
 #define PLANE_MIN_X                (-5.0)    // Размеры плоскости (Левая передняя точка, правая задняя)(XOZ)
 #define PLANE_MAX_X                 5.0
@@ -53,4 +53,4 @@
 #define MCM_SCENE                   300
 #define MCM_PRIMITIVE               301
 
-#endif // RESOURCE_H
+#endif //MYCADSYSTEM_SRC_CONSTANTS_H_

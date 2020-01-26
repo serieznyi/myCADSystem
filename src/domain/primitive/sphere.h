@@ -1,5 +1,5 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_SPHERE_H_
+#define MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_SPHERE_H_
 
 #include "GL/glu.h"
 #include "src/domain/primitive.h"
@@ -8,11 +8,11 @@
 class Sphere : public Primitive {
  public:
   Sphere(GLUquadric *quad, GLfloat a);
-  void draw();
-  void setQuadric(GLUquadric quad);
+  void Draw() override;
+  void SetQuadric(GLUquadric *quad);
  private:
-  GLUquadric *quadric;
-  GLdouble a;
+  GLUquadric *quadric_;
+  GLdouble a_;
 };
 
-#endif // SPHERE_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_SPHERE_H_

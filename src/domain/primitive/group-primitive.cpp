@@ -1,30 +1,30 @@
 #include "group-primitive.h"
 
-GroupPrimitive::GroupPrimitive(Container *con1, Container *con2) : Primitive() {
-  this->setTypeName(MEL_GROUP);
-  container1 = con1;
-  container2 = con2;
+GroupPrimitive::GroupPrimitive(Container *con_1, Container *con_2) : Primitive() {
+  this->SetTypeName(MEL_GROUP);
+  container_1_ = con_1;
+  container_2_ = con_2;
 }
 
-void GroupPrimitive::draw() {
-  container1->draw(getPaintMode());
-  container2->draw(getPaintMode());
+void GroupPrimitive::Draw() {
+  container_1_->Draw(GetPaintMode());
+  container_2_->Draw(GetPaintMode());
 }
 
-void GroupPrimitive::SynchData() {
-  container1->getPrimitive()->setIDColor(this->getIDColor());
-  //   container1->getPrimitive()->setColor(this->getColor());
+void GroupPrimitive::SyncData() {
+  container_1_->GetPrimitive()->SetIdColor(this->GetIdColor());
+  //   container1->GetPrimitive()->SetColor(this->GetColor());
 
-  container2->getPrimitive()->setIDColor(this->getIDColor());
-  //  container2->getPrimitive()->setColor(this->getColor());
+  container_2_->GetPrimitive()->SetIdColor(this->GetIdColor());
+  //  container2->GetPrimitive()->SetColor(this->GetColor());
 
-  if (container1->getPrimitive()->getTypeName() == MEL_GROUP) {
-    GroupPrimitive *gp = dynamic_cast<GroupPrimitive *>(container1->getPrimitive());
-    gp->SynchData();
+  if (container_1_->GetPrimitive()->GetTypeName() == MEL_GROUP) {
+    GroupPrimitive *gp = dynamic_cast<GroupPrimitive *>(container_1_->GetPrimitive());
+    gp->SyncData();
 
   }
-  if (container2->getPrimitive()->getTypeName() == MEL_GROUP) {
-    GroupPrimitive *gp = dynamic_cast<GroupPrimitive *>(container2->getPrimitive());
-    gp->SynchData();
+  if (container_2_->GetPrimitive()->GetTypeName() == MEL_GROUP) {
+    GroupPrimitive *gp = dynamic_cast<GroupPrimitive *>(container_2_->GetPrimitive());
+    gp->SyncData();
   }
 }

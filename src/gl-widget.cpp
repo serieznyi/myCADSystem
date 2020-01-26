@@ -8,51 +8,51 @@
 
 GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
   // ПОЧИСТИТЬ!
-  koef = 1;
-  pMW = dynamic_cast<MainWindow *>(parent);
-  contextMenuPrimitive = new ContextMenu(MCM_PRIMITIVE, this);
-  currentOrtho = Ortho();
+  koef_ = 1;
+  p_mw_ = dynamic_cast<MainWindow *>(parent);
+  context_menu_primitive_ = new ContextMenu(MCM_PRIMITIVE, this);
+  current_ortho_ = Ortho();
   //color_selected_prim = {0};
-  this->SELECTED = false;
-  this->AXES = true;
-  this->PLANE = true;
-  this->PAINTING_MODE = MODE_REAL;
-  lastProjection = 0;
-  currentWork = pMW->getWork();
-  currenEvent = pMW->getCurEvent();
-  previousEvent = pMW->getPrevEvent();
-  n = 0;
-  xRot = 0;
-  yRot = 0;
-  zRot = 0;
-  xTranslate = 0;
-  yTranslate = 0;
-  zTranslate = 0;
-  gScale = 1;
-  currentPos = QPoint();
-  lastPos = QPoint();
-  comboBox = new QComboBox();
-  lay_global_v = new QVBoxLayout();
-  lay_global_h = new QHBoxLayout();
-  comboBox->addItem("Перспектива");
-  comboBox->addItem("Верх");
-  comboBox->addItem("Бок");
-  comboBox->addItem("Перед");
-  comboBox->addItem("Во весь экран");
-  comboBox->addItem("Сброс");
-  lay_global_h->addWidget(comboBox);
-  lay_global_h->addStretch(3);
-  lay_global_v->addLayout(lay_global_h);
-  lay_global_v->addStretch(3);
-  this->setLayout(lay_global_v);
+  this->selected_ = false;
+  this->axes_ = true;
+  this->plane_ = true;
+  this->painting_mode_ = MODE_REAL;
+  last_projection_ = 0;
+  current_work_ = p_mw_->GetWork();
+  curren_event_ = p_mw_->GetCurEvent();
+  previous_event_ = p_mw_->GetPrevEvent();
+  n_ = 0;
+  x_rot_ = 0;
+  y_rot_ = 0;
+  z_rot_ = 0;
+  x_translate_ = 0;
+  y_translate_ = 0;
+  z_translate_ = 0;
+  g_scale_ = 1;
+  current_pos_ = QPoint();
+  last_pos_ = QPoint();
+  combo_box_ = new QComboBox();
+  lay_global_v_ = new QVBoxLayout();
+  lay_global_h_ = new QHBoxLayout();
+  combo_box_->addItem("Перспектива");
+  combo_box_->addItem("Верх");
+  combo_box_->addItem("Бок");
+  combo_box_->addItem("Перед");
+  combo_box_->addItem("Во весь экран");
+  combo_box_->addItem("Сброс");
+  lay_global_h_->addWidget(combo_box_);
+  lay_global_h_->addStretch(3);
+  lay_global_v_->addLayout(lay_global_h_);
+  lay_global_v_->addStretch(3);
+  this->setLayout(lay_global_v_);
 
   ////////////////////////
-  Mx = 0;
-  My = 0;           // Позиция Курсора (обработанная)
-  prevMx = 0;
-  prevMy = 0;   // Предыдущая позиция курсора?
+  mx_ = 0;
+  my_ = 0;           // Позиция Курсора (обработанная)
+  prev_mx_ = 0;
+  prev_my_ = 0;   // Предыдущая позиция курсора?
 
-  connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeProection(int)));
+  connect(combo_box_, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeProection(int)));
 
   setMouseTracking(true);
 }
@@ -79,41 +79,41 @@ void GLWidget::initializeGL() {
   glMatrixMode(GL_MODELVIEW);                     // включить матрицу вида
 }
 
-void GLWidget::resizeGL(int _w, int _h) {
-  int w = _w, h = _h;
+void GLWidget::resizeGL(int w_arg, int h_arg) {
+  int w = w_arg, h = h_arg;
   if (w != 0 && h != 0) {
-    currentOrtho.width = w;
-    currentOrtho.height = h;
+    current_ortho_.width_ = w;
+    current_ortho_.height_ = h;
   } else {
-    currentOrtho.width = currentOrtho.last_width;
-    currentOrtho.height = currentOrtho.last_height;
-    w = currentOrtho.last_width;
-    h = currentOrtho.last_height;
+    current_ortho_.width_ = current_ortho_.last_width_;
+    current_ortho_.height_ = current_ortho_.last_height_;
+    w = current_ortho_.last_width_;
+    h = current_ortho_.last_height_;
   }
 
-  currentOrtho.left_val = -w / h * 2;
-  currentOrtho.right_val = w / h * 2;
-  currentOrtho.top_val = -w / h;
-  currentOrtho.down_val = w / h;
-  currentOrtho.near_val = -10;
-  currentOrtho.far_val = 10;
+  current_ortho_.left_val_ = -w / h * 2;
+  current_ortho_.right_val_ = w / h * 2;
+  current_ortho_.top_val_ = -w / h;
+  current_ortho_.down_val_ = w / h;
+  current_ortho_.near_val_ = -10;
+  current_ortho_.far_val_ = 10;
 
-  glViewport(0, 0, currentOrtho.width, currentOrtho.height);                         // Размер порта вида
+  glViewport(0, 0, current_ortho_.width_, current_ortho_.height_);                         // Размер порта вида
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  glOrtho(currentOrtho.left_val,
-          currentOrtho.right_val,
-          currentOrtho.top_val,
-          currentOrtho.down_val,
-          currentOrtho.near_val,
-          currentOrtho.far_val);                                  // Размер ортогональной проекции
+  glOrtho(current_ortho_.left_val_,
+          current_ortho_.right_val_,
+          current_ortho_.top_val_,
+          current_ortho_.down_val_,
+          current_ortho_.near_val_,
+          current_ortho_.far_val_);                                  // Размер ортогональной проекции
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
   //  glGetDoublev(GL_MODELVIEW_MATRIX, &startMatrix[0][0]);
-  //  copyMatrix(inversStartMatrix, startMatrix);
-  //  inversMatrix(inversStartMatrix);
+  //  CopyMatrix(inversStartMatrix, startMatrix);
+  //  InversMatrix(inversStartMatrix);
 }
 
 void GLWidget::paintGL() {
@@ -122,40 +122,40 @@ void GLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);   // Очистка буферов
   glPolygonMode(GL_FRONT, GL_FILL);          // Режим отрисовки
 
-  glScalef(gScale, gScale, gScale);
-  glTranslatef(xTranslate, yTranslate, zTranslate);
-  glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
-  glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
-  glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
+  glScalef(g_scale_, g_scale_, g_scale_);
+  glTranslatef(x_translate_, y_translate_, z_translate_);
+  glRotatef(x_rot_ / 16.0, 1.0, 0.0, 0.0);
+  glRotatef(y_rot_ / 16.0, 0.0, 1.0, 0.0);
+  glRotatef(z_rot_ / 16.0, 0.0, 0.0, 1.0);
 
-  if (this->getProjection() == VIEW_FRONT) {
+  if (this->GetProjection() == VIEW_FRONT) {
     glPushMatrix();
-    glTranslated(0, 0, -currentOrtho.far_val);
+    glTranslated(0, 0, -current_ortho_.far_val_);
     glRotated(-90, 1, 0, 0);
-    if (PAINTING_MODE != MODE_FICTIVE)
-      this->drawPlane();
+    if (painting_mode_ != MODE_FICTIVE)
+      this->DrawPlane();
     glPopMatrix();
-  } else if (this->getProjection() == VIEW_RIGHT) {
+  } else if (this->GetProjection() == VIEW_RIGHT) {
     glPushMatrix();
-    glTranslated(currentOrtho.far_val, 0, 0);
+    glTranslated(current_ortho_.far_val_, 0, 0);
     glRotatef(90, 0, 0, 1);
-    if (PAINTING_MODE != MODE_FICTIVE)
-      this->drawPlane();
+    if (painting_mode_ != MODE_FICTIVE)
+      this->DrawPlane();
     glPopMatrix();
   } else {
-    if (PAINTING_MODE != MODE_FICTIVE)
-      this->drawPlane();
+    if (painting_mode_ != MODE_FICTIVE)
+      this->DrawPlane();
   }
 
-  if (PAINTING_MODE == MODE_FICTIVE)
+  if (painting_mode_ == MODE_FICTIVE)
     glDisable(GL_LIGHTING);
   else
     glEnable(GL_LIGHTING);
 
-  currentWork->drawWork(PAINTING_MODE);
-  if (PAINTING_MODE != MODE_FICTIVE) {
+  current_work_->DrawWork(painting_mode_);
+  if (painting_mode_ != MODE_FICTIVE) {
     glDisable(GL_LIGHTING);
-    drawAxes();
+    DrawAxes();
   }
   /*
   GLUquadric *quad = gluNewQuadric();
@@ -180,189 +180,190 @@ void GLWidget::paintGL() {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
-  getSelectedPrimitiveID(event);
+  GetSelectedPrimitiveId(event);
 
-  if (event->button() == Qt::RightButton && SELECTED) {
-    contextMenuPrimitive->exec(event->globalPos());
+  if (event->button() == Qt::RightButton && selected_) {
+    context_menu_primitive_->exec(event->globalPos());
   }
 
-  switch (*currenEvent) {
+  switch (*curren_event_) {
     case MEL_SPHERE:
     case MEL_CUBE:
     case MEL_PYRAMID:
-    case MEL_CYLINDER:addPrimitive();
-      previousEvent = currenEvent;
-      pMW->setCurEvent(CAMERA_TRANSLATE);
+    case MEL_CYLINDER:AddPrimitive();
+      previous_event_ = curren_event_;
+      p_mw_->SetCurEvent(CAMERA_TRANSLATE);
       break;
     case ACTION_ROTATE:
-      if (SELECTED)
-        addAction(ACTION_ROTATE);
+      if (selected_)
+        AddAction(ACTION_ROTATE);
       break;
     case ACTION_TRANSLATE:
-      if (SELECTED)
-        addAction(ACTION_TRANSLATE);
+      if (selected_)
+        AddAction(ACTION_TRANSLATE);
       break;
     case ACTION_SCALE:
-      if (SELECTED)
-        addAction(ACTION_SCALE);
+      if (selected_)
+        AddAction(ACTION_SCALE);
       break;
     case ACTION_STRETCH:
-      if (SELECTED)
-        addAction(ACTION_STRETCH);
+      if (selected_)
+        AddAction(ACTION_STRETCH);
       break;
 
     case ACTION_GROUP: {
-      if (currentWork->getGroupObj1() == -1)
-        currentWork->setGroupObj1(pMW->selected_prim);
-      else if (currentWork->getGroupObj2() == -1)
-        currentWork->setGroupObj2(pMW->selected_prim);
+      if (current_work_->GetGroupObj1() == -1)
+        current_work_->SetGroupObj1(p_mw_->selected_prim_);
+      else if (current_work_->GetGroupObj2() == -1)
+        current_work_->SetGroupObj2(p_mw_->selected_prim_);
 
-      if (currentWork->getGroupObj1() > -1 && currentWork->getGroupObj2() > -1)
-        eventGroupPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+      if (current_work_->GetGroupObj1() > -1 && current_work_->GetGroupObj2() > -1)
+        EventGroupPrimitive(current_work_->GetGroupObj1(), current_work_->GetGroupObj2());
 
       break;
     }
     case ACTION_SUBSTRACT: {
-      if (currentWork->getGroupObj1() == -1)
-        currentWork->setGroupObj1(pMW->selected_prim);
-      else if (currentWork->getGroupObj2() == -1)
-        currentWork->setGroupObj2(pMW->selected_prim);
+      if (current_work_->GetGroupObj1() == -1)
+        current_work_->SetGroupObj1(p_mw_->selected_prim_);
+      else if (current_work_->GetGroupObj2() == -1)
+        current_work_->SetGroupObj2(p_mw_->selected_prim_);
 
-      if (currentWork->getGroupObj1() > -1 && currentWork->getGroupObj2() > -1)
-        eventSubstractPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+      if (current_work_->GetGroupObj1() > -1 && current_work_->GetGroupObj2() > -1)
+        EventSubstractPrimitive(current_work_->GetGroupObj1(), current_work_->GetGroupObj2());
 
       break;
     }
     case ACTION_INTERSECT: {
-      if (currentWork->getGroupObj1() == -1)
-        currentWork->setGroupObj1(pMW->selected_prim);
-      else if (currentWork->getGroupObj2() == -1)
-        currentWork->setGroupObj2(pMW->selected_prim);
+      if (current_work_->GetGroupObj1() == -1)
+        current_work_->SetGroupObj1(p_mw_->selected_prim_);
+      else if (current_work_->GetGroupObj2() == -1)
+        current_work_->SetGroupObj2(p_mw_->selected_prim_);
 
-      if (currentWork->getGroupObj1() > -1 && currentWork->getGroupObj2() > -1)
-        eventIntersectPrimitive(currentWork->getGroupObj1(), currentWork->getGroupObj2());
+      if (current_work_->GetGroupObj1() > -1 && current_work_->GetGroupObj2() > -1)
+        EventIntersectPrimitive(current_work_->GetGroupObj1(), current_work_->GetGroupObj2());
 
       break;
     }
     default:break;
   }
 
-  lastPos = event->pos();
+  last_pos_ = event->pos();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
-  currentPos.setX(event->x() - lastPos.x());
-  currentPos.setY(event->y() - lastPos.y());
+  current_pos_.setX(event->x() - last_pos_.x());
+  current_pos_.setY(event->y() - last_pos_.y());
   if (event->buttons() && Qt::LeftButton)
-    selectEvent(event, currentPos);
-  lastPos = event->pos();
+    SelectEvent(event, current_pos_);
+  last_pos_ = event->pos();
 
-  pMW->getStatusBar()->showMessage(
+  p_mw_->GetStatusBar()->showMessage(
       "Window: " + QString::number(event->pos().x()) + "   " + QString::number(event->pos().y()) +
-          "      OpenGL: " + QString::number(ScreenToOGL(event->pos().x(), COORD_X)) + "   "
-          + QString::number(ScreenToOGL(event->pos().y(), COORD_Y))
-          + "      Событие: " + getTextEvent(*currenEvent));
+          "      OpenGL: " + QString::number(ScreenToOgl(event->pos().x(), COORD_X)) + "   "
+          + QString::number(ScreenToOgl(event->pos().y(), COORD_Y))
+          + "      Событие: " + GetTextEvent(*curren_event_));
 }
 
-void GLWidget::setProjection(int i) {
-  this->PROJECTION_TYPE = i;
+void GLWidget::SetProjection(int i) {
+  this->projection_type_ = i;
   glLoadIdentity();
   switch (i) {
-    case VIEW_FRONT:xRot = 0;
-      yRot = 0;
-      zRot = 0;
-      this->comboBox->setCurrentIndex(3);
+    case VIEW_FRONT:x_rot_ = 0;
+      y_rot_ = 0;
+      z_rot_ = 0;
+      this->combo_box_->setCurrentIndex(3);
       break;
-    case VIEW_TOP:xRot = -90.0f * 16;
-      yRot = 0;
-      zRot = 0;
-      this->comboBox->setCurrentIndex(1);
+    case VIEW_TOP:x_rot_ = -90.0f * 16;
+      y_rot_ = 0;
+      z_rot_ = 0;
+      this->combo_box_->setCurrentIndex(1);
       break;
-    case VIEW_RIGHT:xRot = 0;
-      yRot = 90.0f * 16;
-      zRot = 0;
-      this->comboBox->setCurrentIndex(2);
+    case VIEW_RIGHT:x_rot_ = 0;
+      y_rot_ = 90.0f * 16;
+      z_rot_ = 0;
+      this->combo_box_->setCurrentIndex(2);
       break;
-    case VIEW_PERSPECTIVE:xRot = 10.0f * 16;
-      yRot = 10.0f * 16;
-      zRot = 0;
-      this->comboBox->setCurrentIndex(0);
+    case VIEW_PERSPECTIVE:x_rot_ = 10.0f * 16;
+      y_rot_ = 10.0f * 16;
+      z_rot_ = 0;
+      this->combo_box_->setCurrentIndex(0);
       break;
   }
   this->update();
 }
 
-int GLWidget::getProjection() {
-  return PROJECTION_TYPE;
+int GLWidget::GetProjection() {
+  return projection_type_;
 }
 
-void GLWidget::changeProection(int n) {
+void GLWidget::ChangeProection(int n) {
   switch (n) {
-    case VIEW_PERSPECTIVE:setProjection(VIEW_PERSPECTIVE);
+    case VIEW_PERSPECTIVE:SetProjection(VIEW_PERSPECTIVE);
       break;
-    case VIEW_TOP:setProjection(VIEW_TOP);
+    case VIEW_TOP:SetProjection(VIEW_TOP);
       break;
-    case VIEW_RIGHT:setProjection(VIEW_RIGHT);
+    case VIEW_RIGHT:SetProjection(VIEW_RIGHT);
       break;
-    case VIEW_FRONT:setProjection(VIEW_FRONT);
+    case VIEW_FRONT:SetProjection(VIEW_FRONT);
       break;
     case VIEW_FULL_SCREEN:
-      //pMW->getPaintingZone()->saveProjectionLastState();
-      pMW->getPaintingZone()->setMaximum(this->PROJECTION_TYPE);
+      //pMW->GetPaintingZone()->SaveProjectionLastState();
+      p_mw_->GetPaintingZone()->SetMaximum(this->projection_type_);
       break;
-    case VIEW_RESET:pMW->getPaintingZone()->setAllUnvisible(false);
-      pMW->getPaintingZone()->loadProjectionLastState();
+    case VIEW_RESET:
+      p_mw_->GetPaintingZone()->SetAllUnvisible(false);
+      p_mw_->GetPaintingZone()->LoadProjectionLastState();
       break;
   }
 }
 
 void GLWidget::SaveLastState() {
-  currentOrtho.last_height = currentOrtho.height;
-  currentOrtho.last_width = currentOrtho.width;
-  this->lastProjection = getProjection();
+  current_ortho_.last_height_ = current_ortho_.height_;
+  current_ortho_.last_width_ = current_ortho_.width_;
+  this->last_projection_ = GetProjection();
 
 }
 
 void GLWidget::LoadLastState() {
-  currentOrtho.height = currentOrtho.last_height;
-  currentOrtho.width = currentOrtho.last_width;
-  setProjection(this->lastProjection);
+  current_ortho_.height_ = current_ortho_.last_height_;
+  current_ortho_.width_ = current_ortho_.last_width_;
+  SetProjection(this->last_projection_);
 }
 
-void GLWidget::selectEvent(QMouseEvent *event, QPoint current) {
-  switch (*currenEvent) {
-    case CAMERA_TRANSLATE:eventTranslateCamera(event, current);
+void GLWidget::SelectEvent(QMouseEvent *event, QPoint current) {
+  switch (*curren_event_) {
+    case CAMERA_TRANSLATE:EventTranslateCamera(event, current);
       break;
 
     case ACTION_TRANSLATE:
-      if (SELECTED)
-        eventTranslatePrimitive(event);
+      if (selected_)
+        EventTranslatePrimitive(event);
       else
-        eventTranslateCamera(event, current);
+        EventTranslateCamera(event, current);
       break;
 
-    case CAMERA_ROTATE:eventRotateCamera(event, current);
+    case CAMERA_ROTATE:EventRotateCamera(event, current);
       break;
 
     case ACTION_ROTATE:
-      if (SELECTED)
-        eventRotatePrimitive(event, current);
+      if (selected_)
+        EventRotatePrimitive(event, current);
       else
-        eventRotateCamera(event, current);
+        EventRotateCamera(event, current);
       break;
 
-    case CAMERA_ZOOM:eventZoomCamera(event, current);
+    case CAMERA_ZOOM:EventZoomCamera(event, current);
       break;
 
     case ACTION_SCALE:
-      if (SELECTED)
-        eventScalePrimitive(current);
+      if (selected_)
+        EventScalePrimitive(current);
       else
-        eventZoomCamera(event, current);
+        EventZoomCamera(event, current);
       break;
     case ACTION_STRETCH:
-      if (SELECTED)
-        eventStretchPrimitive(current);
+      if (selected_)
+        EventStretchPrimitive(current);
       break;
 
   }
@@ -370,69 +371,69 @@ void GLWidget::selectEvent(QMouseEvent *event, QPoint current) {
 
 //  Камера
 
-void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current) {
-  if (this->getProjection() == VIEW_TOP) {
+void GLWidget::EventTranslateCamera(QMouseEvent *event, QPoint current) {
+  if (this->GetProjection() == VIEW_TOP) {
     if (current.x() > 0) {
-      xTranslate += step_translate;
+      x_translate_ += step_translate_;
     } else if (current.x() < 0) {
-      xTranslate -= step_translate;
+      x_translate_ -= step_translate_;
     }
     if (current.y() > 0) {
-      yTranslate -= step_translate;
+      y_translate_ -= step_translate_;
     } else if (current.y() < 0) {
-      yTranslate += step_translate;
+      y_translate_ += step_translate_;
     }
     this->update();
     return;
   }
 
-  if (this->getProjection() == VIEW_RIGHT) {
+  if (this->GetProjection() == VIEW_RIGHT) {
     if (current.x() > 0) {
-      xTranslate += step_translate;
+      x_translate_ += step_translate_;
     } else if (current.x() < 0) {
-      xTranslate -= step_translate;
+      x_translate_ -= step_translate_;
     }
     if (current.y() > 0) {
-      yTranslate -= step_translate;
+      y_translate_ -= step_translate_;
     } else if (current.y() < 0) {
-      yTranslate += step_translate;
+      y_translate_ += step_translate_;
     }
 
     this->update();
     return;
   }
 
-  if (this->getProjection() == VIEW_FRONT) {
+  if (this->GetProjection() == VIEW_FRONT) {
     if (current.x() > 0) {
-      xTranslate += step_translate;
+      x_translate_ += step_translate_;
     } else if (current.x() < 0) {
-      xTranslate -= step_translate;
+      x_translate_ -= step_translate_;
     }
     if (current.y() > 0) {
-      yTranslate -= step_translate;
+      y_translate_ -= step_translate_;
     } else if (current.y() < 0) {
-      yTranslate += step_translate;
+      y_translate_ += step_translate_;
     }
     this->update();
     return;
   }
 
-  if (this->getProjection() == VIEW_PERSPECTIVE) {
+  if (this->GetProjection() == VIEW_PERSPECTIVE) {
     if (current.x() > 0) {
-      xTranslate += step_translate;
+      x_translate_ += step_translate_;
       //xCamPos -= step_translate;
       //xCamLook -= step_translate;
     } else if (current.x() < 0) {
-      xTranslate -= step_translate;
+      x_translate_ -= step_translate_;
       //xCamPos += step_translate;
       //xCamLook += step_translate;
     }
     if (current.y() > 0) {
-      yTranslate -= step_translate;
+      y_translate_ -= step_translate_;
       //zCamPos -= step_translate;
       //zCamLook -= step_translate;
     } else if (current.y() < 0) {
-      yTranslate += step_translate;
+      y_translate_ += step_translate_;
       //zCamPos += step_translate;
       //zCamLook += step_translate;
     }
@@ -443,25 +444,25 @@ void GLWidget::eventTranslateCamera(QMouseEvent *event, QPoint current) {
   //R = sqrt((xCamLook-xCamPos)*(xCamLook-xCamPos)+(zCamLook-zCamPos)*(zCamLook-zCamPos));
 }
 
-void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current) {
-  if (this->getProjection() == VIEW_TOP) {
+void GLWidget::EventZoomCamera(QMouseEvent *event, QPoint current) {
+  if (this->GetProjection() == VIEW_TOP) {
     if (current.y() > 0)
-      gScale -= step_scale;
+      g_scale_ -= step_scale_;
     else if (current.y() < 0)
-      gScale += step_scale;
+      g_scale_ += step_scale_;
 
     this->update();
-  } else if (this->getProjection() == VIEW_RIGHT) {
+  } else if (this->GetProjection() == VIEW_RIGHT) {
     if (current.y() > 0)
-      gScale -= step_scale;
+      g_scale_ -= step_scale_;
     else if (current.y() < 0)
-      gScale += step_scale;
+      g_scale_ += step_scale_;
     this->update();
-  } else if (this->getProjection() == VIEW_FRONT) {
+  } else if (this->GetProjection() == VIEW_FRONT) {
     if (current.y() > 0)
-      gScale -= step_scale;
+      g_scale_ -= step_scale_;
     else if (current.y() < 0)
-      gScale += step_scale;
+      g_scale_ += step_scale_;
 
     this->update();
   }
@@ -480,34 +481,34 @@ void GLWidget::eventZoomCamera(QMouseEvent *event, QPoint current) {
   }
 */
 
-  koef = calcKoef();
+  koef_ = CalcKoef();
 }
 
-void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current) {
-  if (this->getProjection() == VIEW_TOP)
-    setYRotation(yRot + 8 * current.x());
+void GLWidget::EventRotateCamera(QMouseEvent *event, QPoint current) {
+  if (this->GetProjection() == VIEW_TOP)
+    SetYRotation(y_rot_ + 8 * current.x());
 
-  if (this->getProjection() == VIEW_FRONT)
-    setZRotation(zRot + (-8) * current.x());
+  if (this->GetProjection() == VIEW_FRONT)
+    SetZRotation(z_rot_ + (-8) * current.x());
 
-  if (this->getProjection() == VIEW_RIGHT) {
-    setXRotation(xRot + 8 * current.x());
+  if (this->GetProjection() == VIEW_RIGHT) {
+    SetXRotation(x_rot_ + 8 * current.x());
   }
 
-  if (this->getProjection() == VIEW_PERSPECTIVE) {
+  if (this->GetProjection() == VIEW_PERSPECTIVE) {
 
     GLdouble matrix[4][4], workMatrix[4][4];
 
     glGetDoublev(GL_MODELVIEW_MATRIX, &matrix[0][0]);
-    copyMatrix(workMatrix, inversStartMatrix);
-    multMatrix(workMatrix, matrix);
-    glLoadMatrixd(&startMatrix[0][0]);
+    CopyMatrix(workMatrix, invers_start_matrix_);
+    MultiMatrix(workMatrix, matrix);
+    glLoadMatrixd(&start_matrix_[0][0]);
 
-    if (prevMx != event->x()) {
-      glRotated((double) (lastPos.x() - event->x()), 0, -1, 0);
+    if (prev_mx_ != event->x()) {
+      glRotated((double) (last_pos_.x() - event->x()), 0, -1, 0);
     }
-    if (prevMy != event->y()) {
-      glRotated((double) (lastPos.y() - event->y()), -1, 0, 0);
+    if (prev_my_ != event->y()) {
+      glRotated((double) (last_pos_.y() - event->y()), -1, 0, 0);
     }
 /*
 
@@ -521,7 +522,7 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current) {
         }
         if(current.x()<0)
         {
-            setYRotation(yRot + 8 * current.x());
+            SetYRotation(yRot + 8 * current.x());
             //n -= 3.14/sector;
             //xCamLook -=R*sin(n);
             // zCamLook -=R*cos(n);
@@ -535,7 +536,7 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current) {
         }
         if(current.y()<0)
         {
-            setZRotation(zRot + 8 * current.x());
+            SetZRotation(zRot + 8 * current.x());
         }
 */
 
@@ -548,250 +549,250 @@ void GLWidget::eventRotateCamera(QMouseEvent *event, QPoint current) {
 
 //  Примитивы
 
-void GLWidget::addPrimitive(QPoint pos) {
+void GLWidget::AddPrimitive(QPoint pos) {
   if (pos.x() == 0 && pos.y() == 0)
-    currentWork->addPrimitive(*currenEvent);
+    current_work_->AddPrimitive(*curren_event_);
   else {
-    double x = ScreenToOGL(pos.x(), COORD_X);
-    double y = ScreenToOGL(pos.y(), COORD_Y);
+    double x = ScreenToOgl(pos.x(), COORD_X);
+    double y = ScreenToOgl(pos.y(), COORD_Y);
     qDebug() << x << " " << y;
-    currentWork->addPrimitive(*currenEvent, QPoint(x, y));
+    current_work_->AddPrimitive(*curren_event_, QPoint(x, y));
   }
 
-  pMW->Update();
+  p_mw_->Update();
 }
 
-void GLWidget::addPrimitive(int i) {
-  currentWork->addAction(i);
-  pMW->Update();
+void GLWidget::AddPrimitive(int i) {
+  current_work_->AddAction(i);
+  p_mw_->Update();
 }
 
-void GLWidget::addAction(int i) {
-  currentWork->addAction(*currenEvent);
+void GLWidget::AddAction(int i) {
+  current_work_->AddAction(*curren_event_);
 }
 
-void GLWidget::deletePrimitive() {
-  currentWork->deletePrimitive(pMW->selected_prim);
-  pMW->Update();
+void GLWidget::DeletePrimitive() {
+  current_work_->DeletePrimitive(p_mw_->selected_prim_);
+  p_mw_->Update();
 }
 
-void GLWidget::eventTranslatePrimitive(QMouseEvent *event) {
-  Translate *translate = currentWork->getList()->at(pMW->selected_prim)->getTranslate();
+void GLWidget::EventTranslatePrimitive(QMouseEvent *event) {
+  Translate *translate = current_work_->GetList()->at(p_mw_->selected_prim_)->GetTranslate();
 
-  double new_Mx = currentOrtho.width / 2 - event->pos().x();
-  double new_My = event->pos().y() - currentOrtho.height / 2;
-  Mx = prevMx - new_Mx;
-  My = prevMy - new_My;
-  prevMx = new_Mx;
-  prevMy = new_My;
+  double new_Mx = current_ortho_.width_ / 2 - event->pos().x();
+  double new_My = event->pos().y() - current_ortho_.height_ / 2;
+  mx_ = prev_mx_ - new_Mx;
+  my_ = prev_my_ - new_My;
+  prev_mx_ = new_Mx;
+  prev_my_ = new_My;
 
-  if (event->buttons() && Qt::LeftButton && this->getProjection() == VIEW_TOP) {
-    translate->move(ScreenToOGL(Mx, COORD_X), 0, ScreenToOGL(My, COORD_Y));
-    pMW->Update();
+  if (event->buttons() && Qt::LeftButton && this->GetProjection() == VIEW_TOP) {
+    translate->Move(ScreenToOgl(mx_, COORD_X), 0, ScreenToOgl(my_, COORD_Y));
+    p_mw_->Update();
     return;
   }
 
-  if (event->buttons() && Qt::LeftButton && this->getProjection() == VIEW_FRONT) {
-    translate->move(ScreenToOGL(Mx, COORD_X), ScreenToOGL(My, COORD_Y), 0);
-    pMW->Update();
+  if (event->buttons() && Qt::LeftButton && this->GetProjection() == VIEW_FRONT) {
+    translate->Move(ScreenToOgl(mx_, COORD_X), ScreenToOgl(my_, COORD_Y), 0);
+    p_mw_->Update();
     return;
   }
 
-  if (event->buttons() && Qt::LeftButton && this->getProjection() == VIEW_RIGHT) {
-    translate->move(0, ScreenToOGL(My, COORD_Y), ScreenToOGL(Mx, COORD_X));
-    pMW->Update();
+  if (event->buttons() && Qt::LeftButton && this->GetProjection() == VIEW_RIGHT) {
+    translate->Move(0, ScreenToOgl(my_, COORD_Y), ScreenToOgl(mx_, COORD_X));
+    p_mw_->Update();
     return;
   }
 }
 
-void GLWidget::eventRotatePrimitive(QMouseEvent *event, QPoint current) {
-  Rotate *rotate = currentWork->getList()->at(pMW->selected_prim)->getRotate();
-  switch (getProjection()) {
+void GLWidget::EventRotatePrimitive(QMouseEvent *event, QPoint current) {
+  Rotate *rotate = current_work_->GetList()->at(p_mw_->selected_prim_)->GetRotate();
+  switch (GetProjection()) {
     case VIEW_TOP:
       if (current.x() > 0) {
-        rotate->RotateY(step_rotate);
+        rotate->RotateY(step_rotate_);
       } else if (current.x() < 0) {
-        rotate->RotateY(-1 * step_rotate);
+        rotate->RotateY(-1 * step_rotate_);
       }
       if (current.y() > 0) {
-        rotate->RotateY(step_rotate);
+        rotate->RotateY(step_rotate_);
       } else if (current.y() < 0) {
-        rotate->RotateY(-1 * step_rotate);
+        rotate->RotateY(-1 * step_rotate_);
       }
 
-      pMW->Update();
+      p_mw_->Update();
       break;
     case VIEW_FRONT:
       if (current.x() < 0) {
-        rotate->RotateZ(step_rotate);
+        rotate->RotateZ(step_rotate_);
       } else if (current.x() > 0) {
-        rotate->RotateZ(-1 * step_rotate);
+        rotate->RotateZ(-1 * step_rotate_);
       }
       if (current.y() < 0) {
-        rotate->RotateZ(step_rotate);
+        rotate->RotateZ(step_rotate_);
       } else if (current.y() > 0) {
-        rotate->RotateZ(-1 * step_rotate);
+        rotate->RotateZ(-1 * step_rotate_);
       }
-      pMW->Update();
+      p_mw_->Update();
       break;
     case VIEW_RIGHT:
       if (current.x() > 0) {
-        rotate->RotateX(step_rotate);
+        rotate->RotateX(step_rotate_);
       } else if (current.x() < 0) {
-        rotate->RotateX(-1 * step_rotate);
+        rotate->RotateX(-1 * step_rotate_);
       }
       if (current.y() > 0) {
-        rotate->RotateX(step_rotate);
+        rotate->RotateX(step_rotate_);
       } else if (current.y() < 0) {
-        rotate->RotateX(-1 * step_rotate);
+        rotate->RotateX(-1 * step_rotate_);
       }
-      pMW->Update();
+      p_mw_->Update();
       break;
     case VIEW_PERSPECTIVE:break;
   }
 }
 
-void GLWidget::eventGroupPrimitive(long obj1, long obj2) {
-  if (obj1 == obj2) {
+void GLWidget::EventGroupPrimitive(long obj_1, long obj_2) {
+  if (obj_1 == obj_2) {
     QMessageBox::critical(this, "Ошибка",
                           "Невозможно групировать с самим собой!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
-  if (intersectionGroupObj(obj1, obj2)) {
-    addPrimitive(ACTION_GROUP);
+  if (IntersectionGroupObj(obj_1, obj_2)) {
+    AddPrimitive(ACTION_GROUP);
     QMessageBox::about(this, "Операция выполнена",
                        "Объекты сгрупированы!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
   } else {
     QMessageBox::critical(this, "Ошибка",
                           "Объекты не пересекаются!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
 }
 
-void GLWidget::eventSubstractPrimitive(long obj1, long obj2) {
-  if (obj1 == obj2) {
+void GLWidget::EventSubstractPrimitive(long obj_1, long obj_2) {
+  if (obj_1 == obj_2) {
     QMessageBox::critical(this, "Ошибка",
                           "Невозможно вычесть из самого себя!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
-  if (intersectionGroupObj(obj1, obj2)) {
-    addPrimitive(ACTION_SUBSTRACT);
+  if (IntersectionGroupObj(obj_1, obj_2)) {
+    AddPrimitive(ACTION_SUBSTRACT);
     QMessageBox::about(this, "Операция выполнена",
                        "Объект вычтен!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
   } else {
     QMessageBox::critical(this, "Ошибка",
                           "Объекты не пересекаются!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
 
 }
 
-void GLWidget::eventIntersectPrimitive(long obj1, long obj2) {
-  if (obj1 == obj2) {
+void GLWidget::EventIntersectPrimitive(long obj_1, long obj_2) {
+  if (obj_1 == obj_2) {
     QMessageBox::critical(this, "Ошибка",
                           "Невозможно пересечь с самим сабой!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
-  if (intersectionGroupObj(obj1, obj2)) {
-    addPrimitive(ACTION_INTERSECT);
+  if (IntersectionGroupObj(obj_1, obj_2)) {
+    AddPrimitive(ACTION_INTERSECT);
     QMessageBox::about(this, "Операция выполнена",
                        "Объекты пересечены!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
   } else {
     QMessageBox::critical(this, "Ошибка",
                           "Объекты не пересекаются!");
-    currentWork->setGroupObj1(-1);
-    currentWork->setGroupObj2(-1);
+    current_work_->SetGroupObj1(-1);
+    current_work_->SetGroupObj2(-1);
     return;
   }
 }
 
-void GLWidget::eventScalePrimitive(QPoint poin) {
-  Scale *scale = currentWork->getList()->at(pMW->selected_prim)->getScale();
+void GLWidget::EventScalePrimitive(QPoint point) {
+  Scale *scale = current_work_->GetList()->at(p_mw_->selected_prim_)->GetScale();
 
-  if (poin.y() < 0) {
-    scale->ScaleYXY(step_scale, step_scale, step_scale);
-  } else if (poin.y() > 0) {
-    scale->ScaleYXY(-1 * step_scale, -1 * step_scale, -1 * step_scale);
+  if (point.y() < 0) {
+    scale->ScaleYxy(step_scale_, step_scale_, step_scale_);
+  } else if (point.y() > 0) {
+    scale->ScaleYxy(-1 * step_scale_, -1 * step_scale_, -1 * step_scale_);
   }
 
-  pMW->Update();
+  p_mw_->Update();
 }
 
-void GLWidget::eventStretchPrimitive(QPoint poin) {
-  Scale *scale = currentWork->getList()->at(pMW->selected_prim)->getScale();
+void GLWidget::EventStretchPrimitive(QPoint point) {
+  Scale *scale = current_work_->GetList()->at(p_mw_->selected_prim_)->GetScale();
 
-  switch (getProjection()) {
+  switch (GetProjection()) {
     case VIEW_TOP:
-      if (poin.x() > 0) {
-        scale->ScaleX(step_scale);
-      } else if (poin.x() < 0) {
-        scale->ScaleX(-1 * step_scale);
+      if (point.x() > 0) {
+        scale->ScaleX(step_scale_);
+      } else if (point.x() < 0) {
+        scale->ScaleX(-1 * step_scale_);
       }
-      if (poin.y() < 0) {
-        scale->ScaleZ(step_scale);
-      } else if (poin.y() > 0) {
-        scale->ScaleZ(-1 * step_scale);
+      if (point.y() < 0) {
+        scale->ScaleZ(step_scale_);
+      } else if (point.y() > 0) {
+        scale->ScaleZ(-1 * step_scale_);
       }
 
-      pMW->Update();
+      p_mw_->Update();
       break;
     case VIEW_FRONT:
-      if (poin.x() > 0) {
-        scale->ScaleX(step_scale);
-      } else if (poin.x() < 0) {
-        scale->ScaleX(-1 * step_scale);
+      if (point.x() > 0) {
+        scale->ScaleX(step_scale_);
+      } else if (point.x() < 0) {
+        scale->ScaleX(-1 * step_scale_);
       }
-      if (poin.y() < 0) {
-        scale->ScaleY(step_scale);
-      } else if (poin.y() > 0) {
-        scale->ScaleY(-1 * step_scale);
+      if (point.y() < 0) {
+        scale->ScaleY(step_scale_);
+      } else if (point.y() > 0) {
+        scale->ScaleY(-1 * step_scale_);
       }
 
-      pMW->Update();
+      p_mw_->Update();
       break;
     case VIEW_RIGHT:
-      if (poin.x() > 0) {
-        scale->ScaleZ(step_scale);
-      } else if (poin.x() < 0) {
-        scale->ScaleZ(-1 * step_scale);
+      if (point.x() > 0) {
+        scale->ScaleZ(step_scale_);
+      } else if (point.x() < 0) {
+        scale->ScaleZ(-1 * step_scale_);
       }
-      if (poin.y() < 0) {
-        scale->ScaleY(step_scale);
-      } else if (poin.y() > 0) {
-        scale->ScaleY(-1 * step_scale);
+      if (point.y() < 0) {
+        scale->ScaleY(step_scale_);
+      } else if (point.y() > 0) {
+        scale->ScaleY(-1 * step_scale_);
       }
 
-      pMW->Update();
+      p_mw_->Update();
       break;
   }
 
-  pMW->Update();
+  p_mw_->Update();
 }
 
 //  Рисование
-void GLWidget::drawAxes() {
+void GLWidget::DrawAxes() {
   glLoadIdentity();
   glTranslated(2.9, -1.4, 5);
   glScaled(0.5, 0.5, 0.5);
-  glRotatef(xRot / 16.0, 1.0, 0.0, 0.0);
-  glRotatef(yRot / 16.0, 0.0, 1.0, 0.0);
-  glRotatef(zRot / 16.0, 0.0, 0.0, 1.0);
+  glRotatef(x_rot_ / 16.0, 1.0, 0.0, 0.0);
+  glRotatef(y_rot_ / 16.0, 0.0, 1.0, 0.0);
+  glRotatef(z_rot_ / 16.0, 0.0, 0.0, 1.0);
 
   glLineWidth(2);
   glBegin(GL_LINES);
@@ -803,7 +804,7 @@ void GLWidget::drawAxes() {
   glLineWidth(3);
   glTranslated(1.2, 0, 0);
   glScaled(0.2, 0.2, 0.2);
-  //drawX();
+  //DrawX();
   glLineWidth(2);
   glPopMatrix();
   glColor3ub(0, 255, 0);//Цвет оси Y
@@ -815,7 +816,7 @@ void GLWidget::drawAxes() {
   glTranslated(0, 1.2, 0);
   glScaled(0.3, 0.3, 0.3);
   glLineWidth(2);
-  //   drawY();
+  //   DrawY();
   glPopMatrix();
   glColor3ub(0, 0, 255);
   glVertex3d(0, 0, 0);
@@ -825,13 +826,13 @@ void GLWidget::drawAxes() {
   glTranslated(0, 0, 1.2);
   glScaled(0.3, 0.3, 0.3);
   glLineWidth(2);
-  //  drawZ();
+  //  DrawZ();
   glPopMatrix();
   glEnd();
   glLineWidth(1);
 }
 
-void GLWidget::drawX() {
+void GLWidget::DrawX() {
   // Буква X
   glBegin(GL_LINES);
   glVertex3d(-1, 1, 0);
@@ -842,7 +843,7 @@ void GLWidget::drawX() {
   glEnd();
 }
 
-void GLWidget::drawY() {
+void GLWidget::DrawY() {
   glBegin(GL_LINES);
   glVertex3d(-1, 1, 0);
   glVertex3d(1, 1, 0);
@@ -853,7 +854,7 @@ void GLWidget::drawY() {
   glEnd();
 }
 
-void GLWidget::drawZ() {
+void GLWidget::DrawZ() {
   glBegin(GL_LINE);
   glVertex3d(-0.8, 1, 0);
   glVertex3d(0, 0, 0);
@@ -866,7 +867,7 @@ void GLWidget::drawZ() {
   glEnd();
 }
 
-void GLWidget::drawPlane() {
+void GLWidget::DrawPlane() {
   glColor3f(0.0f, 0.0f, 0.0f);
 
   for (double i = PLANE_MIN_X; i <= PLANE_MAX_X; i += 0.5) {
@@ -882,19 +883,19 @@ void GLWidget::drawPlane() {
 
 //  Дополнительные
 
-double GLWidget::ScreenToOGL(int coord, int type) {
+double GLWidget::ScreenToOgl(int coord, int type) {
 
   double opengl_pix;
 
   switch (type) {
     case COORD_X: {
-      double proj_x = (currentOrtho.width / currentOrtho.height * (double) 4);
-      opengl_pix = (proj_x / currentOrtho.width);
+      double proj_x = (current_ortho_.width_ / current_ortho_.height_ * (double) 4);
+      opengl_pix = (proj_x / current_ortho_.width_);
       break;
     }
     case COORD_Y: {
-      double proj_y = ((currentOrtho.width / currentOrtho.height) * (double) 2);
-      opengl_pix = (proj_y / currentOrtho.height);
+      double proj_y = ((current_ortho_.width_ / current_ortho_.height_) * (double) 2);
+      opengl_pix = (proj_y / current_ortho_.height_);
       break;
     }
   }
@@ -902,7 +903,7 @@ double GLWidget::ScreenToOGL(int coord, int type) {
   return opengl_pix * (double) coord;
 }
 
-double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
+double GLWidget::ScreenToOgLv2(int last, int coord, int type) {
 
   double opengl_pix;
   double result = 0;
@@ -910,8 +911,8 @@ double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
   switch (type) {
 
     case COORD_X: {
-      double proj_x = (currentOrtho.width / currentOrtho.height * (double) 4);
-      opengl_pix = (proj_x / currentOrtho.width);
+      double proj_x = (current_ortho_.width_ / current_ortho_.height_ * (double) 4);
+      opengl_pix = (proj_x / current_ortho_.width_);
       if (coord > last) {
         result = opengl_pix * ((double) coord - ((double) last));
       } else if (coord < last) {
@@ -921,8 +922,8 @@ double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
       break;
     }
     case COORD_Y: {
-      double proj_y = ((currentOrtho.width / currentOrtho.height) * (double) 2);
-      opengl_pix = (proj_y / currentOrtho.height);
+      double proj_y = ((current_ortho_.width_ / current_ortho_.height_) * (double) 2);
+      opengl_pix = (proj_y / current_ortho_.height_);
 
       if (coord > last) {
         result = (-1) * opengl_pix * ((double) coord - ((double) last));
@@ -937,31 +938,31 @@ double GLWidget::ScreenToOGLv2(int last, int coord, int type) {
   return result;
 }
 
-void GLWidget::setXRotation(int angle) {
-  qNormalizeAngle(angle);
-  if (angle != xRot) {
-    xRot = angle;
+void GLWidget::SetXRotation(int angle) {
+  QNormalizeAngle(angle);
+  if (angle != x_rot_) {
+    x_rot_ = angle;
     update();
   }
 }
 
-void GLWidget::setYRotation(int angle) {
-  qNormalizeAngle(angle);
-  if (angle != yRot) {
-    yRot = angle;
+void GLWidget::SetYRotation(int angle) {
+  QNormalizeAngle(angle);
+  if (angle != y_rot_) {
+    y_rot_ = angle;
     update();
   }
 }
 
-void GLWidget::setZRotation(int angle) {
-  qNormalizeAngle(angle);
-  if (angle != zRot) {
-    zRot = angle;
+void GLWidget::SetZRotation(int angle) {
+  QNormalizeAngle(angle);
+  if (angle != z_rot_) {
+    z_rot_ = angle;
     update();
   }
 }
 
-void GLWidget::qNormalizeAngle(int &angle) {
+void GLWidget::QNormalizeAngle(int &angle) {
   while (angle < 0)
     angle += 360 * 16;
   while (angle > 360 * 16)
@@ -970,40 +971,36 @@ void GLWidget::qNormalizeAngle(int &angle) {
 
 // TEMP
 
-void GLWidget::initializeLighting() {
-
-}
-
-long GLWidget::getSelectedPrimitiveID(QMouseEvent *event) {
-  PAINTING_MODE = MODE_FICTIVE;
+long GLWidget::GetSelectedPrimitiveId(QMouseEvent *event) {
+  painting_mode_ = MODE_FICTIVE;
   update();
-  glReadPixels(event->pos().x(), currentOrtho.height - event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel);
-  PAINTING_MODE = MODE_REAL;
+  glReadPixels(event->pos().x(), current_ortho_.height_ - event->pos().y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &pixel_);
+  painting_mode_ = MODE_REAL;
   update();
 
-  QList<Container *> *elements = currentWork->getList();
+  QList<Container *> *elements = current_work_->GetList();
 
   if (elements->size() > 0) {
 
     for (int i = 0; i < elements->size(); i++) {
       Container *cont = elements->at(i);
-      MCOLOR *color = 0;// Цвет примитива из контейнера
+      Mcolor *color = 0;// Цвет примитива из контейнера
       GLubyte ba[3] = {0};
-      color = cont->getPrimitive()->getIDColor();
-      ba[0] = (GLubyte) color->red;
-      ba[1] = (GLubyte) color->green;
-      ba[2] = (GLubyte) color->blue;
+      color = cont->GetPrimitive()->GetIdColor();
+      ba[0] = (GLubyte) color->red_;
+      ba[1] = (GLubyte) color->green_;
+      ba[2] = (GLubyte) color->blue_;
 
-      if (ba[0] == pixel[0] && ba[1] == pixel[1] && ba[2] == pixel[2]) {
-        SELECTED = true;
+      if (ba[0] == pixel_[0] && ba[1] == pixel_[1] && ba[2] == pixel_[2]) {
+        selected_ = true;
         //делаем точку в которой кликнули началом системы координат
-        prevMx = currentOrtho.width / 2 - event->pos().x();
-        prevMy = event->pos().y() - currentOrtho.height / 2;
-        pMW->selected_prim = i;
+        prev_mx_ = current_ortho_.width_ / 2 - event->pos().x();
+        prev_my_ = event->pos().y() - current_ortho_.height_ / 2;
+        p_mw_->selected_prim_ = i;
         return i;
 
       } else {
-        SELECTED = false;
+        selected_ = false;
       }
     }
   }
@@ -1012,18 +1009,18 @@ long GLWidget::getSelectedPrimitiveID(QMouseEvent *event) {
 
 }
 
-double GLWidget::calcKoef() {
-  if (gScale < 1) {
-    return 1 + (1 - gScale);
+double GLWidget::CalcKoef() {
+  if (g_scale_ < 1) {
+    return 1 + (1 - g_scale_);
   }
-  qDebug() << koef;
+  qDebug() << koef_;
   return 1;
 }
 
-bool GLWidget::intersectionGroupObj(long obj1, long obj2) {/*
+bool GLWidget::IntersectionGroupObj(long obj_1, long obj_2) {/*
     Element *prim1 = currentWork->element_list->at(obj1);
     Element *prim2 = currentWork->element_list->at(obj2);
-    switch(prim1->getTypeName())
+    switch(prim1->GetTypeName())
     {
         case MEL_CUBE:
         //     prim1->
@@ -1035,7 +1032,7 @@ bool GLWidget::intersectionGroupObj(long obj1, long obj2) {/*
   return true;
 }
 
-QString GLWidget::getTextEvent(int event) {
+QString GLWidget::GetTextEvent(int event) {
   switch (event) {
     case ACTION_ROTATE:return "Поворот примитива";
     case ACTION_TRANSLATE:return "Перемещение примитива";

@@ -1,19 +1,22 @@
 #include "sphere.h"
 
 Sphere::Sphere(GLUquadric *quad, GLfloat a) : Primitive() {
-    this->a = a;
-    this->setTypeName(MEL_SPHERE);
-    quadric = quad;
+    this->a_ = a;
+    this->SetTypeName(MEL_SPHERE);
+    quadric_ = quad;
 }
 
-void Sphere::draw() {
-    MCOLOR *color = 0;
-    if (getPaintMode())
-        color = getColor();
+void Sphere::Draw() {
+    Mcolor *color = nullptr;
+    if (GetPaintMode())
+        color = GetColor();
     else
-        color = getIDColor();
+        color = GetIdColor();
 
-    glColor3ub(color->red, color->green, color->blue);
+    glColor3ub(color->red_, color->green_, color->blue_);
 
-    gluSphere(quadric, a, 20, 20);
+    gluSphere(quadric_, a_, 20, 20);
+}
+void Sphere::SetQuadric(GLUquadric *quad) {
+    quadric_ = quad;
 }

@@ -1,5 +1,5 @@
-#ifndef STRETCH_H
-#define STRETCH_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_ACTION_STRETCH_H_
+#define MYCADSYSTEM_SRC_DOMAIN_ACTION_STRETCH_H_
 
 #include "src/domain/action.h"
 
@@ -8,4 +8,4 @@ class Stretch : public Action {
   Stretch();
 };
 
-#endif // STRETCH_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_ACTION_STRETCH_H_

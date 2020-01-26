@@ -9,25 +9,25 @@
 #include "QDebug"
 
 Work::Work(QWidget *parent) {
-  pMW = dynamic_cast<MainWindow *>(parent);
-  element_list = new QList<Container *>;
-  current_free_id = 0;
-  current_free_color[0] = 0;
-  current_free_color[1] = 0;
-  current_free_color[2] = 0;
-  forGroupID[0] = -1;
-  forGroupID[1] = -1;
+  p_mw_ = dynamic_cast<MainWindow *>(parent);
+  element_list_ = new QList<Container *>;
+  current_free_id_ = 0;
+  current_free_color_[0] = 0;
+  current_free_color_[1] = 0;
+  current_free_color_[2] = 0;
+  for_group_id_[0] = -1;
+  for_group_id_[1] = -1;
 
-  quadric = gluNewQuadric();
+  quadric_ = gluNewQuadric();
 }
 
-void Work::drawWork(bool mode) {
+void Work::DrawWork(bool mode) {
   glPushMatrix();
 
-  for (int i = 0; i < element_list->size(); i++) {
-    Container *cont = element_list->at(i);
-    cont->draw(mode);
-    switch (cont->getPrimitive()->getTypeName()) {
+  for (int i = 0; i < element_list_->size(); i++) {
+    Container *cont = element_list_->at(i);
+    cont->Draw(mode);
+    switch (cont->GetPrimitive()->GetTypeName()) {
       case MEL_PRIMITIVE:
       case MEL_CUBE:
       case MEL_PYRAMID:
@@ -41,33 +41,33 @@ void Work::drawWork(bool mode) {
   glPopMatrix();
 }
 
-void Work::addPrimitive(int i, QPoint pos) {
+void Work::AddPrimitive(int i, QPoint pos) {
   switch (i) {
     case MEL_SPHERE: {
-      Sphere *sphere = new Sphere(quadric, 1.0f);
-      sphere->setGID(generateGID());
-      sphere->setIDColor(generateIDColor());
-      sphere->setColor(generateColor());
-      element_list->append(new Container(sphere));
+      Sphere *sphere = new Sphere(quadric_, 1.0f);
+      sphere->SetGid(GenerateGid());
+      sphere->SetIdColor(GenerateIdColor());
+      sphere->SetColor(GenerateColor());
+      element_list_->append(new Container(sphere));
       break;
     }
     case MEL_CUBE: {
       Cube *cube = new Cube(1.0f);
-      cube->setGID(generateGID());
-      cube->setIDColor(generateIDColor());
-      cube->setColor(generateColor());
+      cube->SetGid(GenerateGid());
+      cube->SetIdColor(GenerateIdColor());
+      cube->SetColor(GenerateColor());
       if (pos.x() != 0 && pos.y() != 0)
-        element_list->append(new Container(cube, new Translate(pos.x(), pos.y(), 0)));
+        element_list_->append(new Container(cube, new Translate(pos.x(), pos.y(), 0)));
       else
-        element_list->append(new Container(cube));
+        element_list_->append(new Container(cube));
       break;
     }
     case MEL_PYRAMID: {
       Pyramid *pyramid = new Pyramid(2.0f);
-      pyramid->setGID(generateGID());
-      pyramid->setIDColor(generateIDColor());
-      pyramid->setColor(generateColor());
-      element_list->append(new Container(pyramid));
+      pyramid->SetGid(GenerateGid());
+      pyramid->SetIdColor(GenerateIdColor());
+      pyramid->SetColor(GenerateColor());
+      element_list_->append(new Container(pyramid));
       break;
     }
     case MEL_CYLINDER: {
@@ -77,124 +77,124 @@ void Work::addPrimitive(int i, QPoint pos) {
   }
 }
 
-void Work::deletePrimitive(long index) {
-  element_list->removeAt(index);
+void Work::DeletePrimitive(long index) {
+  element_list_->removeAt(index);
 }
 
-void Work::addAction(int i) {
+void Work::AddAction(int i) {
   switch (i) {
     case ACTION_GROUP: {
-      Container *obj1 = element_list->at(getGroupObj1());
-      Container *obj2 = element_list->at(getGroupObj2());
+      Container *obj1 = element_list_->at(GetGroupObj1());
+      Container *obj2 = element_list_->at(GetGroupObj2());
 
       GroupPrimitive *groupPrim = new GroupPrimitive(obj1, obj2);
-      groupPrim->setGID(generateGID());
-      groupPrim->setIDColor(generateIDColor());
-      groupPrim->setColor(generateColor());
-      groupPrim->SynchData();
-      element_list->removeOne(obj1);
-      element_list->removeOne(obj2);
-      element_list->append(new Container(groupPrim));
+      groupPrim->SetGid(GenerateGid());
+      groupPrim->SetIdColor(GenerateIdColor());
+      groupPrim->SetColor(GenerateColor());
+      groupPrim->SyncData();
+      element_list_->removeOne(obj1);
+      element_list_->removeOne(obj2);
+      element_list_->append(new Container(groupPrim));
       break;
     }
     case ACTION_SUBSTRACT: {
-      Container *obj1 = element_list->at(getGroupObj1());
-      Container *obj2 = element_list->at(getGroupObj2());
+      Container *obj1 = element_list_->at(GetGroupObj1());
+      Container *obj2 = element_list_->at(GetGroupObj2());
 
       SubstractPrimitive *substractPrim = new SubstractPrimitive(obj1, obj2);
-      substractPrim->setGID(generateGID());
-      substractPrim->setIDColor(generateIDColor());
-      substractPrim->setColor(generateColor());
-      substractPrim->SynchData();
-      element_list->removeOne(obj1);
-      element_list->removeOne(obj2);
-      element_list->append(new Container(substractPrim));
+      substractPrim->SetGid(GenerateGid());
+      substractPrim->SetIdColor(GenerateIdColor());
+      substractPrim->SetColor(GenerateColor());
+      substractPrim->SyncData();
+      element_list_->removeOne(obj1);
+      element_list_->removeOne(obj2);
+      element_list_->append(new Container(substractPrim));
       break;
     }
     case ACTION_TRANSLATE: {
       Translate *translate = new Translate(0, 0, 0);
-      translate->setGID(generateGID());
-      element_list->at(pMW->selected_prim)->addTranslate(translate);
+      translate->SetGid(GenerateGid());
+      element_list_->at(p_mw_->selected_prim_)->AddTranslate(translate);
       break;
     }
     case ACTION_SCALE:
     case ACTION_STRETCH: {
       Scale *scale = new Scale(1, 1, 1);
-      scale->setGID(generateGID());
-      element_list->at(pMW->selected_prim)->addScale(scale);
+      scale->SetGid(GenerateGid());
+      element_list_->at(p_mw_->selected_prim_)->AddScale(scale);
       break;
     }
 
     case ACTION_ROTATE: {
       Rotate *rotate = new Rotate(0, 0, 0);
-      rotate->setGID(generateGID());
-      element_list->at(pMW->selected_prim)->addRotate(rotate);
+      rotate->SetGid(GenerateGid());
+      element_list_->at(p_mw_->selected_prim_)->AddRotate(rotate);
       break;
     }
     case ACTION_INTERSECT: {
-      Container *obj1 = element_list->at(getGroupObj1());
-      Container *obj2 = element_list->at(getGroupObj2());
+      Container *obj1 = element_list_->at(GetGroupObj1());
+      Container *obj2 = element_list_->at(GetGroupObj2());
 
       IntersectPrimitive *intersectPrim = new IntersectPrimitive(obj1, obj2);
-      intersectPrim->setGID(generateGID());
-      intersectPrim->setIDColor(generateIDColor());
-      intersectPrim->setColor(generateColor());
-      intersectPrim->SynchData();
-      element_list->removeOne(obj1);
-      element_list->removeOne(obj2);
-      element_list->append(new Container(intersectPrim));
+      intersectPrim->SetGid(GenerateGid());
+      intersectPrim->SetIdColor(GenerateIdColor());
+      intersectPrim->SetColor(GenerateColor());
+      intersectPrim->SyncData();
+      element_list_->removeOne(obj1);
+      element_list_->removeOne(obj2);
+      element_list_->append(new Container(intersectPrim));
       break;
     }
     default:break;
   }
 }
 
-long Work::generateGID() {
-  return current_free_id++;
+long Work::GenerateGid() {
+  return current_free_id_++;
 }
 
-MCOLOR *Work::generateIDColor() {
+Mcolor *Work::GenerateIdColor() {
   int arr[3] = {0};
 
-  if (this->current_free_color[2] < 255) {
-    arr[2] = current_free_color[2]++;
-  } else if (this->current_free_color[1] < 255) {
-    arr[1] = current_free_color[1]++;
-  } else if (this->current_free_color[0] < 255) {
-    arr[0] = current_free_color[0]++;
+  if (this->current_free_color_[2] < 255) {
+    arr[2] = current_free_color_[2]++;
+  } else if (this->current_free_color_[1] < 255) {
+    arr[1] = current_free_color_[1]++;
+  } else if (this->current_free_color_[0] < 255) {
+    arr[0] = current_free_color_[0]++;
   }
-  MCOLOR *color;
-  color = new MCOLOR(arr[0], arr[1], arr[2]);
+  Mcolor *color;
+  color = new Mcolor(arr[0], arr[1], arr[2]);
   return color;
 }
 
-MCOLOR *Work::generateColor() {
+Mcolor *Work::GenerateColor() {
   int arr[3] = {0};
-  MCOLOR *color;
+  Mcolor *color;
   for (int i = 0; i < 3; i++) {
     arr[i] = (0 + rand() % 255);
     srand(time(NULL));
   }
-  color = new MCOLOR(arr[0], arr[1], arr[2]);
+  color = new Mcolor(arr[0], arr[1], arr[2]);
   return color;
 }
 
-QList<Container *> *Work::getList() {
-  return element_list;
+QList<Container *> *Work::GetList() {
+  return element_list_;
 }
 
-void Work::setGroupObj1(long i) {
-  forGroupID[0] = i;
+void Work::SetGroupObj1(long i) {
+  for_group_id_[0] = i;
 }
 
-void Work::setGroupObj2(long i) {
-  forGroupID[1] = i;
+void Work::SetGroupObj2(long i) {
+  for_group_id_[1] = i;
 }
 
-long Work::getGroupObj1() {
-  return forGroupID[0];
+long Work::GetGroupObj1() {
+  return for_group_id_[0];
 }
 
-long Work::getGroupObj2() {
-  return forGroupID[1];
+long Work::GetGroupObj2() {
+  return for_group_id_[1];
 }

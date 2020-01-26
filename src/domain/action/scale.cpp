@@ -1,31 +1,31 @@
 #include "scale.h"
 
 Scale::Scale(GLdouble x, GLdouble y, GLdouble z) : Action() {
-  this->x = x;
-  this->y = y;
-  this->z = z;
+  this->x_ = x;
+  this->y_ = y;
+  this->z_ = z;
 }
 
 void Scale::Apply(int mode) {
-  glScaled(x, y, z);
+  glScaled(x_, y_, z_);
 }
 
 void Scale::ScaleX(GLdouble x) {
-  this->x += x;
+  this->x_ += x;
 }
 
 void Scale::ScaleY(GLdouble y) {
-  this->y += y;
+  this->y_ += y;
 }
 
 void Scale::ScaleZ(GLdouble z) {
-  double tz = this->z;
+  double tz = this->z_;
   if (tz += z > 0.2)
-    this->z += z;
+    this->z_ += z;
 }
 
-void Scale::ScaleYXY(GLdouble x, GLdouble y, GLdouble z) {
-  this->x += x;
-  this->y += y;
-  this->z += z;
+void Scale::ScaleYxy(GLdouble x, GLdouble y, GLdouble z) {
+  this->x_ += x;
+  this->y_ += y;
+  this->z_ += z;
 }

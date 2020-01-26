@@ -1,15 +1,15 @@
-#ifndef PYRAMID_H
-#define PYRAMID_H
+#ifndef MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_PYRAMID_H_
+#define MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_PYRAMID_H_
 
-#include "math.h"
+#include <cmath>
 #include "src/domain/primitive.h"
 
 class Pyramid : public Primitive {
  public:
   explicit Pyramid(GLfloat a);
-  virtual void draw();
+  void Draw() override;
  private:
-  GLdouble a;
+  GLdouble a_;
 };
 
-#endif // PYRAMID_H
+#endif //MYCADSYSTEM_SRC_DOMAIN_PRIMITIVE_PYRAMID_H_

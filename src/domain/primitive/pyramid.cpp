@@ -1,38 +1,38 @@
 #include "pyramid.h"
 
 Pyramid::Pyramid(GLfloat a) : Primitive() {
-  this->a = a;
-  this->setTypeName(MEL_PYRAMID);
+  this->a_ = a;
+  this->SetTypeName(MEL_PYRAMID);
 }
 
-void Pyramid::draw() {
-  MCOLOR *color = 0;
-  if (getPaintMode())
-    color = getColor();
+void Pyramid::Draw() {
+  Mcolor *color = 0;
+  if (GetPaintMode())
+    color = GetColor();
   else
-    color = getIDColor();
+    color = GetIdColor();
 
-  glColor3ub(color->red, color->green, color->blue);
+  glColor3ub(color->red_, color->green_, color->blue_);
 
-  GLdouble h = (sqrt(3) / 2) * this->a;
+  GLdouble h = (sqrt(3) / 2) * this->a_;
   // glPushMatrix();//основание
   glRotated(90, 1, 0, 0);
   glBegin(GL_TRIANGLES);
   glVertex3d(0, h / 2, 0);
-  glVertex3d(a / 2, -h / 2, 0);
-  glVertex3d(-a / 2, -h / 2, 0);
+  glVertex3d(a_ / 2, -h / 2, 0);
+  glVertex3d(-a_ / 2, -h / 2, 0);
 
   glVertex3d(0, 0, -h);
   glVertex3d(0, h / 2, 0);
-  glVertex3d(a / 2, -h / 2, 0);
+  glVertex3d(a_ / 2, -h / 2, 0);
 
   glVertex3d(0, 0, -h);
   glVertex3d(0, h / 2, 0);
-  glVertex3d(-a / 2, -h / 2, 0);
+  glVertex3d(-a_ / 2, -h / 2, 0);
 
   glVertex3d(0, 0, -h);
-  glVertex3d(a / 2, -h / 2, 0);
-  glVertex3d(-a / 2, -h / 2, 0);
+  glVertex3d(a_ / 2, -h / 2, 0);
+  glVertex3d(-a_ / 2, -h / 2, 0);
   glEnd();
   //             glPopMatrix();
 }

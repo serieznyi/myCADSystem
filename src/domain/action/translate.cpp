@@ -2,23 +2,23 @@
 #include <QDebug>
 
 Translate::Translate(double x, double y, double z) : Action() {
-  this->x = x;
-  this->y = y;
-  this->z = z;
+  this->x_ = x;
+  this->y_ = y;
+  this->z_ = z;
 }
 
 void Translate::Apply(int mode) {
-  glTranslated(x, y, z);
+  glTranslated(x_, y_, z_);
 }
 
-void Translate::move(double x, double y, double z) {
-  this->x += x;
-  this->y += y;
-  this->z += z;
+void Translate::Move(double x, double y, double z) {
+  this->x_ += x;
+  this->y_ += y;
+  this->z_ += z;
 }
 
-void Translate::moveTo(double x, double y, double z) {
-  this->x = x;
-  this->y = y;
-  this->z = z;
+void Translate::MoveTo(double x, double y, double z) {
+  this->x_ = x;
+  this->y_ = y;
+  this->z_ = z;
 }

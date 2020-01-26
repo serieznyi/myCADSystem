@@ -1,78 +1,78 @@
 #include "src/domain/container.h"
 
 Container::Container(Primitive *prim) {
-  primitive = prim;
-  rotateList = new QList<Rotate *>();
-  translateList = new QList<Translate *>();
-  scaleList = new QList<Scale *>();
+  primitive_ = prim;
+  rotate_list_ = new QList<Rotate *>();
+  translate_list_ = new QList<Translate *>();
+  scale_list_ = new QList<Scale *>();
 }
 
 Container::Container(Primitive *prim, Translate *translate) {
-  primitive = prim;
-  rotateList = new QList<Rotate *>();
-  translateList = new QList<Translate *>();
-  scaleList = new QList<Scale *>();
+  primitive_ = prim;
+  rotate_list_ = new QList<Rotate *>();
+  translate_list_ = new QList<Translate *>();
+  scale_list_ = new QList<Scale *>();
 
-  addTranslate(translate);
+  AddTranslate(translate);
 }
 
-void Container::addTranslate(Translate *trans) {
-  translateList->append(trans);
+void Container::AddTranslate(Translate *trans) {
+  translate_list_->append(trans);
 }
 
-void Container::addRotate(Rotate *rot) {
-  rotateList->append(rot);
+void Container::AddRotate(Rotate *rot) {
+  rotate_list_->append(rot);
 }
 
-void Container::addScale(Scale *scale) {
-  scaleList->append(scale);
+void Container::AddScale(Scale *scale) {
+  scale_list_->append(scale);
 }
 
-QList<Translate *> *Container::getTranslateList() {
-  return translateList;
+QList<Translate *> *Container::GetTranslateList() {
+  return translate_list_;
 }
 
-QList<Rotate *> *Container::getRotateList() {
-  return rotateList;
+QList<Rotate *> *Container::GetRotateList() {
+  return rotate_list_;
 }
 
-QList<Scale *> *Container::getScaleList() {
-  return scaleList;
+QList<Scale *> *Container::GetScaleList() {
+  return scale_list_;
 }
 
-Translate *Container::getTranslate() {
-  return translateList->last();
+Translate *Container::GetTranslate() {
+  return translate_list_->last();
 }
 
-Scale *Container::getScale() {
-  return scaleList->last();
+Scale *Container::GetScale() {
+  return scale_list_->last();
 }
 
-Rotate *Container::getRotate() {
-  return rotateList->last();
+Rotate *Container::GetRotate() {
+  return rotate_list_->last();
 }
 
-Primitive *Container::getPrimitive() {
-  return primitive;
+Primitive *Container::GetPrimitive() {
+  return primitive_;
 }
 
-void Container::draw(int mode) {
-  for (int i = 0; i < translateList->size(); i++)
-    translateList->at(i)->Apply(mode);
+void Container::Draw(int mode) {
+  for (int i = 0; i < translate_list_->size(); i++)
+    translate_list_->at(i)->Apply(mode);
 
-  for (int i = 0; i < rotateList->size(); i++)
-    rotateList->at(i)->Apply(mode);
+  for (int i = 0; i < rotate_list_->size(); i++)
+    rotate_list_->at(i)->Apply(mode);
 
-  for (int i = 0; i < scaleList->size(); i++)
-    scaleList->at(i)->Apply(mode);
+  for (int i = 0; i < scale_list_->size(); i++)
+    scale_list_->at(i)->Apply(mode);
 
-  primitive->Apply(mode);
+  primitive_->Apply(mode);
 }
 
 QDataStream &operator<<(QDataStream &out, const Container *painting) {
-  //out << painting->getPrimitive();
-  //out << painting->getRotateList();
-  // out << painting->getTranslate();
-  //out << painting->getScaleList();
+  //out << painting->GetPrimitive();
+  //out << painting->GetRotateList();
+  // out << painting->GetTranslate();
+  //out << painting->GetScaleList();
   return out;
 }
