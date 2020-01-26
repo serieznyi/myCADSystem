@@ -6,14 +6,11 @@
 #include <QMainWindow>
 #include "PaintingZone.h"
 #include "MenuBar.h"
-#include "src/gui/toolbars/ActionPrimitiveToolBar.h"
 #include "src/gui/toolbars/SceneControlToolbar.h"
 #include "StatusBar.h"
 #include "src/Work.h"
 #include "src/resource.h"
 #include <QFileDialog>
-
-class ActionPrimitiveToolBar;
 
 class MainWindow : public QMainWindow
 {
@@ -27,7 +24,6 @@ public:
     Work* getWork();
     void Update();
     PaintingZone *getPaintingZone();
-    ActionPrimitiveToolBar* getActionPrimitiveToolbar();
     SceneControlToolbar* getSceneControlToolbar();
 
     StatusBar* getStatusBar();
@@ -35,7 +31,6 @@ public:
 private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида
     MenuBar                         *menuBar;
-    ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
     SceneControlToolbar               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие

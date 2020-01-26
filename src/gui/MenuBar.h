@@ -37,12 +37,16 @@ public:
     QAction               *action_about;
 
  private:
-  void primitiveChangeEvent(int i);
+  void choosePrimitiveEvent(int i);
+  void choosePrimitiveActionEvent(int i);
 
  public slots:
-  void setSphereAction();
-  void setPyramidAction();
-  void setCubeAction();
+  void choosePrimitiveSphereAction();
+  void choosePrimitivePyramidAction();
+  void choosePrimitiveCubeAction();
+  void choosePrimitiveTranslateAction();
+  void choosePrimitiveRotateAction();
+  void choosePrimitiveGroupAction();
 };
 
 #endif // MENUBAR_H

@@ -63,45 +63,65 @@ void MenuBar::createActions() {
   // Primitives
   actionCube = new QAction("Куб", this);
   primitiveMenu->addAction(actionCube);
-  connect(actionCube, SIGNAL(triggered()), SLOT(setCubeAction()));
+  connect(actionCube, SIGNAL(triggered()), SLOT(choosePrimitiveCubeAction()));
 
   actionSphere = new QAction("Сфера", this);
   primitiveMenu->addAction(actionSphere);
-  connect(actionSphere, SIGNAL(triggered()), SLOT(setSphereAction()));
+  connect(actionSphere, SIGNAL(triggered()), SLOT(choosePrimitiveSphereAction()));
 
   actionPyramid = new QAction("Пирамида", this);
   primitiveMenu->addAction(actionPyramid);
-  connect(actionPyramid, SIGNAL(triggered()), SLOT(setPyramidAction()));
+  connect(actionPyramid, SIGNAL(triggered()), SLOT(choosePrimitivePyramidAction()));
 
-  // Actions
+  // Primitive actions
   actionTranslate = new QAction("Переместить", this);
   primitiveActionMenu->addAction(actionTranslate);
-  connect(actionTranslate, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setTranslateAction()));
+  connect(actionTranslate, SIGNAL(triggered()), SLOT(choosePrimitiveTranslateAction()));
 
   actionRotate = new QAction("Повернуть", this);
   primitiveActionMenu->addAction(actionRotate);
-  connect(actionRotate, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setRotateAction()));
+  connect(actionRotate, SIGNAL(triggered()), SLOT(choosePrimitiveRotateAction()));
 
   actionGroup = new QAction("Сгрупировать", this);
   primitiveActionMenu->addAction(actionGroup);
-  connect(actionGroup, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setGroupAction()));
+  connect(actionGroup, SIGNAL(triggered()), SLOT(choosePrimitiveGroupAction()));
 
 }
 
-void MenuBar::setCubeAction() {
+void MenuBar::choosePrimitiveCubeAction() {
 
-  primitiveChangeEvent(MEL_CUBE);
+  choosePrimitiveEvent(MEL_CUBE);
 }
 
-void MenuBar::setPyramidAction() {
-  primitiveChangeEvent(MEL_PYRAMID);
+void MenuBar::choosePrimitivePyramidAction() {
+  choosePrimitiveEvent(MEL_PYRAMID);
 }
 
-void MenuBar::setSphereAction() {
-  primitiveChangeEvent(MEL_SPHERE);
+void MenuBar::choosePrimitiveSphereAction() {
+  choosePrimitiveEvent(MEL_SPHERE);
 }
 
-void MenuBar::primitiveChangeEvent(int i) {
+void MenuBar::choosePrimitiveEvent(int i) {
   pMW->setPrevEvent(*(pMW->getCurEvent()));
+  pMW->setCurEvent(i);
+}
+
+void MenuBar::choosePrimitiveTranslateAction()
+{
+  choosePrimitiveActionEvent(ACTION_TRANSLATE);
+}
+
+void MenuBar::choosePrimitiveRotateAction()
+{
+  choosePrimitiveActionEvent(ACTION_ROTATE);
+}
+
+void MenuBar::choosePrimitiveGroupAction()
+{
+  choosePrimitiveActionEvent(ACTION_GROUP);
+}
+
+void MenuBar::choosePrimitiveActionEvent(int i)
+{
   pMW->setCurEvent(i);
 }
