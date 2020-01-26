@@ -7,7 +7,7 @@
 #include "PaintingZone.h"
 #include "MenuBar.h"
 #include "StatusBar.h"
-#include "src/Work.h"
+#include "src/work.h"
 #include "src/constants.h"
 #include <QFileDialog>
 

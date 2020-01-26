@@ -13,7 +13,7 @@
 #include <cmath>
 #include "GL/glu.h"
 #include "src/constants.h"
-#include "Work.h"
+#include "work.h"
 #include "src/gui/ContextMenu.h"
 
 #include "invers.h"
