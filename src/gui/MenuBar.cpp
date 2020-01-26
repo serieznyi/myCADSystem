@@ -50,15 +50,15 @@ void MenuBar::createActions() {
   // Camera actions
   actionTranslateCamera = new QAction("Переместить камеру", this);
   sceneActionMenu->addAction(actionTranslateCamera);
-  connect(actionTranslateCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraTranslateAction()));
+  connect(actionTranslateCamera, SIGNAL(triggered()), SLOT(chooseCameraTranslateAction()));
 
   actionRotateCamera = new QAction("Повернуть камеру", this);
   sceneActionMenu->addAction(actionRotateCamera);
-  connect(actionRotateCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraRotAction()));
+  connect(actionRotateCamera, SIGNAL(triggered()), SLOT(chooseCameraRotAction()));
 
   actionZoomCamera = new QAction("Изменить масштаб", this);
   sceneActionMenu->addAction(actionZoomCamera);
-  connect(actionZoomCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraZoomAction()));
+  connect(actionZoomCamera, SIGNAL(triggered()), SLOT(chooseCameraZoomAction()));
 
   // Primitives
   actionCube = new QAction("Куб", this);
@@ -124,4 +124,19 @@ void MenuBar::choosePrimitiveGroupAction()
 void MenuBar::choosePrimitiveActionEvent(int i)
 {
   pMW->setCurEvent(i);
+}
+
+void MenuBar::chooseCameraTranslateAction()
+{
+  pMW->setCurEvent(CAMERA_TRANSLATE);
+}
+
+void MenuBar::chooseCameraRotAction()
+{
+  pMW->setCurEvent(CAMERA_ROTATE);
+}
+
+void MenuBar::chooseCameraZoomAction()
+{
+  pMW->setCurEvent(CAMERA_ZOOM);
 }

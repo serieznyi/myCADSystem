@@ -47,6 +47,9 @@ public:
   void choosePrimitiveTranslateAction();
   void choosePrimitiveRotateAction();
   void choosePrimitiveGroupAction();
+  void chooseCameraTranslateAction();
+  void chooseCameraRotAction();
+  void chooseCameraZoomAction();
 };
 
 #endif // MENUBAR_H

@@ -9,13 +9,11 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     WORK_CREATED                = false;
     prev_event                  = 0;
     currentWork                 = new Work(this);
-    sceneControlPanel           = new SceneControlToolbar(this);
     paintingZone                = new PaintingZone(this);
     statusBar                   = new StatusBar();
     menuBar                     = new MenuBar(this);
 
     this->setMenuBar(menuBar);
-    this->addToolBar(sceneControlPanel);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
@@ -63,11 +61,6 @@ void MainWindow::Update()
 PaintingZone* MainWindow::getPaintingZone()
 {
     return paintingZone;
-}
-
-SceneControlToolbar *MainWindow::getSceneControlToolbar()
-{
-    return sceneControlPanel;
 }
 
 StatusBar *MainWindow::getStatusBar()

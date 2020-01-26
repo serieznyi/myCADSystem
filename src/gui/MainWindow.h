@@ -6,7 +6,6 @@
 #include <QMainWindow>
 #include "PaintingZone.h"
 #include "MenuBar.h"
-#include "src/gui/toolbars/SceneControlToolbar.h"
 #include "StatusBar.h"
 #include "src/Work.h"
 #include "src/resource.h"
@@ -24,14 +23,12 @@ public:
     Work* getWork();
     void Update();
     PaintingZone *getPaintingZone();
-    SceneControlToolbar* getSceneControlToolbar();
 
     StatusBar* getStatusBar();
 
 private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида
     MenuBar                         *menuBar;
-    SceneControlToolbar               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие
     int                             prev_event;                 // Предыдущее событие
