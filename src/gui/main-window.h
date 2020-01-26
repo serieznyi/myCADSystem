@@ -4,9 +4,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "PaintingZone.h"
-#include "MenuBar.h"
-#include "StatusBar.h"
+#include "painting-zone.h"
+#include "menu-bar.h"
+#include "status-bar.h"
 #include "src/work.h"
 #include "src/constants.h"
 #include <QFileDialog>

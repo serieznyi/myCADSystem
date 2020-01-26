@@ -14,7 +14,7 @@
 #include "GL/glu.h"
 #include "src/constants.h"
 #include "work.h"
-#include "src/gui/ContextMenu.h"
+#include "src/gui/context-menu.h"
 
 #include "invers.h"
 #include "matrix.h"

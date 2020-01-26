@@ -1,5 +1,5 @@
-#include "MenuBar.h"
-#include "src/gui/MainWindow.h"
+#include "menu-bar.h"
+#include "src/gui/main-window.h"
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
   pMW = dynamic_cast<MainWindow *>(parent);

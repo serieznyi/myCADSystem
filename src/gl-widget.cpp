@@ -1,8 +1,8 @@
-#include "GLWidget.h"
-#include "src/gui/PaintingZone.h"
+#include "gl-widget.h"
+#include "src/gui/painting-zone.h"
 #include <QDebug>
 #include <QtWidgets/QMessageBox>
-#include "src/gui/MainWindow.h"
+#include "src/gui/main-window.h"
 
 //  Главные
 

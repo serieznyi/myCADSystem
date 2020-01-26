@@ -1,5 +1,5 @@
 #include <QtWidgets/QMessageBox>
-#include "MainWindow.h"
+#include "main-window.h"
 
 MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWindow(parent)
 {

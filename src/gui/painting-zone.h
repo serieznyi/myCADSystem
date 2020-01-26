@@ -4,7 +4,7 @@
 #define PAINTINGZONE_H
 
 #include <QSplitter>
-#include "src/GLWidget.h"
+#include "src/gl-widget.h"
 #include "src/constants.h"
 
 class PaintingZone : public QWidget

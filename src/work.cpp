@@ -5,7 +5,7 @@
 #include <src/domain/primitive/substract-primitive.h>
 #include <src/domain/primitive/intersect-primitive.h>
 #include "work.h"
-#include "src/gui/MainWindow.h"
+#include "src/gui/main-window.h"
 #include "QDebug"
 
 Work::Work(QWidget *parent)

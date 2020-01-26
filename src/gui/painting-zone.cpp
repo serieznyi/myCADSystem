@@ -1,4 +1,4 @@
-#include "PaintingZone.h"
+#include "painting-zone.h"
 
 PaintingZone::PaintingZone(QWidget *parent) : QWidget(parent)
 {
