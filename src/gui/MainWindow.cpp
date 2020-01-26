@@ -10,7 +10,6 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
     prev_event                  = 0;
     currentWork                 = new Work(this);
     actionPrimitiveToolbar      = new ActionPrimitiveToolBar(this);
-    selectPrimitiveToolbar      = new SelectPrimitiveToolbar(this);
     sceneControlPanel           = new SceneControlToolbar(this);
     paintingZone                = new PaintingZone(this);
     statusBar                   = new StatusBar();
@@ -18,16 +17,13 @@ MainWindow::MainWindow(int max_width, int max_height, QWidget *parent): QMainWin
 
     this->setMenuBar(menuBar);
     this->addToolBar(actionPrimitiveToolbar);
-    this->addToolBar(selectPrimitiveToolbar);
     this->addToolBar(sceneControlPanel);
     this->setCentralWidget(paintingZone);
     this->setStatusBar(statusBar);
 
     //настройки окна
     this->resize(900, 700);
-    //this->setFixedSize(max_width, max_height);
     this->setWindowState(Qt::WindowMaximized);
-    //this->move(10, 10);
     this->setMinimumSize(700, 500);
     this->setWindowTitle("MyCADSystem v1");
     this->show();
@@ -69,11 +65,6 @@ void MainWindow::Update()
 PaintingZone* MainWindow::getPaintingZone()
 {
     return paintingZone;
-}
-
-SelectPrimitiveToolbar* MainWindow::getSelectPrimitiveToolbar()
-{
-    return selectPrimitiveToolbar;
 }
 
 ActionPrimitiveToolBar *MainWindow::getActionPrimitiveToolbar()

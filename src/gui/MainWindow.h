@@ -7,7 +7,6 @@
 #include "PaintingZone.h"
 #include "MenuBar.h"
 #include "src/gui/toolbars/ActionPrimitiveToolBar.h"
-#include "src/gui/toolbars/SelectPrimitiveToolbar.h"
 #include "src/gui/toolbars/SceneControlToolbar.h"
 #include "StatusBar.h"
 #include "src/Work.h"
@@ -28,7 +27,6 @@ public:
     Work* getWork();
     void Update();
     PaintingZone *getPaintingZone();
-    SelectPrimitiveToolbar *getSelectPrimitiveToolbar();
     ActionPrimitiveToolBar* getActionPrimitiveToolbar();
     SceneControlToolbar* getSceneControlToolbar();
 
@@ -38,7 +36,6 @@ private:
     PaintingZone                    *paintingZone;              // Виджет проекций вида
     MenuBar                         *menuBar;
     ActionPrimitiveToolBar          *actionPrimitiveToolbar;    // Панель управления примитивами
-    SelectPrimitiveToolbar          *selectPrimitiveToolbar;    // Панель выбора примитивов
     SceneControlToolbar               *sceneControlPanel;         // Панель управления сценой
     StatusBar                       *statusBar;                 // Панель вывода доп. информации
     int                             cur_event;                  // Текущее событие

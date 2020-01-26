@@ -16,26 +16,33 @@ public:
     void createActions();
 public:
     MainWindow             *pMW;
-    QMenu           *menu_file;
-    QAction               *action_open;
-    QAction               *action_save;
-    QAction               *action_save_to;
-    QAction               *action_exit;
-    QMenu           *menu_scene_action;
+    QMenu           *fileMenu;
+    QAction               *fileOpenAction;
+    QAction               *fileSaveAction;
+    QAction               *fileSaveToAction;
+    QAction               *exitAction;
+    QMenu           *sceneActionMenu;
     QAction               *actionTranslateCamera;
     QAction               *actionRotateCamera;
     QAction               *actionZoomCamera;
-    QMenu           *menu_select_primitive;
+    QMenu           *primitiveMenu;
     QAction               *actionCube;
     QAction               *actionPyramid;
     QAction               *actionSphere;
-    QMenu           *menu_primitive_action;
+    QMenu           *primitiveActionMenu;
     QAction               *actionTranslate;
     QAction               *actionRotate;
     QAction               *actionGroup;
-    QMenu           *menu_help;
+    QMenu           *helpMenu;
     QAction               *action_about;
 
+ private:
+  void primitiveChangeEvent(int i);
+
+ public slots:
+  void setSphereAction();
+  void setPyramidAction();
+  void setCubeAction();
 };
 
 #endif // MENUBAR_H

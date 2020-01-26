@@ -1,78 +1,107 @@
 #include "MenuBar.h"
 #include "src/gui/MainWindow.h"
 
-MenuBar::MenuBar(QWidget *parent) :
-    QMenuBar(parent)
-{
-    pMW = dynamic_cast<MainWindow*>(parent);
+MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
+  pMW = dynamic_cast<MainWindow *>(parent);
 
-    menu_file = new QMenu("Файл");
-        this->addMenu(menu_file);
-    menu_scene_action = new QMenu("Сцена");
-        this->addMenu(menu_scene_action);
-    menu_select_primitive = new QMenu("Примитивы");
-        this->addMenu(menu_select_primitive);
-    menu_primitive_action = new QMenu("Действия над примитивами");
-        this->addMenu(menu_primitive_action);
-    menu_help = new QMenu("Помощь");
-        this->addMenu(menu_help);
+  fileMenu = new QMenu("Файл");
+  this->addMenu(fileMenu);
 
-    createActions();
+  sceneActionMenu = new QMenu("Сцена");
+  this->addMenu(sceneActionMenu);
+
+  primitiveMenu = new QMenu("Примитивы");
+  this->addMenu(primitiveMenu);
+
+  primitiveActionMenu = new QMenu("Действия над примитивами");
+  this->addMenu(primitiveActionMenu);
+
+  helpMenu = new QMenu("Помощь");
+  this->addMenu(helpMenu);
+
+  createActions();
 }
 
-void MenuBar::createActions()
-{
-    action_open         = new QAction("Открыть",this);
-    action_save         = new QAction("Сохранить",this);
-    action_save_to      = new QAction("Сохранить как...",this);
-    action_exit         = new QAction("Выход",this);
+void MenuBar::createActions() {
 
-    actionTranslateCamera   = new QAction("Переместить камеру",this);
-    actionRotateCamera      = new QAction("Повернуть камеру",this);
-    actionZoomCamera        = new QAction("Изменить масштаб",this);
+  // File
+  fileOpenAction = new QAction("Открыть", this);
+  fileMenu->addAction(fileOpenAction);
 
-    actionCube          = new QAction("Куб",this);
-    actionSphere        = new QAction("Сфера",this);
-    actionPyramid       = new QAction("Пирамида",this);
+  fileMenu->addSeparator();
 
-    actionTranslate         = new QAction("Переместить",this);
-    actionRotate            = new QAction("Повернуть",this);
-    actionGroup             = new QAction("Сгрупировать",this);
+  fileSaveAction = new QAction("Сохранить", this);
+  fileMenu->addAction(fileSaveAction);
 
-    action_about        = new QAction("О программе",this);
+  fileSaveToAction = new QAction("Сохранить как...", this);
+  fileMenu->addAction(fileSaveToAction);
+  connect(fileSaveToAction, SIGNAL(triggered()), pMW, SLOT(saveTo()));
 
-    menu_file->addAction(action_open);
-    menu_file->addSeparator();
-    menu_file->addAction(action_save);
-    menu_file->addAction(action_save_to);
-        connect(action_save_to, SIGNAL(triggered()),pMW, SLOT(saveTo()));
-    menu_file->addSeparator();
-    menu_file->addAction(action_exit);
-        connect(action_exit, SIGNAL(triggered()),pMW, SLOT(close()));
-    menu_help->addAction(action_about);
+  fileMenu->addSeparator();
 
+  exitAction = new QAction("Выход", this);
+  fileMenu->addAction(exitAction);
+  connect(exitAction, SIGNAL(triggered()), pMW, SLOT(close()));
 
-    menu_scene_action->addAction(actionTranslateCamera);
-        connect(actionTranslateCamera, SIGNAL(triggered()),pMW->getSceneControlToolbar(), SLOT(setCameraTranslateAction()));
-    menu_scene_action->addAction(actionRotateCamera);
-        connect(actionRotateCamera, SIGNAL(triggered()),pMW->getSceneControlToolbar(), SLOT(setCameraRotAction()));
-    menu_scene_action->addAction(actionZoomCamera);
-        connect(actionZoomCamera, SIGNAL(triggered()),pMW->getSceneControlToolbar(), SLOT(setCameraZoomAction()));
+  // About
+  action_about = new QAction("О программе", this);
+  helpMenu->addAction(action_about);
 
+  // Camera actions
+  actionTranslateCamera = new QAction("Переместить камеру", this);
+  sceneActionMenu->addAction(actionTranslateCamera);
+  connect(actionTranslateCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraTranslateAction()));
 
-    menu_select_primitive->addAction(actionCube);
-        connect(actionTranslateCamera, SIGNAL(triggered()),pMW->getSelectPrimitiveToolbar(), SLOT(setCubeAction()));
-    menu_select_primitive->addAction(actionPyramid);
-        connect(actionRotateCamera, SIGNAL(triggered()),pMW->getSelectPrimitiveToolbar(), SLOT(setPyramidAction()));
-    menu_select_primitive->addAction(actionSphere);
-        connect(actionZoomCamera, SIGNAL(triggered()),pMW->getSelectPrimitiveToolbar(), SLOT(setSphereAction()));
+  actionRotateCamera = new QAction("Повернуть камеру", this);
+  sceneActionMenu->addAction(actionRotateCamera);
+  connect(actionRotateCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraRotAction()));
 
+  actionZoomCamera = new QAction("Изменить масштаб", this);
+  sceneActionMenu->addAction(actionZoomCamera);
+  connect(actionZoomCamera, SIGNAL(triggered()), pMW->getSceneControlToolbar(), SLOT(setCameraZoomAction()));
 
-    menu_primitive_action->addAction(actionTranslate);
-        connect(actionTranslate, SIGNAL(triggered()),pMW->getActionPrimitiveToolbar(), SLOT(setTranslateAction()));
-    menu_primitive_action->addAction(actionRotate);
-        connect(actionRotate, SIGNAL(triggered()),pMW->getActionPrimitiveToolbar(), SLOT(setRotateAction()));
-    menu_primitive_action->addAction(actionGroup);
-        connect(actionGroup, SIGNAL(triggered()),pMW->getActionPrimitiveToolbar(), SLOT(setGroupAction()));
+  // Primitives
+  actionCube = new QAction("Куб", this);
+  primitiveMenu->addAction(actionCube);
+  connect(actionCube, SIGNAL(triggered()), SLOT(setCubeAction()));
 
+  actionSphere = new QAction("Сфера", this);
+  primitiveMenu->addAction(actionSphere);
+  connect(actionSphere, SIGNAL(triggered()), SLOT(setSphereAction()));
+
+  actionPyramid = new QAction("Пирамида", this);
+  primitiveMenu->addAction(actionPyramid);
+  connect(actionPyramid, SIGNAL(triggered()), SLOT(setPyramidAction()));
+
+  // Actions
+  actionTranslate = new QAction("Переместить", this);
+  primitiveActionMenu->addAction(actionTranslate);
+  connect(actionTranslate, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setTranslateAction()));
+
+  actionRotate = new QAction("Повернуть", this);
+  primitiveActionMenu->addAction(actionRotate);
+  connect(actionRotate, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setRotateAction()));
+
+  actionGroup = new QAction("Сгрупировать", this);
+  primitiveActionMenu->addAction(actionGroup);
+  connect(actionGroup, SIGNAL(triggered()), pMW->getActionPrimitiveToolbar(), SLOT(setGroupAction()));
+
+}
+
+void MenuBar::setCubeAction() {
+
+  primitiveChangeEvent(MEL_CUBE);
+}
+
+void MenuBar::setPyramidAction() {
+  primitiveChangeEvent(MEL_PYRAMID);
+}
+
+void MenuBar::setSphereAction() {
+  primitiveChangeEvent(MEL_SPHERE);
+}
+
+void MenuBar::primitiveChangeEvent(int i) {
+  pMW->setPrevEvent(*(pMW->getCurEvent()));
+  pMW->setCurEvent(i);
 }
