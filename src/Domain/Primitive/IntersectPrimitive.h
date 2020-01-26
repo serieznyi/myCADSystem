@@ -3,7 +3,7 @@
 
 #include "GroupPrimitive.h"
 #include "src/Domain/Container.h"
-#include "src/resource.h"
+#include "src/constants.h"
 
 class IntersectPrimitive : public GroupPrimitive
 {

@@ -8,7 +8,7 @@
 #include "MenuBar.h"
 #include "StatusBar.h"
 #include "src/Work.h"
-#include "src/resource.h"
+#include "src/constants.h"
 #include <QFileDialog>
 
 class MainWindow : public QMainWindow

@@ -1,11 +1,9 @@
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
 
-#include <QOpenGLWidget>
 #include <QStack>
-#include <QRgb>
 #include "src/Domain/Element.h"
-#include "src/resource.h"
+#include "src/constants.h"
 
 struct MCOLOR
 {

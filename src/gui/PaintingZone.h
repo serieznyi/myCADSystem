@@ -5,10 +5,7 @@
 
 #include <QSplitter>
 #include "src/GLWidget.h"
-#include "src/resource.h"
-
-//#include "matrix.h"
-//#include "invers.h"
+#include "src/constants.h"
 
 class PaintingZone : public QWidget
 {

@@ -16,7 +16,7 @@
 #define VIEW_TOP                     1
 #define VIEW_RIGHT                   2
 #define VIEW_FRONT                   3
-#define VIEW_FULL_SCREEN                4
+#define VIEW_FULL_SCREEN             4
 #define VIEW_RESET                   5
 
 // Прочее
@@ -45,9 +45,9 @@
 #define ACTION_INTERSECT            207 // Пересечение
 
 //ДЕЙСТВИЯ НАД СЦЕНОЙ
-#define CAMERA_TRANSLATE        251 // Переместить камеру
-#define CAMERA_ROTATE           252 // Вращать камеру
-#define CAMERA_ZOOM             253 // Изменить масштаб
+#define CAMERA_TRANSLATE            251 // Переместить камеру
+#define CAMERA_ROTATE               252 // Вращать камеру
+#define CAMERA_ZOOM                 253 // Изменить масштаб
 
 //ПРОЧЕЕ
 #define MCM_SCENE                   300

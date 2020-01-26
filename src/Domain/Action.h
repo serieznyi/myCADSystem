@@ -2,9 +2,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include <QOpenGLWidget>
 #include "src/Domain/Element.h"
-#include "src/resource.h"
+#include "src/constants.h"
 
 class Action : public Element
 {

@@ -12,7 +12,7 @@
 #include <QMouseEvent>
 #include <cmath>
 #include "GL/glu.h"
-#include "src/resource.h"
+#include "src/constants.h"
 #include "Work.h"
 #include "src/gui/ContextMenu.h"
 

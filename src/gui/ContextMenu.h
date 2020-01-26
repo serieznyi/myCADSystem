@@ -3,7 +3,7 @@
 
 #include <QMenu>
 #include <QAction>
-#include "src/resource.h"
+#include "src/constants.h"
 
 class GLWidget;
 
