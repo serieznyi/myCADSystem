@@ -1,10 +1,8 @@
 #include "intersection.h"
 
-Intersection::Intersection():Action()
-{
+Intersection::Intersection() : Action() {
 }
 
-void Intersection::Apply(bool mode)
-{
+void Intersection::Apply(bool mode) {
 
 }

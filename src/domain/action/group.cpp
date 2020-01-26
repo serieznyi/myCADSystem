@@ -1,10 +1,8 @@
 #include "group.h"
 
-Group::Group():Action()
-{
+Group::Group() : Action() {
 }
 
-void Group::Apply(bool mode)
-{
+void Group::Apply(bool mode) {
 
 }

@@ -5,11 +5,10 @@
 
 #include "src/domain/action.h"
 
-class Subtraction : public Action
-{
-public:
-    explicit Subtraction();
-    virtual void Apply(bool mode=true);
+class Subtraction : public Action {
+ public:
+  explicit Subtraction();
+  virtual void Apply(bool mode = true);
 };
 
 #endif // SUBTRACTION_H

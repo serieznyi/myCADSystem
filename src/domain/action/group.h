@@ -5,11 +5,10 @@
 
 #include "src/domain/action.h"
 
-class Group : public Action
-{
-public:
-    explicit Group();
-    virtual void Apply(bool mode=true);
+class Group : public Action {
+ public:
+  explicit Group();
+  virtual void Apply(bool mode = true);
 };
 
 #endif

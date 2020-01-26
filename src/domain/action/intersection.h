@@ -5,11 +5,10 @@
 
 #include "src/domain/action.h"
 
-class Intersection : public Action
-{
-public:
-    explicit Intersection();
-    virtual void Apply(bool mode=true);
+class Intersection : public Action {
+ public:
+  explicit Intersection();
+  virtual void Apply(bool mode = true);
 };
 
 #endif // INTERSECTION_H

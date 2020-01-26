@@ -5,10 +5,9 @@
 #include "src/domain/element.h"
 #include "src/constants.h"
 
-class Action : public Element
-{
-public:
-    explicit Action(bool mode=true);
+class Action : public Element {
+ public:
+  explicit Action(bool mode = true);
 };
 
 #endif // ACTION_H

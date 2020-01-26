@@ -3,10 +3,9 @@
 
 #include "src/domain/action.h"
 
-class Stretch : public Action
-{
-public:
-    Stretch();
+class Stretch : public Action {
+ public:
+  Stretch();
 };
 
 #endif // STRETCH_H

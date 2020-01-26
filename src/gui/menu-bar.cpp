@@ -106,37 +106,30 @@ void MenuBar::choosePrimitiveEvent(int i) {
   pMW->setCurEvent(i);
 }
 
-void MenuBar::choosePrimitiveTranslateAction()
-{
+void MenuBar::choosePrimitiveTranslateAction() {
   choosePrimitiveActionEvent(ACTION_TRANSLATE);
 }
 
-void MenuBar::choosePrimitiveRotateAction()
-{
+void MenuBar::choosePrimitiveRotateAction() {
   choosePrimitiveActionEvent(ACTION_ROTATE);
 }
 
-void MenuBar::choosePrimitiveGroupAction()
-{
+void MenuBar::choosePrimitiveGroupAction() {
   choosePrimitiveActionEvent(ACTION_GROUP);
 }
 
-void MenuBar::choosePrimitiveActionEvent(int i)
-{
+void MenuBar::choosePrimitiveActionEvent(int i) {
   pMW->setCurEvent(i);
 }
 
-void MenuBar::chooseCameraTranslateAction()
-{
+void MenuBar::chooseCameraTranslateAction() {
   pMW->setCurEvent(CAMERA_TRANSLATE);
 }
 
-void MenuBar::chooseCameraRotAction()
-{
+void MenuBar::chooseCameraRotAction() {
   pMW->setCurEvent(CAMERA_ROTATE);
 }
 
-void MenuBar::chooseCameraZoomAction()
-{
+void MenuBar::chooseCameraZoomAction() {
   pMW->setCurEvent(CAMERA_ZOOM);
 }

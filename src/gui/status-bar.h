@@ -3,10 +3,9 @@
 
 #include <QStatusBar>
 
-class StatusBar : public QStatusBar
-{
-    Q_OBJECT
-public:
-    explicit StatusBar(QWidget *parent = 0);
+class StatusBar : public QStatusBar {
+ Q_OBJECT
+ public:
+  explicit StatusBar(QWidget *parent = 0);
 };
 #endif // STATUSBAR_H

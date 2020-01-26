@@ -1,5 +1,4 @@
 #include "stretch.h"
 
-Stretch::Stretch()
-{
+Stretch::Stretch() {
 }

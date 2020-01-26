@@ -7,16 +7,15 @@
 
 class GLWidget;
 
-class ContextMenu : public QMenu
-{
-public:
-    ContextMenu(int type, QWidget *parent);
-    void createPrimitiveContexMenu();
-    void createSceneContexMenu();
-public:
-    GLWidget    *pGLW;
-    QAction     *primitiveDeleteAction;
-    QAction     *primitivePropertiesAction;
+class ContextMenu : public QMenu {
+ public:
+  ContextMenu(int type, QWidget *parent);
+  void createPrimitiveContexMenu();
+  void createSceneContexMenu();
+ public:
+  GLWidget *pGLW;
+  QAction *primitiveDeleteAction;
+  QAction *primitivePropertiesAction;
 
 };
 

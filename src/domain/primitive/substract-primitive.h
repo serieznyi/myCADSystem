@@ -5,12 +5,11 @@
 #include "src/domain/container.h"
 #include "src/constants.h"
 
-class SubstractPrimitive : public GroupPrimitive
-{
-public:
-    SubstractPrimitive(Container *con1, Container *con2);
-    virtual void draw();
-    virtual void SynchData();
+class SubstractPrimitive : public GroupPrimitive {
+ public:
+  SubstractPrimitive(Container *con1, Container *con2);
+  virtual void draw();
+  virtual void SynchData();
 };
 
 #endif // SUBSTRACTPRIMITIVE_H

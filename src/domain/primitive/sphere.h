@@ -5,15 +5,14 @@
 #include "src/domain/primitive.h"
 #include "GL/glu.h"
 
-class Sphere : public Primitive
-{
-public:
-    Sphere(GLUquadric *quad, GLfloat a);
-    void draw();
-    void setQuadric(GLUquadric quad);
-private:
-    GLUquadric               *quadric;
-     GLdouble a;
+class Sphere : public Primitive {
+ public:
+  Sphere(GLUquadric *quad, GLfloat a);
+  void draw();
+  void setQuadric(GLUquadric quad);
+ private:
+  GLUquadric *quadric;
+  GLdouble a;
 };
 
 #endif // SPHERE_H
