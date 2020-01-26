@@ -3,7 +3,7 @@
 #ifndef TRANSLATE_H
 #define TRANSLATE_H
 
-#include "src/lib/action/Action.h"
+#include "src/Domain/Action.h"
 
 class Translate : public Action
 {

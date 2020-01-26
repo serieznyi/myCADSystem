@@ -4,7 +4,7 @@
 #include <QOpenGLWidget>
 #include <QStack>
 #include <QRgb>
-#include "src/lib/Element.h"
+#include "src/Domain/Element.h"
 #include "src/resource.h"
 
 struct MCOLOR

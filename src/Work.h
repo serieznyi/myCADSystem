@@ -4,10 +4,11 @@
 
 #include <QOpenGLWidget>
 #include <GL/glu.h>
-#include "stdlib.h"
-#include "time.h"
+#include <cstdlib>
+#include <ctime>
+#include <src/Domain/Primitive.h>
+#include <src/Domain/Container.h>
 #include "src/resource.h"
-#include "src/lib/lib.h"
 
 class MainWindow;
 

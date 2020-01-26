@@ -1,7 +1,7 @@
 #ifndef SCALE_H
 #define SCALE_H
 
-#include "src/lib/action/Action.h"
+#include "src/Domain/Action.h"
 
 class Scale : public Action
 {

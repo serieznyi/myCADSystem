@@ -1,8 +1,8 @@
 #ifndef SUBSTRACTPRIMITIVE_H
 #define SUBSTRACTPRIMITIVE_H
 
-#include "src/lib/primitive/GroupPrimitive.h"
-#include "src/lib/Container.h"
+#include "GroupPrimitive.h"
+#include "src/Domain/Container.h"
 #include "src/resource.h"
 
 class SubstractPrimitive : public GroupPrimitive

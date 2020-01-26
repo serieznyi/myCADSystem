@@ -3,7 +3,7 @@
 #ifndef ROTATE_H
 #define ROTATE_H
 
-#include "src/lib/action/Action.h"
+#include "src/Domain/Action.h"
 
 class Rotate : public Action
 {

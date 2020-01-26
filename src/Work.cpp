@@ -1,3 +1,9 @@
+#include <src/Domain/Primitive/Sphere.h>
+#include <src/Domain/Primitive/Cube.h>
+#include <src/Domain/Primitive/Pyramid.h>
+#include <src/Domain/Primitive/GroupPrimitive.h>
+#include <src/Domain/Primitive/SubstractPrimitive.h>
+#include <src/Domain/Primitive/IntersectPrimitive.h>
 #include "Work.h"
 #include "src/gui/MainWindow.h"
 #include "QDebug"

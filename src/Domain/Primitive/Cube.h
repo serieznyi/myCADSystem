@@ -1,7 +1,7 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-#include "src/lib/primitive/Primitive.h"
+#include "src/Domain/Primitive.h"
 
 class Cube : public Primitive
 {

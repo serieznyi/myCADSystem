@@ -3,7 +3,7 @@
 #ifndef LIB_ACTION_GROUP_H
 #define LIB_ACTION_GROUP_H
 
-#include "src/lib/action/Action.h"
+#include "src/Domain/Action.h"
 
 class Group : public Action
 {

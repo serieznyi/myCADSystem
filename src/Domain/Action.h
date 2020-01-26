@@ -3,7 +3,7 @@
 #define ACTION_H
 
 #include <QOpenGLWidget>
-#include "src/lib/Element.h"
+#include "src/Domain/Element.h"
 #include "src/resource.h"
 
 class Action : public Element
