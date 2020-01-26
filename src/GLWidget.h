@@ -13,7 +13,7 @@
 #include <math.h>
 #include "GL/glu.h"
 #include "src/resource.h"
-#include "Work.h"
+#include "work.h"
 #include "src/lib/lib.h"
 #include "src/gui/ContextMenu.h"
 

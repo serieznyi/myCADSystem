@@ -1,4 +1,4 @@
-#include "Work.h"
+#include "work.h"
 #include "src/gui/MainWindow.h"
 #include "QDebug"
 

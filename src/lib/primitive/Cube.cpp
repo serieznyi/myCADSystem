@@ -1,7 +1,7 @@
 #include "Cube.h"
 #include "QDebug"
 
-Cube::Cube(GLfloat a=1.0f):Primitive()
+Cube::Cube(GLfloat a):Primitive()
 {
     this->setTypeName(MEL_CUBE);
     this->a = a;
@@ -9,11 +9,7 @@ Cube::Cube(GLfloat a=1.0f):Primitive()
 
 void Cube::draw()
 {
-    MCOLOR *color = 0;
-    if(getPaintMode())
-    color = getColor();
-            else
-    color = getIDColor();
+    MCOLOR *color = getPaintMode() ? getColor() : getIDColor();
 
     glColor3ub(color->red,color->green,color->blue);
 
