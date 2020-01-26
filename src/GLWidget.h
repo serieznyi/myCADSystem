@@ -10,10 +10,10 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QMouseEvent>
-#include <math.h>
+#include <cmath>
 #include "GL/glu.h"
 #include "src/resource.h"
-#include "work.h"
+#include "Work.h"
 #include "src/lib/lib.h"
 #include "src/gui/ContextMenu.h"
 
